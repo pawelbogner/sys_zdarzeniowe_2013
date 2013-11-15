@@ -12,10 +12,14 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         klient.cpp \
-    qclient.cpp
+    qclient.cpp \
+    field.cpp \
+    eter.cpp
 
 HEADERS  += klient.h \
     qclient.h \
-    qprotocol.h
+    qprotocol.h \
+    field.h \
+    eter.h
 
 FORMS    += klient.ui
