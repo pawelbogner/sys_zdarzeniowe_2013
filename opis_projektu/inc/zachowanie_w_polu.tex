@@ -1,0 +1,23 @@
+
+\section{Zachowanie robotów wewn¹trz pola}
+Zachowanie robotów wewn¹trz pola zamodelowane jest za pomoc¹ metody sztucznych pól potencja³ów. Potencja³y ustalane s¹ w nastêpuj¹cy sposób:
+	\begin{itemize}
+		\item dwa roboty znajduj¹ce siê w tym samym polu zawsze s¹ spolaryzowane ³adunkami punktowymi o jednakowych znakach,
+		\item robot oczekuj¹cy na zezwolenie wyjazdu z pola widzi wszystkie œciany jako spolaryzowane ³adunkiem o znaku zgodnym ze znakiem jego ³adunku (rys.\ref{pic:waiting}),
+		\item robot wykonuj¹cy manewr przejazdu do innego pola widzi œcianê, któr¹ ma pokonaæ, jako spolaryzowan¹ ³adunkiem przeciwnym do jego (œrodek wa¿ony ³adunku znajduje siê bli¿ej prawej krawêdzi œciany, patrz¹c od strony robota -- powoduje to unikanie kolizji z innym robotem przy przekraczaniu krawêdzi pola), a trzy pozosta³e jako spolaryzowane ³adunkiem o znaku jednakowym ze znakiem jego ³adunku (rys. \ref{pic:moving}),
+		\item w wypadku, jeœli w polu znajduj¹ siê dwa roboty, ka¿dy widzi inn¹ polaryzacjê œcian -- tak¹, aby zgadza³a siê ona z jego stanem ruchu (oczekiwanie, zezwolenie na przejazd).
+	\end{itemize}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.7]{img/waiting.png}
+		\caption{Robot oczekuj¹cy na pozwolenie na wyjazd z komórki}
+		\label{pic:waiting}
+	\end{figure}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.7]{img/moving.png}
+		\caption{Robot wyje¿d¿aj¹cy z komórki}
+		\label{pic:moving}
+	\end{figure}
+
