@@ -11,6 +11,7 @@ Force Robot::calculateForce()
     // - diameter robota,
     // - _isAllowedToLeaveField,
     // - współrzędnych pola, na które ma wyjechać,
+    // cel podróży: _destinationX, _destinationY,
     // należy obliczyć siłę.
 
     // zaślepka
@@ -135,4 +136,28 @@ void Robot::setNextFieldYPos(int32_t nextFieldYPos)
 {
     _nextFieldYPos = nextFieldYPos;
 }
+
+
+int32_t Robot::getDestinationX() const
+{
+    return _destinationX;
+}
+
+void Robot::setDestinationX(int32_t destinationX)
+{
+    _destinationX = destinationX;
+}
+
+
+int32_t Robot::getDestinationY() const
+{
+    return _destinationY;
+}
+
+void Robot::setDestinationY(int32_t destinationY)
+{
+    _destinationY = destinationY;
+}
+
+
 

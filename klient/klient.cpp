@@ -1,5 +1,6 @@
 #include "klient.h"
 #include "ui_klient.h"
+#include <iostream>
 
 klient::klient(QWidget *parent) :
     QMainWindow(parent),
@@ -20,7 +21,7 @@ klient::~klient()
 
 void klient::on_pushButton_clicked()
 {
-    this->client->connect_to_host(this->ui->host->text(), this->ui->port->value(), 2000);
+    std::cerr<<this->client->connect_to_host(this->ui->host->text(), this->ui->port->value(), 2000)<<std::endl;
 }
 
 void klient::on_pushButton_2_clicked()

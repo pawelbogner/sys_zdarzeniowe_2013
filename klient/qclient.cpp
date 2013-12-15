@@ -1,6 +1,6 @@
 #include "qclient.h"
 #include "qprotocol.h"
-
+#include <iostream>
 
 QClient::QClient(QObject *parent) :
     QObject(parent)
@@ -15,7 +15,7 @@ QClient::QClient(QObject *parent) :
 bool QClient::connect_to_host(QString host, qint16 port, int timeout)
 {
     this->socket->connectToHost(host, port);
-
+    std::cerr<<"polaczono"<<std::endl;
     return this->socket->waitForConnected(timeout);
 }
 

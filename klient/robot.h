@@ -52,6 +52,12 @@ public:
     int32_t getNextFieldYPos() const;
     void setNextFieldYPos(int32_t nextFieldYPos);
 
+    int32_t getDestinationX() const;
+    void setDestinationX(int32_t destinationX);
+
+    int32_t getDestinationY() const;
+    void setDestinationY(int32_t destinationY);
+
 private:
     int32_t _diameter;
     int32_t _localId;
@@ -62,6 +68,9 @@ private:
     bool _isAllowedToLeaveField;
     int32_t _nextFieldXPos;
     int32_t _nextFieldYPos;
+
+    int32_t _destinationX;
+    int32_t _destinationY;
 };
 
 #endif // ROBOT_H

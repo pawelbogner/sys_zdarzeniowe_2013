@@ -12,6 +12,8 @@ public:
     void start();
 private:
     std::vector<Field> fields;
+    std::vector<boost::shared_ptr<Robot> > _allRobotsOnScene;
+
     void advanceTime();
 };
 
