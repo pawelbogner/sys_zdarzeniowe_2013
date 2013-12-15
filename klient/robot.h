@@ -1,33 +1,67 @@
 #ifndef ROBOT_H
 #define ROBOT_H
 
+#include<stdint.h>
+
+
+struct Force {
+    double X, Y;
+};
+
+
 class Robot
 {
 public:
-    Robot();
-    int getId() const;
-    void setId(int id);
+    Robot(int32_t diameter, int32_t id);
 
-    double getXPos() const;
-    void setXPos(double xPos);
+    Force calculateForce();
 
-    double getYPos() const;
-    void setYPos(double yPos);
+    void calculateVelocity();
 
-    double getXVel() const;
-    void setXVel(double xVel);
 
-    double getYVel() const;
-    void setYVel(double yVel);
+    int32_t getId() const;
+    void setId(int32_t localId);
 
-    double getDiameter() const;
-    void setDiameter(double diameter);
+    int32_t getXPos() const;
+    void setXPos(int32_t xPos);
+
+    int32_t getYPos() const;
+    void setYPos(int32_t yPos);
+
+    int32_t getXVel() const;
+    void setXVel(int32_t xVel);
+
+    int32_t getYVel() const;
+    void setYVel(int32_t yVel);
+
+    int32_t getDiameter() const;
+    void setDiameter(int32_t diameter);
+
+    int32_t getGlobalId() const;
+    void setGlobalId(int32_t globalId);
+
+    int32_t getLocalId() const;
+    void setLocalId(int32_t localId);
+
+    bool getIsAllowedToLeaveField() const;
+    void setIsAllowedToLeaveField(bool value);
+
+    int32_t getNextFieldXPos() const;
+    void setNextFieldXPos(int32_t nextFieldXPos);
+
+    int32_t getNextFieldYPos() const;
+    void setNextFieldYPos(int32_t nextFieldYPos);
 
 private:
-    int _id;
-    double _xPos, _yPos;
-    double _xVel, _yVel;
-    double _diameter;
+    int32_t _diameter;
+    int32_t _localId;
+    int32_t _globalId;
+    int32_t _xPos, _yPos;
+    int32_t _xVel, _yVel;
+
+    bool _isAllowedToLeaveField;
+    int32_t _nextFieldXPos;
+    int32_t _nextFieldYPos;
 };
 
 #endif // ROBOT_H

@@ -1,6 +1,6 @@
 #include "eter.h"
 
-Ether::Ether(int fields_x, int fields_y, double fieldXSize, double fieldYSize)
+Ether::Ether(int32_t fields_x, int32_t fields_y, int32_t fieldXSize, int32_t fieldYSize)
 {
 
 }

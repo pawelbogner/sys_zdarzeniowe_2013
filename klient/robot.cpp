@@ -1,65 +1,138 @@
 #include "robot.h"
 
-Robot::Robot()
+Robot::Robot(int32_t diameter, int32_t id):
+    _diameter(diameter), _localId(id), _globalId(0), _isAllowedToLeaveField(false)
+{ }
+
+Force Robot::calculateForce()
 {
+    // na podstawie następujących danych:
+    // - szerokość w X i w Y pojedynczego pola,
+    // - diameter robota,
+    // - _isAllowedToLeaveField,
+    // - współrzędnych pola, na które ma wyjechać,
+    // należy obliczyć siłę.
+
+    // zaślepka
+    Force result = {0.0, 0.0};
+    return result;
 }
 
-int Robot::getId() const
+
+void Robot::calculateVelocity()
 {
-    return _id;
+    // tu odpalamy calculateForce i na podstawie wyliczonych wartości
+    // siły oraz bieżących prędkości wyliczamy nowe prędkości
 }
 
-void Robot::setId(int id)
+
+
+int32_t Robot::getLocalId() const
 {
-    _id = id;
+    return _localId;
 }
-double Robot::getXPos() const
+
+void Robot::setLocalId(int32_t localId)
+{
+    _localId = localId;
+}
+
+
+int32_t Robot::getGlobalId() const
+{
+    return _globalId;
+}
+
+void Robot::setGlobalId(int32_t globalId)
+{
+    _globalId = globalId;
+}
+
+
+int32_t Robot::getXPos() const
 {
     return _xPos;
 }
 
-void Robot::setXPos(double xPos)
+void Robot::setXPos(int32_t xPos)
 {
     _xPos = xPos;
 }
-double Robot::getYPos() const
+
+
+int32_t Robot::getYPos() const
 {
     return _yPos;
 }
 
-void Robot::setYPos(double yPos)
+void Robot::setYPos(int32_t yPos)
 {
     _yPos = yPos;
 }
-double Robot::getXVel() const
+
+
+int32_t Robot::getXVel() const
 {
     return _xVel;
 }
 
-void Robot::setXVel(double xVel)
+void Robot::setXVel(int32_t xVel)
 {
     _xVel = xVel;
 }
-double Robot::getYVel() const
+
+
+int32_t Robot::getYVel() const
 {
     return _yVel;
 }
 
-void Robot::setYVel(double yVel)
+void Robot::setYVel(int32_t yVel)
 {
     _yVel = yVel;
 }
-double Robot::getDiameter() const
+
+
+int32_t Robot::getDiameter() const
 {
     return _diameter;
 }
 
-void Robot::setDiameter(double diameter)
+void Robot::setDiameter(int32_t diameter)
 {
     _diameter = diameter;
 }
 
 
+bool Robot::getIsAllowedToLeaveField() const
+{
+    return _isAllowedToLeaveField;
+}
+
+void Robot::setIsAllowedToLeaveField(bool value)
+{
+    _isAllowedToLeaveField = value;
+}
 
 
+int32_t Robot::getNextFieldXPos() const
+{
+    return _nextFieldXPos;
+}
+
+void Robot::setNextFieldXPos(int32_t nextFieldXPos)
+{
+    _nextFieldXPos = nextFieldXPos;
+}
+
+
+int32_t Robot::getNextFieldYPos() const
+{
+    return _nextFieldYPos;
+}
+
+void Robot::setNextFieldYPos(int32_t nextFieldYPos)
+{
+    _nextFieldYPos = nextFieldYPos;
+}
 
