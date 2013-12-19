@@ -1,23 +1,36 @@
-
-\section{Zachowanie robotów wewn¹trz pola}
-Zachowanie robotów wewn¹trz pola zamodelowane jest za pomoc¹ metody sztucznych pól potencja³ów. Potencja³y ustalane s¹ w nastêpuj¹cy sposób:
+\section{Zachowanie robotÃ³w wewnÄ…trz pola}
+	Zachowanie robotÃ³w wewnÄ…trz pola zamodelowane jest za pomocÄ… metody sztucznych pÃ³l potencjaÅ‚Ã³w. PotencjaÅ‚y ustalane sÄ… w nastÄ™pujÄ…cy sposÃ³b:
 	\begin{itemize}
-		\item dwa roboty znajduj¹ce siê w tym samym polu zawsze s¹ spolaryzowane ³adunkami punktowymi o jednakowych znakach,
-		\item robot oczekuj¹cy na zezwolenie wyjazdu z pola widzi wszystkie œciany jako spolaryzowane ³adunkiem o znaku zgodnym ze znakiem jego ³adunku (rys.\ref{pic:waiting}),
-		\item robot wykonuj¹cy manewr przejazdu do innego pola widzi œcianê, któr¹ ma pokonaæ, jako spolaryzowan¹ ³adunkiem przeciwnym do jego (œrodek wa¿ony ³adunku znajduje siê bli¿ej prawej krawêdzi œciany, patrz¹c od strony robota -- powoduje to unikanie kolizji z innym robotem przy przekraczaniu krawêdzi pola), a trzy pozosta³e jako spolaryzowane ³adunkiem o znaku jednakowym ze znakiem jego ³adunku (rys. \ref{pic:moving}),
-		\item w wypadku, jeœli w polu znajduj¹ siê dwa roboty, ka¿dy widzi inn¹ polaryzacjê œcian -- tak¹, aby zgadza³a siê ona z jego stanem ruchu (oczekiwanie, zezwolenie na przejazd).
+		\item robot oczekujÄ…cy na zezwolenie wyjazdu z pola widzi wszystkie Å›ciany jako spolaryzowane Å‚adunkiem o znaku zgodnym ze znakiem jego Å‚adunku (rys. \ref{pic:waiting}), a jego wektor siÅ‚ ma skÅ‚adowe opisane nastÄ™pujÄ…cymi rÃ³wnaniami:
+                  $$F_x= A((X-x)^2 - x^2)$$
+                  $$F_y= A((Y-y)^2 - y^2),$$
+		\item robot wykonujÄ…cy manewr przejazdu do innego pola widzi dodatkowy Å‚adunek na Å›cianie, w kierunku ktÃ³rej ma zmierzaÄ‡ (umieszczony z jej prawej strony, aby zapobiegaÄ‡ kolizjom) (rys. \ref{pic:moving}), a do skÅ‚adowych jego wektora siÅ‚ dodaje siÄ™ czÅ‚on odpowiedzialny za modelowanie dodatkowego potencjaÅ‚u:
+                  $$F_{xM}= +B(X_p-x)^2$$
+                  $$F_{yM}= +B(Y_p-y)^2,$$
+		\item dwa roboty znajdujÄ…ce siÄ™ w tym samym polu zawsze sÄ… spolaryzowane Å‚adunkami punktowymi o jednakowych znakach (rys. \ref{pic:tworobots}), a do wektora siÅ‚ dodawany jest w tym wypadku nastÄ™pujÄ…cy czÅ‚on modelujÄ…cy siÅ‚Ä™ wzajemnie je odpychajÄ…cÄ…:
+                  $$F_{xD}= +C(x-x_D)^2$$
+                  $$F_{yD}= +C(y-y_D)^2,$$ 
+		\item w wypadku, jeÅ›li w polu znajdujÄ… siÄ™ dwa roboty, kaÅ¼dy widzi innÄ… polaryzacjÄ™ Å›cian -- takÄ…, aby zgadzaÅ‚a siÄ™ ona z jego stanem ruchu (oczekiwanie, zezwolenie na przejazd),
+                \item przykÅ‚ad --- kiedy w polu znajdujÄ… siÄ™ dwa roboty i robot, dla ktÃ³rego obliczamy wypadkowy wektor siÅ‚, wyjeÅ¼dÅ¼a z pola, skÅ‚adowe jego siÅ‚ opisane sÄ… nastepujÄ…cymi rÃ³wnaniami:
+                  $$F_x= A((X-x)^2 - x^2)+B(X_p-x)^2+C(x-x_D)^2$$
+                  $$F_y= A((Y-y)^2 - y^2)+B(Y_p-y)^2+C(y-y_D)^2.$$ 
 	\end{itemize}
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.7]{img/waiting.png}
-		\caption{Robot oczekuj¹cy na pozwolenie na wyjazd z komórki}
+		\includegraphics[scale=0.9]{img/waiting.png}
+		\caption{Robot oczekujÄ…cy na pozwolenie na wyjazd z komÃ³rki}
 		\label{pic:waiting}
 	\end{figure}
 	\begin{figure}[H]
 		\centering
-		\includegraphics[scale=0.7]{img/moving.png}
-		\caption{Robot wyje¿d¿aj¹cy z komórki}
+		\includegraphics[scale=0.9]{img/moving.png}
+		\caption{Robot wyjeÅ¼dÅ¼ajÄ…cy z komÃ³rki}
 		\label{pic:moving}
 	\end{figure}
-
+	\begin{figure}[H]
+		\centering
+		\includegraphics[scale=0.9]{img/tworobots.png}
+		\caption{Dwa roboty oczekujÄ…ce na pozwolenie na wyjazd z pola}
+		\label{pic:tworobots}
+	\end{figure}

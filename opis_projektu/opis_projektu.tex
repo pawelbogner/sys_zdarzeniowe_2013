@@ -1,14 +1,9 @@
-\documentclass[11pt]{article} 
+\documentclass[11pt, a4paper]{article} 
 \usepackage[polish]{babel}
-%\usepackage[T1]{fontenc}
-\usepackage{polski}
-\usepackage[cp1250]{inputenc}
 \usepackage{longtable}
 \usepackage{booktabs}
 \usepackage{dcolumn}
-%\usepackage{ctable}
 \usepackage{geometry} % to change the page dimensions
-\geometry{a4paper} % or letterpaper (US) or a5paper or....
 \usepackage{graphicx} % support the \includegraphics command and options
 \usepackage{float}
 \usepackage{array} % for better arrays (eg matrices) in maths
@@ -21,6 +16,8 @@
 \let\lll=\amslll
 %\savesymbol{lll}
 \usepackage{amssymb}
+
+\usepackage{fontspec}
 
 
 \usepackage{pdflscape} 
@@ -35,58 +32,38 @@
   bookmarks=true,  
   bookmarksnumbered=false,  
   unicode=true,  
-  pdftex=true,  
-  pdftitle={Projekt zespo≥owy},
-  pdfauthor={Pawe≥ Bogner, Krzysztof Nomejko, Grzegorz Maj,
-  Bartosz Folta, Marcin Dmochowski, Rados≥aw Grymin},
+  pdftitle={Projekt zespo≈Çowy},
+  pdfauthor={Pawe≈Ç Bogner, Krzysztof Nomejko, Grzegorz Maj,
+  Bartosz Folta, Marcin Dmochowski},
   pdfnewwindow=true,
   colorlinks=false
 ]{hyperref} 
 
 \begin{document}
 	\input{inc/titlepage.tex}
-	
-	%% \section{Problem projektu}
-	%% 	\input{inc/problem_projektu.tex}
-	%% 	\newpage
 
-	%% 	\input{inc/plan_pracy.tex}
-	
-	%% \section{DorÍczenie}\label{sec:doreczenie}
-	%% 	\input{inc/doreczenie.tex}
-	
-	%% \section{Budøet}	
-	%% 	\input{inc/budzet.tex}
-
-	\section{Zarzπdzanie projektem}
+	\section{ZarzƒÖdzanie projektem}
 		\input{inc/zarzadzanie_projektem.tex}
 
 
-\includepdf[landscape]{img/gantt.pdf}
+%\includepdf[landscape]{img/gantt.pdf}
 
-
+\input{inc/opis_logiki.tex}
 \input{inc/zachowanie_w_polu.tex}
 \input{inc/struktury.tex}
 \input{inc/gui.tex}
 
 
 
-	\section{ZespÛ≥}
-		\subsection{Pawe≥ Bogner}
+	\section{Zesp√≥≈Ç}
+		\subsection{Pawe≈Ç Bogner}
 			\input{inc/zespol_pawel_bogner.tex}
-			
-			
-		\subsection{Krzysztof Nomejko}
-			\input{inc/zespol_krzysztof_nomejko.tex}
-			
-		\subsection{Grzegorz Maj}
-			\input{inc/zespol_grzegorz_maj.tex}
-			
-	
-		\subsection{Bartosz Folta}
-			\input{inc/zespol_bartosz_folta.tex}
-
-		
 		\subsection{Marcin Dmochowski}
 			\input{inc/zespol_marcin_dmochowski.tex}
+		\subsection{Bartosz Folta}
+			\input{inc/zespol_bartosz_folta.tex}
+		\subsection{Grzegorz Maj}
+			\input{inc/zespol_grzegorz_maj.tex}
+		\subsection{Krzysztof Nomejko}
+			\input{inc/zespol_krzysztof_nomejko.tex}
 \end{document}
