@@ -128,3 +128,4 @@ typedef struct
 //}
 
 #endif // QPROTOCOL_H
+

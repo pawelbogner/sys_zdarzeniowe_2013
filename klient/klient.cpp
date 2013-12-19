@@ -9,7 +9,8 @@ klient::klient(QWidget *parent) :
     ui->setupUi(this);
 
     this->client = new QClient(this);
-    connect(this->client, SIGNAL(register_robot_id(int32_t,int32_t,int32_t,int32_t)), this, SLOT(register_robot_id(int32_t,int32_t,int32_t,int32_t)));
+    this->ourEther = new Ether(this);
+    connect(this->client, SIGNAL(register_robot_id(int32_t,int32_t,int32_t,int32_t,int32_t,int32_t)), this->ourEther, SLOT(registerRobotInEter(int32_t,int32_t,int32_t,int32_t,int32_t,int32_t)));
     connect(this->client, SIGNAL(response_sector(int32_t,int32_t,int32_t,eSectorRequestResponse,int32_t)), this, SLOT(response_sector(int32_t,int32_t,int32_t,eSectorRequestResponse,int32_t)));
     connect(this->client, SIGNAL(go_to(int32_t,int32_t,int32_t)), this, SLOT(go_to(int32_t,int32_t,int32_t)));
 }
@@ -54,3 +55,4 @@ void klient::go_to            (int32_t id, int32_t goto_x, int32_t goto_y)
     this->ui->gt_x->setText(QString("%1").arg(goto_x));
     this->ui->gt_y->setText(QString("%1").arg(goto_y));
 }
+

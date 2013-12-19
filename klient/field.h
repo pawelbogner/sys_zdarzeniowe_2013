@@ -3,11 +3,11 @@
 
 #include<boost/shared_ptr.hpp>
 #include<vector>
-#include"robot.h"
 #include<inttypes.h>
 #include<stdint.h>
-#include"klient.h"
-
+#include"robot.h"
+#include "qclient.h"
+//#include"klient.h"
 
 class Field {
 public:
@@ -30,3 +30,4 @@ private:
 };
 
 #endif // FIELD_H
+

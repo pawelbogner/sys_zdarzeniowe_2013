@@ -34,3 +34,4 @@ public slots:
 };
 
 #endif // QCLIENT_H
+

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "qclient.h"
+#include "eter.h"
 
 namespace Ui {
 class klient;
@@ -31,6 +32,8 @@ private slots:
 private:
     Ui::klient *ui;
     QClient *client;
+    Ether *ourEther;
 };
 
 #endif // KLIENT_H
+
