@@ -2,9 +2,10 @@
 #define ETER_H
 
 #include <QObject>
-#include<vector>
-#include<stdint.h>
-#include"field.h"
+#include <vector>
+#include <stdint.h>
+#include "field.h"
+#include "robot.h"
 
 class Ether : public QObject
 {

@@ -1,8 +1,14 @@
 #include "robot.h"
 
-Robot::Robot(int32_t diameter, int32_t id):
-    _diameter(diameter), _localId(id), _globalId(0), _isAllowedToLeaveField(false)
-{ }
+//Robot::Robot(int32_t diameter, int32_t id):
+//    _diameter(diameter), _localId(id), _globalId(0), _isAllowedToLeaveField(false)
+//{ }
+
+Robot::Robot(int32_t local_id, int32_t id, int32_t size_x, int32_t size_y):
+    _localId(local_id), _diameter(size_x), _globalId(id), _isAllowedToLeaveField(false)
+{
+
+}
 
 Force Robot::calculateForce()
 {

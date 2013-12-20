@@ -12,8 +12,7 @@ struct Force {
 class Robot
 {
 public:
-    Robot(int32_t diameter, int32_t id);
-
+    Robot(int32_t local_id, int32_t id, int32_t size_x, int32_t size_y);
     Force calculateForce();
 
     void calculateVelocity();
@@ -62,8 +61,8 @@ private:
     int32_t _diameter;
     int32_t _localId;
     int32_t _globalId;
-    int32_t _xPos, _yPos;
     int32_t _xVel, _yVel;
+    int32_t _xPos, _yPos;
 
     bool _isAllowedToLeaveField;
     int32_t _nextFieldXPos;
