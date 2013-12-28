@@ -14,7 +14,7 @@ struct Force {
 class Robot
 {
 public:
-    Robot(int32_t local_id, int32_t id, int32_t size_x, int32_t size_y);
+    Robot(int32_t local_id, int32_t id);
     Force calculateForce(int32_t xFieldSize, int32_t yFieldSize, boost::shared_ptr<Robot> secondRobot);
 
     void calculatePosition(int32_t xFieldSize, int32_t yFieldSize, boost::shared_ptr<Robot> secondRobot, int timeDelay);
@@ -50,8 +50,8 @@ public:
     void setNextFieldYPos(int32_t nextFieldYPos);
 
 private:
-    int32_t _diameter;
     int32_t _localId;
+    int32_t _diameter;
     int32_t _globalId;
     int32_t _xVel, _yVel;
     int32_t _xPos, _yPos;

@@ -22,13 +22,14 @@ private:
     std::vector<Field> fields;
     std::vector<boost::shared_ptr<Robot> > _allRobotsOnScene;
     QTimer *timer;
+    bool fieldsAreCreated;
     int _timeDelay; //[ms]timer->start(_timeDelay);
 
 
     boost::shared_ptr<Robot> getRobotWithMatchingId(int32_t id);
 
 signals:
-    void addRobotToSceneSignal(int32_t id, int32_t x, int32_t y, int32_t dia);
+    void addRobotToSceneSignal(int32_t id, int32_t x, int32_t y);
     void redrawScene(void);
 
 public slots:

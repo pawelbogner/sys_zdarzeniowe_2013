@@ -40,9 +40,9 @@
    <widget class="QSpinBox" name="port">
     <property name="geometry">
      <rect>
-      <x>60</x>
+      <x>50</x>
       <y>40</y>
-      <width>42</width>
+      <width>91</width>
       <height>22</height>
      </rect>
     </property>
@@ -92,9 +92,9 @@
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>180</x>
+      <x>160</x>
       <y>10</y>
-      <width>151</width>
+      <width>171</width>
       <height>221</height>
      </rect>
     </property>

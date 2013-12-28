@@ -15,8 +15,9 @@ klient::klient(QWidget *parent) :
     connect(this->client, SIGNAL(register_robot_id(int32_t,int32_t,int32_t,int32_t,int32_t,int32_t)), this->ourEther, SLOT(registerRobotInEther(int32_t,int32_t,int32_t,int32_t,int32_t,int32_t)));
     connect(this->client, SIGNAL(response_sector(int32_t,int32_t,int32_t,eSectorRequestResponse,int32_t)), this, SLOT(response_sector(int32_t,int32_t,int32_t,eSectorRequestResponse,int32_t)));
     connect(this->client, SIGNAL(go_to(int32_t,int32_t,int32_t)), this->ourEther, SLOT(setRobotNextField(int32_t, int32_t, int32_t)));
-    connect(this->ourEther, SIGNAL(addRobotToSceneSignal(int32_t,int32_t,int32_t,int32_t)), this, SLOT(addRobotToSceneSlot(int32_t,int32_t,int32_t,int32_t)));
+    connect(this->ourEther, SIGNAL(addRobotToSceneSignal(int32_t,int32_t,int32_t)), this, SLOT(addRobotToSceneSlot(int32_t,int32_t,int32_t)));
     connect(this->ourEther, SIGNAL(redrawScene()), this, SLOT(redrawScene()));
+    connect(this->client, SIGNAL(register_robot_id(int32_t,int32_t,int32_t,int32_t,int32_t,int32_t)), this, SLOT(redrawLines(int32_t,int32_t,int32_t,int32_t,int32_t,int32_t)));
     this->ui->graphicsView->setScene(&Scene);
 }
 
@@ -25,9 +26,9 @@ klient::~klient()
     delete ui;
 }
 
-void klient::addRobotToSceneSlot(int32_t id, int32_t x, int32_t y, int32_t dia)
+void klient::addRobotToSceneSlot(int32_t id, int32_t x, int32_t y)
 {
-    boost::shared_ptr<QGraphicsEllipseItem> ellipse = boost::make_shared<QGraphicsEllipseItem>(x,y,dia,dia);
+    boost::shared_ptr<QGraphicsEllipseItem> ellipse = boost::make_shared<QGraphicsEllipseItem>(x, y, 10, 10);
     robotsOnScene.insert(std::pair<int32_t, boost::shared_ptr<QGraphicsEllipseItem> >(id, ellipse));
     Scene.addItem(robotsOnScene.find(id)->second.get());
 }
@@ -60,13 +61,18 @@ void klient::redrawScene()
 {
     BOOST_FOREACH(Field field, ourEther->getFields()){
         BOOST_FOREACH(boost::shared_ptr<Robot> robot, field.getRobotsOnField()){
-            robotsOnScene[robot->getGlobalId()]->setRect(robot->getXPos()+field.xSize()*field.xCoord(),
-                                                               robot->getYPos()+field.ySize()*field.yCoord(),
+            robotsOnScene[robot->getGlobalId()]->setRect(robot->getXPos()+field.xSize()*field.xCoord()*100,
+                                                               robot->getYPos()+field.ySize()*field.yCoord()*100,
                                                                robot->getDiameter(),
                                                                robot->getDiameter()
                                                                );
         }
     }
+}
+
+void klient::redrawLines(int32_t local_id, int32_t id, int32_t sector_size_x, int32_t sector_size_y, int32_t size_x, int32_t size_y)
+{
+
 }
 
 
