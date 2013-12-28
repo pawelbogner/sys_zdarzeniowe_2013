@@ -1,6 +1,7 @@
 #ifndef FIELD_H
 #define FIELD_H
 
+#include <QObject>
 #include<boost/shared_ptr.hpp>
 #include<vector>
 #include<inttypes.h>
@@ -9,9 +10,10 @@
 #include "qclient.h"
 //#include"klient.h"
 
-class Field {
+class Field : public QObject{
+    Q_OBJECT
 public:
-    Field(int32_t xSize, int32_t ySize, int32_t xCoord, int32_t yCoord);
+    Field(int32_t xSize, int32_t ySize, int32_t xCoord, int32_t yCoord, QObject *parent = 0);
 
     bool informServerOfRobotLeaving(boost::shared_ptr<Robot> robotLeaving, Field nextField);
     // robotDemandsFieldAccess to metoda wywolywana przez pole, na ktorym aktualnie znajduje sie robot, ktory

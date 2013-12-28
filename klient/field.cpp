@@ -3,8 +3,8 @@
 #include <boost/foreach.hpp>
 
 
-Field::Field(int32_t xSize, int32_t ySize, int32_t xCoord, int32_t yCoord):
-    _xSize(xSize), _ySize(ySize), _xCoord(xCoord), _yCoord(yCoord)
+Field::Field(int32_t xSize, int32_t ySize, int32_t xCoord, int32_t yCoord,QObject *parent):
+    _xSize(xSize), _ySize(ySize), _xCoord(xCoord), _yCoord(yCoord), QObject(parent)
 { }
 
 bool Field::informServerOfRobotLeaving(boost::shared_ptr<Robot> robotLeaving, Field nextField)
@@ -57,11 +57,13 @@ void Field::computeOneIterationOfMotion()
     if(_robotsOnField.size() == 1)
     {
         _robotsOnField[0]->calculatePosition(_xSize, _ySize, boost::shared_ptr<Robot>());
+        // jeden sygnal
     }
     else if(_robotsOnField.size() == 2)
     {
         _robotsOnField[0]->calculatePosition(_xSize, _ySize, _robotsOnField[1]);
         _robotsOnField[1]->calculatePosition(_xSize, _ySize, _robotsOnField[0]);
+        // dwa sygnaly
     }
 }
 

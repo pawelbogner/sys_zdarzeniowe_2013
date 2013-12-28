@@ -40,7 +40,7 @@ void Ether::registerRobotInEther(int32_t local_id,
 
 void Ether::setRobotNextField(int32_t id, int32_t nextFieldX, int32_t nextFieldY)
 {
-    BOOST_FOREACH(Field field, fields){
+    BOOST_FOREACH(Field &field, fields){
         if(field.setRobotNextField(id, nextFieldX, nextFieldY))
             return;
     }
