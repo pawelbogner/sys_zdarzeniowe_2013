@@ -13,6 +13,8 @@ klient::klient(QWidget *parent) :
     connect(this->client, SIGNAL(register_robot_id(int32_t,int32_t,int32_t,int32_t,int32_t,int32_t)), this->ourEther, SLOT(registerRobotInEter(int32_t,int32_t,int32_t,int32_t,int32_t,int32_t)));
     connect(this->client, SIGNAL(response_sector(int32_t,int32_t,int32_t,eSectorRequestResponse,int32_t)), this, SLOT(response_sector(int32_t,int32_t,int32_t,eSectorRequestResponse,int32_t)));
     connect(this->client, SIGNAL(go_to(int32_t,int32_t,int32_t)), this->ourEther, SLOT(setRobotNextField(int32_t, int32_t, int32_t)));
+
+    this->ui->graphicsView->setScene(&Scene);
 }
 
 klient::~klient()

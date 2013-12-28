@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>796</width>
-    <height>379</height>
+    <height>605</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -106,7 +106,7 @@
       <rect>
        <x>10</x>
        <y>20</y>
-       <width>139</width>
+       <width>160</width>
        <height>181</height>
       </rect>
      </property>
@@ -200,7 +200,7 @@
       <rect>
        <x>10</x>
        <y>20</y>
-       <width>152</width>
+       <width>155</width>
        <height>181</height>
       </rect>
      </property>
@@ -347,6 +347,16 @@
      </layout>
     </widget>
    </widget>
+   <widget class="QGraphicsView" name="graphicsView">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>280</y>
+      <width>256</width>
+      <height>192</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -354,7 +364,7 @@
      <x>0</x>
      <y>0</y>
      <width>796</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>

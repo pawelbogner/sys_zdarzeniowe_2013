@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include "qclient.h"
 #include "eter.h"
+#include <QGraphicsScene>
+#include <QGraphicsEllipseItem>
+#include <QGraphicsView>
 
 namespace Ui {
 class klient;
@@ -15,6 +18,7 @@ class klient : public QMainWindow
     
 public:
     explicit klient(QWidget *parent = 0);
+    QGraphicsScene Scene;
     ~klient();
     
 private slots:
@@ -33,6 +37,8 @@ private:
     Ui::klient *ui;
     QClient *client;
     Ether *ourEther;
+    std::vector<QGraphicsEllipseItem> robotsOnScene;
+    QTransform Translation;
 };
 
 #endif // KLIENT_H

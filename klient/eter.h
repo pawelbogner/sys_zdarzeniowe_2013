@@ -7,6 +7,7 @@
 #include "field.h"
 #include "robot.h"
 
+
 class Ether : public QObject
 {
     Q_OBJECT
@@ -21,9 +22,9 @@ private:
     void advanceTime();
 
     boost::shared_ptr<Robot> getRobotWithMatchingId(int32_t id);
+
 public slots:
-    // BF0: jak od serwera odebrana jest odpowiedz na rejstrowanie robota, to automatycznie zostaje wyemitowany sygnał "register_robot_id", ktory to polaczony jest z tym o to slotem. ten o to slot odpowiada za dodanie robota do listy obiektu Ether.
-    void registerRobotInEter(int32_t local_id, int32_t id, int32_t sector_size_x, int32_t sector_size_y, int32_t size_x, int32_t size_y);
+    void registerRobotInEther(int32_t local_id, int32_t id, int32_t sector_size_x, int32_t sector_size_y, int32_t size_x, int32_t size_y);
     void setRobotNextField(int32_t id, int32_t nextFieldX, int32_t nextFieldY);
 };
 
