@@ -13,7 +13,7 @@
 class Field : public QObject{
     Q_OBJECT
 public:
-    Field(int32_t xSize, int32_t ySize, int32_t xCoord, int32_t yCoord, QObject *parent = 0);
+    Field(int32_t xSize, int32_t ySize, int32_t xCoord, int32_t yCoord);
 
     bool informServerOfRobotLeaving(boost::shared_ptr<Robot> robotLeaving, Field nextField);
     // robotDemandsFieldAccess to metoda wywolywana przez pole, na ktorym aktualnie znajduje sie robot, ktory
