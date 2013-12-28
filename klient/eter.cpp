@@ -17,7 +17,10 @@ void Ether::start()
 
 void Ether::advanceTime()
 {
-
+    for(std::vector<Field>::iterator it=fields.begin();it!=fields.end();it++)
+    {
+        (*it).computeOneIterationOfMotion();
+    }
 }
 
 void Ether::registerRobotInEter(int32_t local_id,
