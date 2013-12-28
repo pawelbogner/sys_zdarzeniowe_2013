@@ -34,6 +34,8 @@ private slots:
 
     void on_pushButton_3_clicked();
 
+    void on_pushButton_4_clicked();
+
 
     void response_sector  (int32_t id, int32_t x, int32_t y, eSectorRequestResponse response, int32_t clients);
     void go_to            (int32_t id, int32_t goto_x, int32_t goto_y);
