@@ -33,6 +33,14 @@ void Ether::advanceTime()
     emit redrawScene();
 }
 
+void Ether::createFields(int32_t size_x, int32_t size_y, int32_t sector_size_x, int32_t sector_size_y)
+{
+    for(int i=0; i<size_x; ++i)
+        for(int j=0; j<size_y; ++j)
+            fields.push_back(Field(sector_size_x, sector_size_y, i, j));
+    fieldsAreCreated=true;
+}
+
 void Ether::registerRobotInEther(int32_t local_id,
                                  int32_t id,
                                  int32_t sector_size_x,
@@ -41,10 +49,8 @@ void Ether::registerRobotInEther(int32_t local_id,
                                  int32_t size_y)
 {
     if(!fieldsAreCreated){
-        for(int i=0; i<size_x; ++i)
-            for(int j=0; j<size_y; ++j)
-                fields.push_back(Field(sector_size_x, sector_size_y, i, j));
-        fieldsAreCreated=true;
+        createFields(size_x, size_y, sector_size_x, sector_size_y);
+        emit drawSceneWithLines(size_x, size_y, sector_size_x, sector_size_y);
     }
     boost::shared_ptr<Robot> newRobot = boost::make_shared<Robot>(local_id, id);
     _allRobotsOnScene.push_back(newRobot);
