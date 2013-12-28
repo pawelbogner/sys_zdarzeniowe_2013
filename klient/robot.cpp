@@ -4,6 +4,13 @@
 //    _diameter(diameter), _localId(id), _globalId(0), _isAllowedToLeaveField(false)
 //{ }
 
+int sgn(double val)
+{
+    if(val<0) return -1;
+    if(val>0) return 1;
+    else return 0;
+}
+
 Robot::Robot(int32_t local_id, int32_t id, int32_t size_x, int32_t size_y):
     _localId(local_id), _diameter(size_x), _globalId(id), _isAllowedToLeaveField(false)
 {
@@ -26,8 +33,8 @@ Force Robot::calculateForce(int32_t xFieldSize, int32_t yFieldSize, boost::share
     Force result = {0.0, 0.0};
 
     /* odpychanie od ścian */
-    result.X += A*(pow((xFieldSize - getXPos()),2) - pow(getXPos(),2));
-    result.Y += A*(pow((yFieldSize - getYPos()),2) - pow(getYPos(),2));
+    result.X += A*pow((xFieldSize - getXPos()),2 - pow(getXPos(),2));
+    result.Y += A*pow((yFieldSize - getYPos()),2 - pow(getYPos(),2));
 
     /* wyjazd z pola */
     if(_isAllowedToLeaveField)
@@ -58,15 +65,15 @@ Force Robot::calculateForce(int32_t xFieldSize, int32_t yFieldSize, boost::share
             destY = yFieldSize - destPosWidth*yFieldSize;
         }
 
-        result.X += B*pow((destX - getXPos()),2);
-        result.Y += B*pow((destY - getYPos()),2);
+        result.X += B*sgn(destX - getXPos())*pow((destX - getXPos()),2);
+        result.Y += B*sgn(destY - getYPos())*pow((destY - getYPos()),2);
     }
 
     /* drugi robot */
     if(secondRobot)
     {
-        result.X += C*pow((getXPos() - secondRobot->getXPos()),2);
-        result.Y += C*pow((getYPos() - secondRobot->getYPos()),2);
+        result.X += C*sgn(getXPos() - secondRobot->getXPos())*pow((getXPos() - secondRobot->getXPos()),2);
+        result.Y += C*sgn(getYPos() - secondRobot->getYPos())*pow((getYPos() - secondRobot->getYPos()),2);
     }
 
     return result;
