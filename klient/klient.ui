@@ -277,18 +277,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QComboBox" name="action">
-            <item>
-             <property name="text">
-              <string>Zajmij</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>Zwolnij</string>
-             </property>
-            </item>
-           </widget>
+           <widget class="QSpinBox" name="s_req"/>
           </item>
          </layout>
         </item>
@@ -405,12 +394,6 @@
      <widget class="QGraphicsView" name="graphicsView"/>
     </item>
    </layout>
-   <zorder>graphicsView</zorder>
-   <zorder>gt_y</zorder>
-   <zorder>formLayoutWidget_2</zorder>
-   <zorder>horizontalSpacer</zorder>
-   <zorder>horizontalSpacer_2</zorder>
-   <zorder>horizontalSpacer_4</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -418,7 +401,7 @@
      <x>0</x>
      <y>0</y>
      <width>796</width>
-     <height>25</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>
