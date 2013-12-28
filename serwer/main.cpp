@@ -3,9 +3,9 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    SerwerMain w;
-    w.show();
+    QApplication application(argc, argv);
+    SerwerMain universe;
+    universe.show();
     
-    return a.exec();
+    return application.exec();
 }

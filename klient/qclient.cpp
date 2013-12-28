@@ -39,6 +39,8 @@ void QClient::ready_read()
     tHeader header;
 
     this->socket->read((char*)&header, sizeof(header));
+    std::cerr << "received: ";
+    std::cerr << header.type << ", " << header.length << endl;
 
     switch(header.type)
     {
@@ -46,6 +48,8 @@ void QClient::ready_read()
     {
         tRegisterRobotResponse packet;
         socket->read((char*)&packet, sizeof(packet));
+        std::cerr << "received: ";
+        std::cerr << header.type << ", " << header.length << endl;
 
         emit register_robot_id(packet.local_id, packet.id, packet.sector_size_x, packet.sector_size_y, packet.size_x, packet.size_y);
     }
@@ -54,6 +58,8 @@ void QClient::ready_read()
     {
         tResponseSector packet;
         socket->read((char*)&packet, sizeof(packet));
+        std::cerr << "received: ";
+        std::cerr << header.type << ", " << header.length << endl;
 
         emit response_sector(packet.id, packet.x, packet.y, packet.response, packet.clients);
     }
@@ -62,6 +68,8 @@ void QClient::ready_read()
     {
         tGoToTask packet;
         socket->read((char*)&packet, sizeof(packet));
+        std::cerr << "received: ";
+        std::cerr << header.type << ", " << header.length << endl;
 
         emit go_to(packet.id, packet.goto_x, packet.goto_y);
 

@@ -123,7 +123,7 @@ void QSerwer::response_sector(int32_t id, int32_t x, int32_t y, eSectorRequestRe
     response.data.id = id;
     response.data.x = x;
     response.data.y = y;
-    response.data.response = static_cast<eSectorRequestResponse>(responseBF);
+    response.data.response = eAffirmative;//static_cast<eSectorRequestResponse>(responseBF);
     response.data.clients = clients;
 
     socket = 0;
