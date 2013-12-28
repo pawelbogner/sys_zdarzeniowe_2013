@@ -22,7 +22,7 @@ private:
     std::vector<Field> fields;
     std::vector<boost::shared_ptr<Robot> > _allRobotsOnScene;
     QTimer *timer;
-    int _timeDelay; //[ms]
+    int _timeDelay; //[ms]timer->start(_timeDelay);
 
 
     boost::shared_ptr<Robot> getRobotWithMatchingId(int32_t id);

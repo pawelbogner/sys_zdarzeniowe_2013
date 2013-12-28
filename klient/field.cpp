@@ -109,11 +109,3 @@ int32_t Field::yCoord() const
 {
     return _yCoord;
 }
-
-
-
-void Field::setRobotsOnField(const std::vector<boost::shared_ptr<Robot> > &robotsOnField)
-{
-    _robotsOnField = robotsOnField;
-}
-
