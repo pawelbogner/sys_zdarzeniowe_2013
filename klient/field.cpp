@@ -54,7 +54,15 @@ void Field::addRobot(boost::shared_ptr<Robot> robot)
 
 void Field::computeOneIterationOfMotion()
 {
-
+    if(_robotsOnField.size() == 1)
+    {
+        _robotsOnField[0]->calculatePosition(_xSize, _ySize, boost::shared_ptr<Robot>());
+    }
+    else if(_robotsOnField.size() == 2)
+    {
+        _robotsOnField[0]->calculatePosition(_xSize, _ySize, _robotsOnField[1]);
+        _robotsOnField[1]->calculatePosition(_xSize, _ySize, _robotsOnField[0]);
+    }
 }
 
 boost::shared_ptr<Robot> Field::getRobotWithMatchingId(int32_t id)

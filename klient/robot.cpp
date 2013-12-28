@@ -70,12 +70,24 @@ Force Robot::calculateForce(int32_t xFieldSize, int32_t yFieldSize, boost::share
 }
 
 
-void Robot::calculateVelocity()
+void Robot::calculatePosition(int32_t xFieldSize, int32_t yFieldSize, boost::shared_ptr<Robot> secondRobot)
 {
     // tu odpalamy calculateForce i na podstawie wyliczonych wartości
-    // siły oraz bieżących prędkości wyliczamy nowe prędkości
+    // siły oraz bieżących prędkości wyliczamy nowe położenie
+    const double timeStep = 0.01;
 
+    const double robotMass = 1;
+    const double maxVelocity = 1;
 
+    Force force = calculateForce(xFieldSize, yFieldSize, secondRobot);
+
+    _xPos = getXPos() + timeStep*_xVel + (force.X/robotMass)*pow(timeStep,2)/2;_xPos = getXPos() + timeStep*_xVel + (force.X/robotMass)*pow(timeStep,2)/2;
+    _yPos = getYPos() + timeStep*_yVel + (force.Y/robotMass)*pow(timeStep,2)/2;_yPos = getYPos() + timeStep*_yVel + (force.Y/robotMass)*pow(timeStep,2)/2;
+
+    _xVel += (force.X/robotMass)*timeStep;
+    _yVel += (force.Y/robotMass)*timeStep;
+    if(_xVel > maxVelocity) _xVel = maxVelocity;
+    if(_yVel > maxVelocity) _yVel = maxVelocity;
 }
 
 
