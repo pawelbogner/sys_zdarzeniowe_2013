@@ -32,8 +32,8 @@ public:
     int32_t xCoord() const;
     int32_t yCoord() const;
 private:
-    int32_t _xCoord, _yCoord;
     int32_t _xSize, _ySize;
+    int32_t _xCoord, _yCoord;
     std::vector<boost::shared_ptr<Robot> > _robotsOnField;
     boost::shared_ptr<QClient> _client;
     boost::shared_ptr<Robot> getRobotWithMatchingId(int32_t id);
