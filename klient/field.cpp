@@ -88,3 +88,34 @@ bool Field::setRobotNextField(int32_t globalId, int32_t nextFieldX, int32_t next
     }
     return false;
 }
+
+std::vector<boost::shared_ptr<Robot> > &Field::getRobotsOnField()
+{
+    return _robotsOnField;
+}
+int32_t Field::xSize() const
+{
+    return _xSize;
+}
+
+int32_t Field::ySize() const
+{
+    return _ySize;
+}
+int32_t Field::xCoord() const
+{
+    return _xCoord;
+}
+
+int32_t Field::yCoord() const
+{
+    return _yCoord;
+}
+
+
+
+void Field::setRobotsOnField(const std::vector<boost::shared_ptr<Robot> > &robotsOnField)
+{
+    _robotsOnField = robotsOnField;
+}
+

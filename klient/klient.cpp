@@ -2,6 +2,7 @@
 #include "ui_klient.h"
 #include <iostream>
 #include <boost/make_shared.hpp>
+#include <boost/foreach.hpp>
 
 klient::klient(QWidget *parent) :
     QMainWindow(parent),
@@ -15,7 +16,7 @@ klient::klient(QWidget *parent) :
     connect(this->client, SIGNAL(response_sector(int32_t,int32_t,int32_t,eSectorRequestResponse,int32_t)), this, SLOT(response_sector(int32_t,int32_t,int32_t,eSectorRequestResponse,int32_t)));
     connect(this->client, SIGNAL(go_to(int32_t,int32_t,int32_t)), this->ourEther, SLOT(setRobotNextField(int32_t, int32_t, int32_t)));
     connect(this->ourEther, SIGNAL(addRobotToSceneSignal(int32_t,int32_t,int32_t,int32_t)), this, SLOT(addRobotToSceneSlot(int32_t,int32_t,int32_t,int32_t)));
-
+    connect(this->ourEther, SIGNAL(redrawScene()), this, SLOT(redrawScene()));
     this->ui->graphicsView->setScene(&Scene);
 }
 
@@ -52,6 +53,19 @@ void klient::register_robot_id(int32_t local_id, int32_t id, int32_t sector_size
     this->ui->rr_id->setText(QString("%1").arg(id));
     this->ui->rr_ssx->setText(QString("%1").arg(sector_size_x));
     this->ui->rr_ssy->setText(QString("%1").arg(sector_size_y));
+}
+
+void klient::redrawScene()
+{
+    BOOST_FOREACH(Field field, ourEther->getFields()){
+        BOOST_FOREACH(boost::shared_ptr<Robot> robot, field.getRobotsOnField()){
+            robotsOnScene[robot->getGlobalId()]->setRect(robot->getXPos()+field.xSize()*field.xCoord(),
+                                                               robot->getYPos()+field.ySize()*field.yCoord(),
+                                                               robot->getDiameter(),
+                                                               robot->getDiameter()
+                                                               );
+        }
+    }
 }
 
 

@@ -14,6 +14,10 @@ void Ether::start()
 {
 
 }
+std::vector<Field> Ether::getFields()
+{
+    return fields;
+}
 
 void Ether::advanceTime()
 {
@@ -21,6 +25,7 @@ void Ether::advanceTime()
     {
         (*it).computeOneIterationOfMotion();
     }
+    emit redrawScene();
 }
 
 void Ether::registerRobotInEther(int32_t local_id,

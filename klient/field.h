@@ -25,6 +25,13 @@ public:
     void computeOneIterationOfMotion(); // tu liczymy potencjaly
     bool setRobotNextField(int32_t globalId, int32_t nextFieldX, int32_t nextFieldY);
 
+    std::vector<boost::shared_ptr<Robot> > &getRobotsOnField();
+
+    int32_t xSize() const;
+    int32_t ySize() const;
+
+    int32_t xCoord() const;
+    int32_t yCoord() const;
 private:
     int32_t _xCoord, _yCoord;
     int32_t _xSize, _ySize;
