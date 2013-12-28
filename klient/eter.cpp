@@ -52,9 +52,10 @@ void Ether::registerRobotInEther(int32_t local_id,
         createFields(size_x, size_y, sector_size_x, sector_size_y);
         emit drawSceneWithLines(size_x, size_y, sector_size_x, sector_size_y);
     }
+    getFields().at(0).addRobot(getRobotWithMatchingId(1));
     boost::shared_ptr<Robot> newRobot = boost::make_shared<Robot>(local_id, id);
     _allRobotsOnScene.push_back(newRobot);
-    emit addRobotToSceneSignal(id, 0, 0);
+    emit addRobotToSceneSignal(id, -10, -10);
     //    newRobot pNewRobot(newRobot(local_id, id, size_x, size_y));/* = new Robot(local_id, id, size_x, size_y);*/
     //    _allRobotsOnScene.push_back(newRobot);
     // uh jeszcze trzeba ogarnąć tę ewentualną zmicd anę wielkosci pola
@@ -66,4 +67,14 @@ void Ether::setRobotNextField(int32_t id, int32_t nextFieldX, int32_t nextFieldY
         if(field.setRobotNextField(id, nextFieldX, nextFieldY))
             return;
     }
+}
+
+boost::shared_ptr<Robot> Ether::getRobotWithMatchingId(int32_t id)
+{
+    BOOST_FOREACH(boost::shared_ptr<Robot> robot, _allRobotsOnScene){
+        //tu bedziemy szukac robota maczujacego po id
+        if(robot->getGlobalId() == id)
+            return robot;
+    }
+    return boost::shared_ptr<Robot>();
 }

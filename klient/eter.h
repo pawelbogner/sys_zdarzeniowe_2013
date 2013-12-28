@@ -19,6 +19,7 @@ public:
 
     std::vector<Field> getFields();
     void createFields(int32_t size_x, int32_t size_y, int32_t sector_size_x, int32_t sector_size_y);
+    boost::shared_ptr<Robot> getRobotWithMatchingId(int32_t id);
 private:
     std::vector<Field> fields;
     std::vector<boost::shared_ptr<Robot> > _allRobotsOnScene;
@@ -27,7 +28,6 @@ private:
     int _timeDelay; //[ms]timer->start(_timeDelay);
 
 
-    boost::shared_ptr<Robot> getRobotWithMatchingId(int32_t id);
 
 signals:
     void addRobotToSceneSignal(int32_t id, int32_t x, int32_t y);

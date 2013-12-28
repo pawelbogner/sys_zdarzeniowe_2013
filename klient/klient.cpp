@@ -45,7 +45,7 @@ void klient::on_pushButton_2_clicked()
 
 void klient::on_pushButton_3_clicked()
 {
-    this->client->register_robot(this->ui->rr_lid->value(), this->ui->rr_dia->value());
+//    this->client->register_robot(this->ui->rr_lid->value(), this->ui->rr_dia->value());
     start();
 }
 
@@ -100,7 +100,8 @@ void klient::go_to(int32_t id, int32_t goto_x, int32_t goto_y)
 
 void klient::start()
 {
-    //client->register_robot(1,10);
+    client->register_robot(1,10);
+
     //client->register_robot(2,10);
     //client->register_robot(3,10);
     //client->register_robot(4,10);
