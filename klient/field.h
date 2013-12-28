@@ -21,12 +21,14 @@ public:
     void removeRobot(boost::shared_ptr<Robot> robot);
     void addRobot(boost::shared_ptr<Robot> robot);
     void computeOneIterationOfMotion(); // tu liczymy potencjaly
+    bool setRobotNextField(int32_t globalId, int32_t nextFieldX, int32_t nextFieldY);
 
 private:
     int32_t _xCoord, _yCoord;
     int32_t _xSize, _ySize;
     std::vector<boost::shared_ptr<Robot> > _robotsOnField;
     boost::shared_ptr<QClient> _client;
+    boost::shared_ptr<Robot> getRobotWithMatchingId(int32_t id);
 };
 
 #endif // FIELD_H

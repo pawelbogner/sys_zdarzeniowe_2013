@@ -1,5 +1,6 @@
 #include "field.h"
 #include "qprotocol.h"
+#include <boost/foreach.hpp>
 
 
 Field::Field(int32_t xSize, int32_t ySize, int32_t xCoord, int32_t yCoord):
@@ -38,12 +39,17 @@ bool Field::reserve(boost::shared_ptr<Robot> robotWishingToEnter)
 
 void Field::removeRobot(boost::shared_ptr<Robot> robot)
 {
-
+   std::vector<boost::shared_ptr<Robot> >::iterator it;
+   for(it=_robotsOnField.begin(); it!=_robotsOnField.end(); ++it)
+       if((*it).get() == robot.get()){
+           _robotsOnField.erase(it);
+           break;
+       }
 }
 
 void Field::addRobot(boost::shared_ptr<Robot> robot)
 {
-
+    _robotsOnField.push_back(robot);
 }
 
 void Field::computeOneIterationOfMotion()
@@ -51,3 +57,24 @@ void Field::computeOneIterationOfMotion()
 
 }
 
+boost::shared_ptr<Robot> Field::getRobotWithMatchingId(int32_t id)
+{
+    BOOST_FOREACH(boost::shared_ptr<Robot> robot, _robotsOnField){
+        //tu bedziemy szukac robota maczujacego po id
+        if(robot->getGlobalId() == id)
+            return robot;
+    }
+    return boost::shared_ptr<Robot>();
+}
+
+bool Field::setRobotNextField(int32_t globalId, int32_t nextFieldX, int32_t nextFieldY)
+{
+    boost::shared_ptr<Robot> currentRobot = getRobotWithMatchingId(globalId);
+    if(currentRobot.get())
+    {
+        currentRobot->setNextFieldXPos(nextFieldX-_xCoord);
+        currentRobot->setNextFieldYPos(nextFieldY-_yCoord);
+        return true;
+    }
+    return false;
+}

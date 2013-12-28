@@ -36,17 +36,10 @@ void Ether::registerRobotInEter(int32_t local_id,
     // uh jeszcze trzeba ogarnąć tę ewentualną zmicd anę wielkosci pola
 }
 
-boost::shared_ptr<Robot> Ether::getRobotWithMatchingId(int32_t id)
-{
-    BOOST_FOREACH(boost::shared_ptr<Robot> robot, _allRobotsOnScene){
-        if(robot->getLocalId()==id)
-            return robot;
-    }
-}
-
 void Ether::setRobotNextField(int32_t id, int32_t nextFieldX, int32_t nextFieldY)
 {
-    boost::shared_ptr<Robot> currentRobot = getRobotWithMatchingId(id);
-    currentRobot->setNextFieldXPos(nextFieldX);
-    currentRobot->setNextFieldYPos(nextFieldY);
+    BOOST_FOREACH(Field field, fields){
+        if(field.setRobotNextField(id, nextFieldX, nextFieldY))
+            return;
+    }
 }
