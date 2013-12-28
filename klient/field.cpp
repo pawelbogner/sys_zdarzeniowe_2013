@@ -4,9 +4,7 @@
 
 Field::Field(int32_t xSize, int32_t ySize, int32_t xCoord, int32_t yCoord):
     _xSize(xSize), _ySize(ySize), _xCoord(xCoord), _yCoord(yCoord)
-{
-
-}
+{ }
 
 bool Field::informServerOfRobotLeaving(boost::shared_ptr<Robot> robotLeaving, Field nextField)
 {

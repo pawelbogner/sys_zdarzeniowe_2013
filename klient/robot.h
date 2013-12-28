@@ -17,10 +17,6 @@ public:
 
     void calculateVelocity();
 
-
-    int32_t getId() const;
-    void setId(int32_t localId);
-
     int32_t getXPos() const;
     void setXPos(int32_t xPos);
 

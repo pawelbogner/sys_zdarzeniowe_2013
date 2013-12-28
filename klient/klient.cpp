@@ -12,7 +12,7 @@ klient::klient(QWidget *parent) :
     this->ourEther = new Ether(this);
     connect(this->client, SIGNAL(register_robot_id(int32_t,int32_t,int32_t,int32_t,int32_t,int32_t)), this->ourEther, SLOT(registerRobotInEter(int32_t,int32_t,int32_t,int32_t,int32_t,int32_t)));
     connect(this->client, SIGNAL(response_sector(int32_t,int32_t,int32_t,eSectorRequestResponse,int32_t)), this, SLOT(response_sector(int32_t,int32_t,int32_t,eSectorRequestResponse,int32_t)));
-    connect(this->client, SIGNAL(go_to(int32_t,int32_t,int32_t)), this, SLOT(go_to(int32_t,int32_t,int32_t)));
+    connect(this->client, SIGNAL(go_to(int32_t,int32_t,int32_t)), this->ourEther, SLOT(setRobotNextField(int32_t, int32_t, int32_t)));
 }
 
 klient::~klient()
@@ -44,12 +44,12 @@ void klient::register_robot_id(int32_t local_id, int32_t id, int32_t sector_size
 }
 
 
-void klient::response_sector  (int32_t id, int32_t x, int32_t y, eSectorRequestResponse response, int32_t clients)
+void klient::response_sector(int32_t id, int32_t x, int32_t y, eSectorRequestResponse response, int32_t clients)
 {
 
 }
 
-void klient::go_to            (int32_t id, int32_t goto_x, int32_t goto_y)
+void klient::go_to(int32_t id, int32_t goto_x, int32_t goto_y)
 {
     this->ui->gt_id->setText(QString("%1").arg(id));
     this->ui->gt_x->setText(QString("%1").arg(goto_x));
