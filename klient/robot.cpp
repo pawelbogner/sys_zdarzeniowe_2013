@@ -25,9 +25,11 @@ Force Robot::calculateForce(int32_t xFieldSize, int32_t yFieldSize, boost::share
     const double destPosDepth = 0.1;    //0-1, dodatnia wartość określa odsunięcie potencjału w głąb docelowej komórki (w proporcji długości ściany komórki)
     Force result = {0.0, 0.0};
 
+    /* odpychanie od ścian */
     result.X += A*(pow((xFieldSize - getXPos()),2) - pow(getXPos(),2));
     result.Y += A*(pow((yFieldSize - getYPos()),2) - pow(getYPos(),2));
 
+    /* wyjazd z pola */
     if(_isAllowedToLeaveField)
     {
         double destX = 0, destY = 0;
@@ -60,6 +62,7 @@ Force Robot::calculateForce(int32_t xFieldSize, int32_t yFieldSize, boost::share
         result.Y += B*pow((destY - getYPos()),2);
     }
 
+    /* drugi robot */
     if(secondRobot)
     {
         result.X += C*pow((getXPos() - secondRobot->getXPos()),2);
@@ -74,10 +77,10 @@ void Robot::calculatePosition(int32_t xFieldSize, int32_t yFieldSize, boost::sha
 {
     // tu odpalamy calculateForce i na podstawie wyliczonych wartości
     // siły oraz bieżących prędkości wyliczamy nowe położenie
-    const double timeStep = 0.01;
+    const double timeStep = 0.01;   //[s]
 
-    const double robotMass = 1;
-    const double maxVelocity = 1;
+    const double robotMass = 1;     //[kg]
+    const double maxVelocity = 1;   //[m/s]
 
     Force force = calculateForce(xFieldSize, yFieldSize, secondRobot);
 
