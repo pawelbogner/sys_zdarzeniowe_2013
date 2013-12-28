@@ -32,7 +32,7 @@ void Ether::registerRobotInEther(int32_t local_id,
 {
     boost::shared_ptr<Robot> newRobot = boost::make_shared<Robot>(local_id, id, size_x, size_x);
     _allRobotsOnScene.push_back(newRobot);
-
+    emit addRobotToSceneSignal(id, 0, 0, size_x);
     //    newRobot pNewRobot(newRobot(local_id, id, size_x, size_y));/* = new Robot(local_id, id, size_x, size_y);*/
     //    _allRobotsOnScene.push_back(newRobot);
     // uh jeszcze trzeba ogarnąć tę ewentualną zmicd anę wielkosci pola

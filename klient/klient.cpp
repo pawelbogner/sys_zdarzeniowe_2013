@@ -1,6 +1,7 @@
 #include "klient.h"
 #include "ui_klient.h"
 #include <iostream>
+#include <boost/make_shared.hpp>
 
 klient::klient(QWidget *parent) :
     QMainWindow(parent),
@@ -10,9 +11,10 @@ klient::klient(QWidget *parent) :
 
     this->client = new QClient(this);
     this->ourEther = new Ether(this);
-    connect(this->client, SIGNAL(register_robot_id(int32_t,int32_t,int32_t,int32_t,int32_t,int32_t)), this->ourEther, SLOT(registerRobotInEter(int32_t,int32_t,int32_t,int32_t,int32_t,int32_t)));
+    connect(this->client, SIGNAL(register_robot_id(int32_t,int32_t,int32_t,int32_t,int32_t,int32_t)), this->ourEther, SLOT(registerRobotInEther(int32_t,int32_t,int32_t,int32_t,int32_t,int32_t)));
     connect(this->client, SIGNAL(response_sector(int32_t,int32_t,int32_t,eSectorRequestResponse,int32_t)), this, SLOT(response_sector(int32_t,int32_t,int32_t,eSectorRequestResponse,int32_t)));
     connect(this->client, SIGNAL(go_to(int32_t,int32_t,int32_t)), this->ourEther, SLOT(setRobotNextField(int32_t, int32_t, int32_t)));
+    connect(this->ourEther, SIGNAL(addRobotToSceneSignal(int32_t,int32_t,int32_t,int32_t)), this, SLOT(addRobotToSceneSlot(int32_t,int32_t,int32_t,int32_t)));
 
     this->ui->graphicsView->setScene(&Scene);
 }
@@ -20,6 +22,13 @@ klient::klient(QWidget *parent) :
 klient::~klient()
 {
     delete ui;
+}
+
+void klient::addRobotToSceneSlot(int32_t id, int32_t x, int32_t y, int32_t dia)
+{
+    boost::shared_ptr<QGraphicsEllipseItem> ellipse = boost::make_shared<QGraphicsEllipseItem>(x,y,dia,dia);
+    robotsOnScene.insert(std::pair<int32_t, boost::shared_ptr<QGraphicsEllipseItem> >(id, ellipse));
+    Scene.addItem(robotsOnScene.find(id)->second.get());
 }
 
 void klient::on_pushButton_clicked()
