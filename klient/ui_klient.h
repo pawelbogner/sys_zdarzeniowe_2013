@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'klient.ui'
 **
-** Created: Sun Dec 15 11:57:32 2013
-**      by: Qt User Interface Compiler version 4.8.4
+** Created: Sat Dec 28 11:59:50 2013
+**      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/

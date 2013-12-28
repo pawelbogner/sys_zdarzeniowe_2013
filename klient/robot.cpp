@@ -10,18 +10,62 @@ Robot::Robot(int32_t local_id, int32_t id, int32_t size_x, int32_t size_y):
 
 }
 
-Force Robot::calculateForce()
+Force Robot::calculateForce(int32_t xFieldSize, int32_t yFieldSize, boost::shared_ptr<Robot> secondRobot)
 {
     // na podstawie następujących danych:
     // - szerokość w X i w Y pojedynczego pola,
     // - diameter robota,
     // - _isAllowedToLeaveField,
     // - współrzędnych pola, na które ma wyjechać,
-    // cel podróży: _destinationX, _destinationY,
+    // cel podróży: _nextFieldXPos, _nextFieldYPos, np. (0,-1) to do góry,
     // należy obliczyć siłę.
 
-    // zaślepka
+    const double A = 1, B = 2, C = 1;
+    const double destPosWidth = 0.75;   //0-1, określa położenie potencjału docelowego w proporcji długości ściany, przez którą robot ma przejechać
+    const double destPosDepth = 0.1;    //0-1, dodatnia wartość określa odsunięcie potencjału w głąb docelowej komórki (w proporcji długości ściany komórki)
     Force result = {0.0, 0.0};
+
+    result.X += A*(pow((xFieldSize - getXPos()),2) - pow(getXPos(),2));
+    result.Y += A*(pow((yFieldSize - getYPos()),2) - pow(getYPos(),2));
+
+    if(_isAllowedToLeaveField)
+    {
+        double destX = 0, destY = 0;
+
+        if(_nextFieldXPos==0 && _nextFieldYPos==-1)
+        {
+            destX = destPosWidth*xFieldSize;
+            destY = -destPosDepth;
+        }
+
+        if(_nextFieldXPos==1 && _nextFieldYPos==0)
+        {
+            destX = xFieldSize + destPosDepth;
+            destY = destPosWidth*yFieldSize;
+        }
+
+        if(_nextFieldXPos==0 && _nextFieldYPos==1)
+        {
+            destX = xFieldSize - destPosWidth*xFieldSize;
+            destY = yFieldSize + destPosDepth;
+        }
+
+        if(_nextFieldXPos==-1 && _nextFieldYPos==0)
+        {
+            destX = -destPosDepth;
+            destY = yFieldSize - destPosWidth*yFieldSize;
+        }
+
+        result.X += B*pow((destX - getXPos()),2);
+        result.Y += B*pow((destY - getYPos()),2);
+    }
+
+    if(secondRobot)
+    {
+        result.X += C*pow((getXPos() - secondRobot->getXPos()),2);
+        result.Y += C*pow((getYPos() - secondRobot->getYPos()),2);
+    }
+
     return result;
 }
 
@@ -30,6 +74,8 @@ void Robot::calculateVelocity()
 {
     // tu odpalamy calculateForce i na podstawie wyliczonych wartości
     // siły oraz bieżących prędkości wyliczamy nowe prędkości
+
+
 }
 
 
