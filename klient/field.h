@@ -20,7 +20,7 @@ public:
     bool reserve(boost::shared_ptr<Robot> robotWishingToEnter);
     void removeRobot(boost::shared_ptr<Robot> robot);
     void addRobot(boost::shared_ptr<Robot> robot);
-    void computeOneIterationOfMotion(); // tu liczymy potencjaly
+    void computeOneIterationOfMotion(int timeDelay); // tu liczymy potencjaly
     bool setRobotNextField(int32_t globalId, int32_t nextFieldX, int32_t nextFieldY);
 
 private:

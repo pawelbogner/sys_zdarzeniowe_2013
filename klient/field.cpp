@@ -52,16 +52,16 @@ void Field::addRobot(boost::shared_ptr<Robot> robot)
     _robotsOnField.push_back(robot);
 }
 
-void Field::computeOneIterationOfMotion()
+void Field::computeOneIterationOfMotion(int timeDelay)
 {
     if(_robotsOnField.size() == 1)
     {
-        _robotsOnField[0]->calculatePosition(_xSize, _ySize, boost::shared_ptr<Robot>());
+        _robotsOnField[0]->calculatePosition(_xSize, _ySize, boost::shared_ptr<Robot>(), timeDelay);
     }
     else if(_robotsOnField.size() == 2)
     {
-        _robotsOnField[0]->calculatePosition(_xSize, _ySize, _robotsOnField[1]);
-        _robotsOnField[1]->calculatePosition(_xSize, _ySize, _robotsOnField[0]);
+        _robotsOnField[0]->calculatePosition(_xSize, _ySize, _robotsOnField[1], timeDelay);
+        _robotsOnField[1]->calculatePosition(_xSize, _ySize, _robotsOnField[0], timeDelay);
     }
 }
 

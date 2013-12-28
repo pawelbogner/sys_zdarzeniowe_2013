@@ -42,6 +42,8 @@ private:
     Ether *ourEther;
     std::map<int32_t, boost::shared_ptr<QGraphicsEllipseItem> > robotsOnScene;
     QTransform Translation;
+
+    void start();
 };
 
 #endif // KLIENT_H

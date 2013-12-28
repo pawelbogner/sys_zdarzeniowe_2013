@@ -7,20 +7,24 @@
 Ether::Ether(QObject *parent) :
     QObject(parent)
 {
-
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(advanceTime()));
 }
 
-void Ether::start()
+void Ether::start(int timeDelay)
 {
-
+    _timeDelay = timeDelay;
+    timer->start(_timeDelay);
 }
 
 void Ether::advanceTime()
 {
+    timer->stop();
     for(std::vector<Field>::iterator it=fields.begin();it!=fields.end();it++)
     {
-        (*it).computeOneIterationOfMotion();
+        (*it).computeOneIterationOfMotion(_timeDelay);
     }
+    timer->start(_timeDelay);
 }
 
 void Ether::registerRobotInEther(int32_t local_id,
