@@ -59,6 +59,8 @@ void QSerwer::ReadData(QObject *s)
     tHeader header;
 
     socket->read((char*)&header, sizeof(header));
+    std::cerr << "received: ";
+    std::cerr << header.type << ", " << header.length;
 
     switch(header.type)
     {
@@ -69,6 +71,10 @@ void QSerwer::ReadData(QObject *s)
         tRobot r;
 
         socket->read((char*)&packet, sizeof(packet));
+        socket->flush();
+        std::cerr << "; data: ";
+        std::cerr << packet.local_id << ", " << packet.diameter << "." << std::endl;
+
         this->last_id++;
 
         response.header.type = REGISTER_ROBOT_RESP;
@@ -96,6 +102,9 @@ void QSerwer::ReadData(QObject *s)
     {
         tRequestSector packet;
         socket->read((char*)&packet, sizeof(packet));
+        socket->flush();
+        std::cerr << "; data: ";
+        std::cerr << packet.id << ", " << packet.x << ", " << packet.y << ", " << packet.request << "." << std::endl;
 
         emit request_sector(packet.id, packet.x, packet.y, packet.request);
     }
@@ -104,12 +113,17 @@ void QSerwer::ReadData(QObject *s)
     {
         tCurrentPosition packet;
         socket->read((char*)&packet, sizeof(packet));
+        socket->flush();
+        std::cerr << "; data: ";
+        std::cerr << packet.id << ", " << packet.x << ", " << packet.y << "." << std::endl;
+
 
         emit current_position(packet.id, packet.x, packet.y);
     }
         break;
 
     }
+    socket->flush();
     std::cerr << __PRETTY_FUNCTION__ << std::endl;
 }
 

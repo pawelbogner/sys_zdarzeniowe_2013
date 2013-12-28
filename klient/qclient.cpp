@@ -40,7 +40,7 @@ void QClient::ready_read()
 
     this->socket->read((char*)&header, sizeof(header));
     std::cerr << "received: ";
-    std::cerr << header.type << ", " << header.length << endl;
+    std::cerr << header.type << ", " << header.length;
 
     switch(header.type)
     {
@@ -48,8 +48,9 @@ void QClient::ready_read()
     {
         tRegisterRobotResponse packet;
         socket->read((char*)&packet, sizeof(packet));
-        std::cerr << "received: ";
-        std::cerr << header.type << ", " << header.length << endl;
+        socket->flush();
+        std::cerr << "; data: ";
+        std::cerr << packet.local_id << ", " << packet.id << ", " << packet.sector_size_x << ", " << packet.sector_size_y << ", " << packet.size_x << ", " << packet.size_y << "." << std::endl;
 
         emit register_robot_id(packet.local_id, packet.id, packet.sector_size_x, packet.sector_size_y, packet.size_x, packet.size_y);
     }
@@ -58,8 +59,9 @@ void QClient::ready_read()
     {
         tResponseSector packet;
         socket->read((char*)&packet, sizeof(packet));
-        std::cerr << "received: ";
-        std::cerr << header.type << ", " << header.length << endl;
+        socket->flush();
+        std::cerr << "; data: ";
+        std::cerr << packet.id << ", " << packet.x << ", " << packet.y << ", " << packet.response << ", " << packet.clients << "." << std::endl;
 
         emit response_sector(packet.id, packet.x, packet.y, packet.response, packet.clients);
     }
@@ -68,8 +70,9 @@ void QClient::ready_read()
     {
         tGoToTask packet;
         socket->read((char*)&packet, sizeof(packet));
-        std::cerr << "received: ";
-        std::cerr << header.type << ", " << header.length << endl;
+        socket->flush();
+        std::cerr << "; data: ";
+        std::cerr << packet.id << ", " << packet.goto_x << ", " << packet.goto_y << "." << std::endl;
 
         emit go_to(packet.id, packet.goto_x, packet.goto_y);
 
@@ -77,6 +80,7 @@ void QClient::ready_read()
         break;
 
     }
+    socket->flush();
 }
 
 void QClient::register_robot(int32_t local_id, int32_t diameter)

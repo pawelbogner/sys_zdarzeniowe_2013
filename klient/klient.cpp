@@ -45,8 +45,13 @@ void klient::on_pushButton_2_clicked()
 
 void klient::on_pushButton_3_clicked()
 {
-    //this->client->register_robot(this->ui->rr_lid->value(), this->ui->rr_dia->value());
+    this->client->register_robot(this->ui->rr_lid->value(), this->ui->rr_dia->value());
     start();
+}
+
+void klient::on_pushButton_4_clicked()
+{
+    this->client->register_robot(this->ui->rr_lid->value(), this->ui->rr_dia->value());
 }
 
 
