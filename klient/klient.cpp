@@ -17,7 +17,7 @@ klient::klient(QWidget *parent) :
     connect(this->client, SIGNAL(go_to(int32_t,int32_t,int32_t)), this->ourEther, SLOT(setRobotNextField(int32_t, int32_t, int32_t)));
     connect(this->ourEther, SIGNAL(addRobotToSceneSignal(int32_t,int32_t,int32_t)), this, SLOT(addRobotToSceneSlot(int32_t,int32_t,int32_t)));
     connect(this->ourEther, SIGNAL(redrawScene()), this, SLOT(redrawScene()));
-    connect(this->client, SIGNAL(register_robot_id(int32_t,int32_t,int32_t,int32_t,int32_t,int32_t)), this, SLOT(redrawLines(int32_t,int32_t,int32_t,int32_t,int32_t,int32_t)));
+    connect(this->ourEther, SIGNAL(drawSceneWithLines(int32_t,int32_t,int32_t,int32_t)), this, SLOT(drawSceneWithLines(int32_t,int32_t,int32_t,int32_t)));
     this->ui->graphicsView->setScene(&Scene);
 }
 
@@ -75,9 +75,13 @@ void klient::redrawScene()
     }
 }
 
-void klient::redrawLines(int32_t local_id, int32_t id, int32_t sector_size_x, int32_t sector_size_y, int32_t size_x, int32_t size_y)
+void klient::drawSceneWithLines(int32_t size_x, int32_t size_y, int32_t sector_size_x, int32_t sector_size_y)
 {
-
+    Scene.setSceneRect(0, 0, sector_size_x*size_x*1, sector_size_y*size_y*1);
+    for(int i=0; i<=size_x; ++i) //kreski pionowe
+        Scene.addLine(i*1*sector_size_x, 0, i*1*sector_size_x, size_y*sector_size_y*1);
+    for(int i=0; i<=size_y; ++i) //kreski poziome
+        Scene.addLine(0, i*1*sector_size_y, size_x*sector_size_x*1, i*1*sector_size_y);
 }
 
 
