@@ -22,6 +22,8 @@ public:
     void createFields(int32_t size_x, int32_t size_y, int32_t sector_size_x, int32_t sector_size_y);
     boost::shared_ptr<Robot> getRobotWithMatchingId(int32_t id);
     Field *findFieldWithCoords(int32_t x, int32_t y);
+    QClient *client() const;
+
 private:
     std::vector<Field> fields;
     std::vector<boost::shared_ptr<Robot> > _allRobotsOnScene;

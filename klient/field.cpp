@@ -54,6 +54,19 @@ void Field::addRobot(boost::shared_ptr<Robot> robot)
     _robotsOnField.push_back(robot);
 }
 
+void Field::reallocateRobot(boost::shared_ptr<Robot> robot)
+{
+    removeRobot(robot);
+    Field *nextField=_ourEther->findFieldWithCoords(_xCoord+robot->getNextFieldXPos(),
+                                                   _yCoord+robot->getNextFieldYPos());
+    if (nextField!=NULL) {
+        nextField->addRobot(robot);
+    }
+    else {
+        std::cerr << "Error: robot appears to have gone out of scene bounds." << std::endl;
+    }
+}
+
 void Field::computeOneIterationOfMotion(int timeDelay)
 {
     if(_robotsOnField.size() == 1)
@@ -66,27 +79,12 @@ void Field::computeOneIterationOfMotion(int timeDelay)
         _robotsOnField[1]->calculatePosition(_xSize, _ySize, _robotsOnField[0], timeDelay);
     }
     BOOST_FOREACH(boost::shared_ptr<Robot> robot, _robotsOnField){
-        if (robot->getXPos()<0.0 || robot->getXPos()>_xSize) {
-            removeRobot(robot);
-            Field *nextField=_ourEther->findFieldWithCoords(_xCoord+robot->getNextFieldXPos(),
-                                                           _yCoord+robot->getNextFieldYPos());
-            if (nextField!=NULL) {
-                nextField->addRobot(robot);
-            }
-            else {
-                std::cerr << "Error: robot appears to have gone out of scene bounds." << std::endl;
-            }
+        if (robot->getXPos()<0.0 || robot->getXPos()>_xSize || robot->getYPos()<0.0 || robot->getYPos()>_ySize) {
+            reallocateRobot(robot);
         }
-        else if (robot->getYPos()<0.0 || robot->getYPos()>_ySize) {
-            removeRobot(robot);
-            Field *nextField=_ourEther->findFieldWithCoords(_xCoord+robot->getNextFieldXPos(),
-                                                           _yCoord+robot->getNextFieldYPos());
-            if (nextField!=NULL) {
-                nextField->addRobot(robot);
-            }
-            else {
-                std::cerr << "Error: robot appears to have gone out of scene bounds." << std::endl;
-            }
+        if ((robot->getXPos()>DIAMETER/2 || robot->getXPos()<_xSize-DIAMETER/2) &&
+                (robot->getYPos()>DIAMETER/2 || robot->getYPos()<_ySize-DIAMETER/2)) { // robot zajmuje tylko 1 pole
+            _ourEther->client()->request_sector(robot->getLocalId(), _xCoord, _yCoord, eRelease);
         }
     }
 }

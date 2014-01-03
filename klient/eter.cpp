@@ -92,3 +92,8 @@ Field *Ether::findFieldWithCoords(int32_t x, int32_t y) {
     }
     return NULL;
 }
+QClient *Ether::client() const
+{
+    return _client;
+}
+

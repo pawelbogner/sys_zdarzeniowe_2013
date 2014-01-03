@@ -33,6 +33,7 @@ public:
 
     int32_t xCoord() const;
     int32_t yCoord() const;
+    void reallocateRobot(boost::shared_ptr<Robot> robot);
 private:
     int32_t _xSize, _ySize; //w centymetrach
     int32_t _xCoord, _yCoord;
