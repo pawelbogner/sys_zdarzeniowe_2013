@@ -1,22 +1,23 @@
 #include "field.h"
 #include "qprotocol.h"
 #include <boost/foreach.hpp>
+#include"eter.h"
 
 
-Field::Field(int32_t xSize, int32_t ySize, int32_t xCoord, int32_t yCoord):
-    _xSize(xSize), _ySize(ySize), _xCoord(xCoord), _yCoord(yCoord)
+Field::Field(int32_t xSize, int32_t ySize, int32_t xCoord, int32_t yCoord, Ether *ourEther):
+    _xSize(xSize), _ySize(ySize), _xCoord(xCoord), _yCoord(yCoord), _ourEther(ourEther)
 { }
 
-bool Field::informServerOfRobotLeaving(boost::shared_ptr<Robot> robotLeaving, Field nextField)
-{
+//bool Field::informServerOfRobotLeaving(boost::shared_ptr<Robot> robotLeaving, Field nextField)
+//{
     // należy wysłać do serwera sygnał o zjeździe robota z pola
-
+    //_client->request_sector(robotWishingToEnter->getLocalId(), _xCoord, _yCoord, eRelease);
 
     // robot wjeżdża do nextField
-    nextField.addRobot(robotLeaving);
-    removeRobot(robotLeaving);
-    return false;
-}
+    //nextField.addRobot(robotLeaving);
+    //removeRobot(robotLeaving);
+    //return false;
+//}
 
 /*bool Field::robotDemandsFieldAccess(boost::shared_ptr<Robot> robotWishingToLeave, Field nextField)
 {
@@ -29,14 +30,14 @@ bool Field::informServerOfRobotLeaving(boost::shared_ptr<Robot> robotLeaving, Fi
         // nie udzielono pozwolenia
     }
     return false;
-}*/
+}
 
 void Field::reserve(boost::shared_ptr<Robot> robotWishingToEnter)
 {
     // tu musimy pytać serwer o pozwolenie na wjazd na ten Field
     _client->request_sector(robotWishingToEnter->getLocalId(), _xCoord, _yCoord, eReserve);
 
-}
+}*/
 
 void Field::removeRobot(boost::shared_ptr<Robot> robot)
 {
@@ -63,6 +64,30 @@ void Field::computeOneIterationOfMotion(int timeDelay)
     {
         _robotsOnField[0]->calculatePosition(_xSize, _ySize, _robotsOnField[1], timeDelay);
         _robotsOnField[1]->calculatePosition(_xSize, _ySize, _robotsOnField[0], timeDelay);
+    }
+    BOOST_FOREACH(boost::shared_ptr<Robot> robot, _robotsOnField){
+        if (robot->getXPos()<0.0 || robot->getXPos()>_xSize) {
+            removeRobot(robot);
+            Field *nextField=_ourEther->findFieldWithCoords(_xCoord+robot->getNextFieldXPos(),
+                                                           _yCoord+robot->getNextFieldYPos());
+            if (nextField!=NULL) {
+                nextField->addRobot(robot);
+            }
+            else {
+                std::cerr << "Error: robot appears to have gone out of scene bounds." << std::endl;
+            }
+        }
+        else if (robot->getYPos()<0.0 || robot->getYPos()>_ySize) {
+            removeRobot(robot);
+            Field *nextField=_ourEther->findFieldWithCoords(_xCoord+robot->getNextFieldXPos(),
+                                                           _yCoord+robot->getNextFieldYPos());
+            if (nextField!=NULL) {
+                nextField->addRobot(robot);
+            }
+            else {
+                std::cerr << "Error: robot appears to have gone out of scene bounds." << std::endl;
+            }
+        }
     }
 }
 

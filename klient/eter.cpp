@@ -4,8 +4,8 @@
 #include <boost/make_shared.hpp>
 #include <boost/foreach.hpp>
 
-Ether::Ether(QObject *parent) :
-    QObject(parent), fieldsAreCreated(false)
+Ether::Ether(QClient *client, QObject *parent) :
+    QObject(parent), fieldsAreCreated(false), _client(client)
 {
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(advanceTime()));
@@ -37,7 +37,7 @@ void Ether::createFields(int32_t size_x, int32_t size_y, int32_t sector_size_x, 
 {
     for(int i=0; i<size_x; ++i)
         for(int j=0; j<size_y; ++j)
-            fields.push_back(Field(sector_size_x, sector_size_y, i, j));
+            fields.push_back(Field(sector_size_x, sector_size_y, i, j, this));
     fieldsAreCreated=true;
 }
 
@@ -65,6 +65,7 @@ void Ether::setRobotNextField(int32_t id, int32_t nextFieldX, int32_t nextFieldY
 {
     BOOST_FOREACH(Field &field, fields){
         if(field.setRobotNextField(id, nextFieldX, nextFieldY)) {
+            _client->request_sector(id, field.xCoord(), field.yCoord(), eReserve);
             emit goToEtherSignal(id,nextFieldX,nextFieldY);
             return;
         }
@@ -79,4 +80,13 @@ boost::shared_ptr<Robot> Ether::getRobotWithMatchingId(int32_t id)
             return robot;
     }
     return boost::shared_ptr<Robot>();
+}
+
+Field *Ether::findFieldWithCoords(int32_t x, int32_t y) {
+    BOOST_FOREACH(Field &field, fields){
+        if (field.xCoord()==x && field.yCoord()==y){
+            return &field;
+        }
+    }
+    return NULL;
 }

@@ -93,8 +93,8 @@ void Robot::calculatePosition(int32_t xFieldSize, int32_t yFieldSize, boost::sha
 
     Force force = calculateForce(xFieldSize, yFieldSize, secondRobot);
 
-    _xPos = getXPos() + timeStep*_xVel + (force.X/robotMass)*pow(timeStep,2)/2;_xPos = getXPos() + timeStep*_xVel + (force.X/robotMass)*pow(timeStep,2)/2;
-    _yPos = getYPos() + timeStep*_yVel + (force.Y/robotMass)*pow(timeStep,2)/2;_yPos = getYPos() + timeStep*_yVel + (force.Y/robotMass)*pow(timeStep,2)/2;
+    _xPos = getXPos() + timeStep*_xVel + (force.X/robotMass)*pow(timeStep,2)/2;
+    _yPos = getYPos() + timeStep*_yVel + (force.Y/robotMass)*pow(timeStep,2)/2;
 
     _xVel += (force.X/robotMass)*timeStep;
     _yVel += (force.Y/robotMass)*timeStep;
@@ -212,6 +212,7 @@ void Robot::setNextFieldYPos(int32_t nextFieldYPos)
 {
     _nextFieldYPos = nextFieldYPos;
 }
+
 
 
 

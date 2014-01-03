@@ -59,6 +59,9 @@ private:
     int32_t _xVel, _yVel;
     int32_t _nextFieldXPos;
     int32_t _nextFieldYPos;
+    int32_t _prevFieldXPos;
+    int32_t _prevFieldYPos;
+    bool _prevFieldReleased;
 };
 
 #endif // ROBOT_H
