@@ -68,8 +68,8 @@ void klient::redrawScene()
 {
     BOOST_FOREACH(Field field, ourEther->getFields()){
         BOOST_FOREACH(boost::shared_ptr<Robot> robot, field.getRobotsOnField()){
-            robotsOnScene[robot->getGlobalId()]->setRect(robot->getXPos()+field.xSize()*field.xCoord()*100,
-                                                               robot->getYPos()+field.ySize()*field.yCoord()*100,
+            robotsOnScene[robot->getGlobalId()]->setRect(robot->getXPos()+field.xSize()*field.xCoord(),
+                                                               robot->getYPos()+field.ySize()*field.yCoord(),
                                                                robot->getDiameter(),
                                                                robot->getDiameter()
                                                                );
@@ -79,11 +79,11 @@ void klient::redrawScene()
 
 void klient::drawSceneWithLines(int32_t size_x, int32_t size_y, int32_t sector_size_x, int32_t sector_size_y)
 {
-    Scene.setSceneRect(0, 0, sector_size_x*size_x*1, sector_size_y*size_y*1);
+    Scene.setSceneRect(0, 0, sector_size_x*size_x, sector_size_y*size_y);
     for(int i=0; i<=size_x; ++i) //kreski pionowe
-        Scene.addLine(i*1*sector_size_x, 0, i*1*sector_size_x, size_y*sector_size_y*1);
+        Scene.addLine(i*sector_size_x, 0, i*sector_size_x, size_y*sector_size_y);
     for(int i=0; i<=size_y; ++i) //kreski poziome
-        Scene.addLine(0, i*1*sector_size_y, size_x*sector_size_x*1, i*1*sector_size_y);
+        Scene.addLine(0, i*sector_size_y, size_x*sector_size_x, i*sector_size_y);
 }
 
 
@@ -107,7 +107,7 @@ void klient::start()
     //client->register_robot(3,DIAMETER);
     //client->register_robot(4,DIAMETER);
     //client->register_robot(5,DIAMETER);
-    ourEther->start(100);
+    ourEther->start(OURTIMEDELAYMS);
 }
 
 
