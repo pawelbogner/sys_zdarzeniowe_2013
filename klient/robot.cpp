@@ -10,10 +10,9 @@ int sgn(double val)
 
 Robot::Robot(int32_t local_id, int32_t id):
     _localId(local_id), _diameter(DIAMETER), _globalId(id), _isAllowedToLeaveField(false),
-    _xPos(0), _yPos(0), _xVel(0), _yVel(0), _nextFieldXPos(1), _nextFieldYPos(1)
-{
-
-}
+    _xPos(0), _yPos(0), _xVel(0), _yVel(0), _nextFieldXPos(0), _nextFieldYPos(0), _prevFieldReleased(true),
+    _prevFieldXPos(0), _prevFieldYPos(0)
+{ }
 
 Force Robot::calculateForce(int32_t xFieldSize, int32_t yFieldSize, boost::shared_ptr<Robot> secondRobot)
 {
@@ -206,6 +205,18 @@ void Robot::setNextFieldYPos(int32_t nextFieldYPos)
 {
     _nextFieldYPos = nextFieldYPos;
 }
+
+bool Robot::getPrevFieldReleased() const
+{
+    return _prevFieldReleased;
+}
+
+void Robot::setPrevFieldReleased(bool prevFieldReleased)
+{
+    _prevFieldReleased = prevFieldReleased;
+}
+
+
 
 
 

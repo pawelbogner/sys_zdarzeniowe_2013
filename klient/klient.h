@@ -21,11 +21,12 @@ public:
     QGraphicsScene Scene;
     ~klient();
     
+
 public slots:
-    void addRobotToSceneSlot(int32_t id);
+    void addRobotToSceneSlot(int32_t id); // wywolywane przez addRobotToSceneSignal w Ether
     //void register_robot_id(int32_t local_id, int32_t id, int32_t sector_size_x, int32_t sector_size_y, int32_t size_x, int32_t size_y);
-    void redrawScene(void);
-    void drawSceneWithLines(int32_t size_x, int32_t size_y, int32_t sector_size_x, int32_t sector_size_y);
+    void redrawScene(void); // wywolywane przez redrawScene w Ether
+    void drawSceneWithLines(int32_t size_x, int32_t size_y, int32_t sector_size_x, int32_t sector_size_y); // wywolywane przez drawSceneWithLines w Ether
 
 private slots:
     void on_pushButton_clicked();
@@ -37,8 +38,8 @@ private slots:
     void on_pushButton_4_clicked();
 
 
-    void response_sector  (int32_t id, int32_t, int32_t, eSectorRequestResponse response, int32_t);
-    void go_to            (int32_t id, int32_t goto_x, int32_t goto_y);
+    void response_sector  (int32_t id, int32_t, int32_t, eSectorRequestResponse response, int32_t); // wywolywane przez response_sector w qclient
+    void go_to            (int32_t id, int32_t goto_x, int32_t goto_y); // wywolywane przez goToEtherSignal w Ether
 
 private:
     Ui::klient *ui;

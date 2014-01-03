@@ -18,9 +18,11 @@ private:
     bool _connected;
 
 signals:
-    void register_robot_id(int32_t local_id, int32_t id, int32_t sector_size_x, int32_t sector_size_y, int32_t size_x, int32_t size_y);
-    void response_sector  (int32_t id, int32_t x, int32_t y, eSectorRequestResponse response, int32_t clients);
-    void go_to            (int32_t id, int32_t goto_x, int32_t goto_y);
+    void register_robot_id(int32_t local_id,
+                           int32_t id, int32_t sector_size_x, int32_t sector_size_y,
+                           int32_t size_x, int32_t size_y); // wywoluje registerRobotInEther w Ether
+    void response_sector  (int32_t id, int32_t x, int32_t y, eSectorRequestResponse response, int32_t clients); // wywoluje response_sector w klient
+    void go_to            (int32_t id, int32_t goto_x, int32_t goto_y); // wywoluje setRobotNextField w Ether
 private slots:
     void connected();
     void disconnected();

@@ -12,7 +12,7 @@ klient::klient(QWidget *parent) :
     ui->setupUi(this);
 
     this->client = new QClient(this);
-    this->ourEther = new Ether(this);
+    this->ourEther = new Ether(this->client,this);
     connect(this->client, SIGNAL(register_robot_id(int32_t,int32_t,int32_t,int32_t,int32_t,int32_t)), this->ourEther, SLOT(registerRobotInEther(int32_t,int32_t,int32_t,int32_t,int32_t,int32_t)));
     connect(this->client, SIGNAL(response_sector(int32_t,int32_t,int32_t,eSectorRequestResponse,int32_t)), this, SLOT(response_sector(int32_t,int32_t,int32_t,eSectorRequestResponse,int32_t)));
     connect(this->client, SIGNAL(go_to(int32_t,int32_t,int32_t)), this->ourEther, SLOT(setRobotNextField(int32_t, int32_t, int32_t)));
@@ -26,6 +26,8 @@ klient::klient(QWidget *parent) :
 klient::~klient()
 {
     delete ui;
+    delete client;
+    delete ourEther;
 }
 
 void klient::addRobotToSceneSlot(int32_t id)
