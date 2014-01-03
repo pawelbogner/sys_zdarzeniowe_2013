@@ -57,12 +57,6 @@ void klient::on_pushButton_3_clicked()
     this->client->register_robot(this->ui->rr_lid->value(), this->ui->rr_dia->value());
 }
 
-void klient::on_pushButton_4_clicked()
-{
-    eSectorRequest request=static_cast<eSectorRequest>(this->ui->s_req->value());
-    this->client->request_sector(this->ui->s_id->value(), this->ui->s_x->value(), this->ui->s_y->value(), request);
-}
-
 
 void klient::redrawScene()
 {
