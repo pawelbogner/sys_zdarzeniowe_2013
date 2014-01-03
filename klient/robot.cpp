@@ -1,10 +1,6 @@
 #include "robot.h"
 #include "defines.h"
 
-//Robot::Robot(int32_t diameter, int32_t id):
-//    _diameter(diameter), _localId(id), _globalId(0), _isAllowedToLeaveField(false)
-//{ }
-
 int sgn(double val)
 {
     if(val<0) return -1;
@@ -14,29 +10,24 @@ int sgn(double val)
 
 Robot::Robot(int32_t local_id, int32_t id):
     _localId(local_id), _diameter(DIAMETER), _globalId(id), _isAllowedToLeaveField(false),
-    _xPos(0), _yPos(0), _xVel(0), _yVel(0)
+    _xPos(0), _yPos(0), _xVel(0), _yVel(0), _nextFieldXPos(1), _nextFieldYPos(1)
 {
 
 }
 
 Force Robot::calculateForce(int32_t xFieldSize, int32_t yFieldSize, boost::shared_ptr<Robot> secondRobot)
 {
-    // na podstawie następujących danych:
-    // - szerokość w X i w Y pojedynczego pola,
-    // - diameter robota,
-    // - _isAllowedToLeaveField,
-    // - współrzędnych pola, na które ma wyjechać,
-    // cel podróży: _nextFieldXPos, _nextFieldYPos, np. (0,-1) to do góry,
-    // należy obliczyć siłę.
+    // liczy siłę działającą na robota
+    const double doNotDivideByZero = 0.0001;
 
-    const double A = 1, B = 2, C = 1;
+    const double A = 10, B = 0, C = 0;
     const double destPosWidth = 0.75;   //0-1, określa położenie potencjału docelowego w proporcji długości ściany, przez którą robot ma przejechać
     const double destPosDepth = 0.1;    //0-1, dodatnia wartość określa odsunięcie potencjału w głąb docelowej komórki (w proporcji długości ściany komórki)
     Force result = {0.0, 0.0};
 
     /* odpychanie od ścian */
-    result.X += A*pow((xFieldSize - getXPos()),2 - pow(getXPos(),2));
-    result.Y += A*pow((yFieldSize - getYPos()),2 - pow(getYPos(),2));
+    result.X += A/(pow((xFieldSize - getXPos()),2) - pow(getXPos(),2) + doNotDivideByZero);
+    result.Y += A/(pow((yFieldSize - getYPos()),2) - pow(getYPos(),2) + doNotDivideByZero);
 
     /* wyjazd z pola */
     if(_isAllowedToLeaveField)
@@ -67,15 +58,15 @@ Force Robot::calculateForce(int32_t xFieldSize, int32_t yFieldSize, boost::share
             destY = yFieldSize - destPosWidth*yFieldSize;
         }
 
-        result.X += B*sgn(destX - getXPos())*pow((destX - getXPos()),2);
-        result.Y += B*sgn(destY - getYPos())*pow((destY - getYPos()),2);
+        result.X += B/(sgn(destX - getXPos())*pow((destX - getXPos()),2) + doNotDivideByZero);
+        result.Y += B/(sgn(destY - getYPos())*pow((destY - getYPos()),2) + doNotDivideByZero);
     }
 
     /* drugi robot */
     if(secondRobot)
     {
-        result.X += C/(sgn(getXPos() - secondRobot->getXPos())*pow((getXPos() - secondRobot->getXPos()),2)+0.0001);     //Żeby nigdy nie było dzielenia przez zero :)
-        result.Y += C/(sgn(getYPos() - secondRobot->getYPos())*pow((getYPos() - secondRobot->getYPos()),2)+0.0001);
+        result.X += C/(sgn(getXPos() - secondRobot->getXPos())*pow((getXPos() - secondRobot->getXPos()),2) + doNotDivideByZero);     //Żeby nigdy nie było dzielenia przez zero :)
+        result.Y += C/(sgn(getYPos() - secondRobot->getYPos())*pow((getYPos() - secondRobot->getYPos()),2) + doNotDivideByZero);
     }
 
     return result;
@@ -88,13 +79,13 @@ void Robot::calculatePosition(int32_t xFieldSize, int32_t yFieldSize, boost::sha
     // siły oraz bieżących prędkości wyliczamy nowe położenie
     const double timeStep = static_cast<double>(timeDelay)/1000;   //[s]
 
-    const double robotMass = 1;     //[kg]
+    const double robotMass = 0.01;     //[kg]
     const double maxVelocity = 1;   //[m/s]
 
     Force force = calculateForce(xFieldSize, yFieldSize, secondRobot);
 
-    _xPos = getXPos() + timeStep*_xVel + (force.X/robotMass)*pow(timeStep,2)/2;_xPos = getXPos() + timeStep*_xVel + (force.X/robotMass)*pow(timeStep,2)/2;
-    _yPos = getYPos() + timeStep*_yVel + (force.Y/robotMass)*pow(timeStep,2)/2;_yPos = getYPos() + timeStep*_yVel + (force.Y/robotMass)*pow(timeStep,2)/2;
+    _xPos = getXPos() + timeStep*_xVel + (force.X/robotMass)*pow(timeStep,2)/2;
+    _yPos = getYPos() + timeStep*_yVel + (force.Y/robotMass)*pow(timeStep,2)/2;
 
     _xVel += (force.X/robotMass)*timeStep;
     _yVel += (force.Y/robotMass)*timeStep;
@@ -126,45 +117,45 @@ void Robot::setGlobalId(int32_t globalId)
 }
 
 
-int32_t Robot::getXPos() const
+double Robot::getXPos() const
 {
     return _xPos;
 }
 
-void Robot::setXPos(int32_t xPos)
+void Robot::setXPos(double xPos)
 {
     _xPos = xPos;
 }
 
 
-int32_t Robot::getYPos() const
+double Robot::getYPos() const
 {
     return _yPos;
 }
 
-void Robot::setYPos(int32_t yPos)
+void Robot::setYPos(double yPos)
 {
     _yPos = yPos;
 }
 
 
-int32_t Robot::getXVel() const
+double Robot::getXVel() const
 {
     return _xVel;
 }
 
-void Robot::setXVel(int32_t xVel)
+void Robot::setXVel(double xVel)
 {
     _xVel = xVel;
 }
 
 
-int32_t Robot::getYVel() const
+double Robot::getYVel() const
 {
     return _yVel;
 }
 
-void Robot::setYVel(int32_t yVel)
+void Robot::setYVel(double yVel)
 {
     _yVel = yVel;
 }

@@ -53,6 +53,8 @@ void Ether::registerRobotInEther(int32_t local_id,
         emit drawSceneWithLines(size_x, size_y, sector_size_x, sector_size_y);
     }
     boost::shared_ptr<Robot> newRobot = boost::make_shared<Robot>(local_id, id);
+    newRobot->setXPos(DIAMETER);
+    newRobot->setYPos(DIAMETER);
     _allRobotsOnScene.push_back(newRobot);
     getFields().at(0).addRobot(getRobotWithMatchingId(id));
     emit addRobotToSceneSignal(id);

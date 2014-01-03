@@ -19,17 +19,17 @@ public:
 
     void calculatePosition(int32_t xFieldSize, int32_t yFieldSize, boost::shared_ptr<Robot> secondRobot, int timeDelay);
 
-    int32_t getXPos() const;
-    void setXPos(int32_t xPos);
+    double getXPos() const;
+    void setXPos(double xPos);
 
-    int32_t getYPos() const;
-    void setYPos(int32_t yPos);
+    double getYPos() const;
+    void setYPos(double yPos);
 
-    int32_t getXVel() const;
-    void setXVel(int32_t xVel);
+    double getXVel() const;
+    void setXVel(double xVel);
 
-    int32_t getYVel() const;
-    void setYVel(int32_t yVel);
+    double getYVel() const;
+    void setYVel(double yVel);
 
     int32_t getDiameter() const;
     void setDiameter(int32_t diameter);
@@ -55,8 +55,8 @@ private:
     int32_t _globalId;
 
     bool _isAllowedToLeaveField;
-    int32_t _xPos, _yPos; // względem kratki
-    int32_t _xVel, _yVel;
+    double _xPos, _yPos; // względem kratki
+    double _xVel, _yVel;
     int32_t _nextFieldXPos;
     int32_t _nextFieldYPos;
 };

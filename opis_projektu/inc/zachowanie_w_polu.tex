@@ -2,11 +2,11 @@
 	Zachowanie robotów wewnątrz pola zamodelowane jest za pomocą metody sztucznych pól potencjałów. Potencjały ustalane są w następujący sposób:
 	\begin{itemize}
 		\item robot oczekujący na zezwolenie wyjazdu z pola widzi wszystkie ściany jako spolaryzowane ładunkiem o znaku zgodnym ze znakiem jego ładunku (rys. \ref{pic:waiting}), a jego wektor sił ma składowe opisane następującymi równaniami:
-                  $$F_x= A((X-x)^2 - x^2)$$
-                  $$F_y= A((Y-y)^2 - y^2),$$
+                  $$F_x= \frac{A}{(X-x)^2 - x^2}$$
+                  $$F_y= \frac{A}{(Y-y)^2 - y^2},$$
 		\item robot wykonujący manewr przejazdu do innego pola widzi dodatkowy ładunek na ścianie, w kierunku której ma zmierzać (umieszczony z jej prawej strony, aby zapobiegać kolizjom) (rys. \ref{pic:moving}), a do składowych jego wektora sił dodaje się człon odpowiedzialny za modelowanie dodatkowego potencjału:
-                  $$F_{xM}= +B(X_p-x)^2$$
-                  $$F_{yM}= +B(Y_p-y)^2,$$
+                  $$F_{xM}= +\frac{B}{(X_p-x)^2}$$
+                  $$F_{yM}= +\frac{B}{(Y_p-y)^2},$$
 		\item dwa roboty znajdujące się w tym samym polu zawsze są spolaryzowane ładunkami punktowymi o jednakowych znakach (rys. \ref{pic:tworobots}), a do wektora sił dodawany jest w tym wypadku następujący człon modelujący siłę wzajemnie je odpychającą:
                   $$F_{xD}= +\frac{C}{(x-x_D)^2}$$
                   $$F_{yD}= +\frac{C}{(y-y_D)^2},$$ 
