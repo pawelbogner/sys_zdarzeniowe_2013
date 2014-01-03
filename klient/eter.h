@@ -7,6 +7,7 @@
 #include <stdint.h>
 #include "field.h"
 #include "robot.h"
+#include "defines.h"
 
 
 class Ether : public QObject
