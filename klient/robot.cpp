@@ -18,7 +18,7 @@ Force Robot::calculateForce(int32_t xFieldSize, int32_t yFieldSize, boost::share
 {
     // liczy siłę działającą na robota
 
-    const double A = 0.01, B = 1000, C = 10000;
+    const double A = 0.01, B = 100, C = 10000;
     const double destPosWidth = 0.75;   //0-1, określa położenie potencjału docelowego w proporcji długości ściany, przez którą robot ma przejechać
     const double destPosDepth = DIAMETER;    //dodatnia wartość określa odsunięcie potencjału w głąb docelowej komórki (w proporcji długości ściany komórki)
     Force result = {0.0, 0.0};
@@ -80,7 +80,7 @@ void Robot::calculatePosition(int32_t xFieldSize, int32_t yFieldSize, boost::sha
     const double timeStep = static_cast<double>(timeDelay)/1000;   //[s]
 
     const double robotMass = 1;     //[kg]
-    const double maxVelocity = 1;   //[m/s]
+    const double maxVelocity = 2;   //[m/s]
 
     Force force = calculateForce(xFieldSize, yFieldSize, secondRobot);
 
