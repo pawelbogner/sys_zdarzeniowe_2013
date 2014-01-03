@@ -81,10 +81,14 @@ void Field::computeOneIterationOfMotion(int timeDelay)
     BOOST_FOREACH(boost::shared_ptr<Robot> robot, _robotsOnField){
         if (robot->getXPos()<0.0 || robot->getXPos()>_xSize || robot->getYPos()<0.0 || robot->getYPos()>_ySize) {
             reallocateRobot(robot);
+            robot->setPrevFieldReleased(false);
         }
         if ((robot->getXPos()>DIAMETER/2 || robot->getXPos()<_xSize-DIAMETER/2) &&
                 (robot->getYPos()>DIAMETER/2 || robot->getYPos()<_ySize-DIAMETER/2)) { // robot zajmuje tylko 1 pole
-            _ourEther->client()->request_sector(robot->getLocalId(), _xCoord, _yCoord, eRelease);
+            if(!robot->getPrevFieldReleased()) {
+                _ourEther->client()->request_sector(robot->getLocalId(), _xCoord, _yCoord, eRelease);
+                robot->setPrevFieldReleased(true);
+            }
         }
     }
 }

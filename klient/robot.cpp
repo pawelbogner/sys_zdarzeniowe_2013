@@ -203,6 +203,17 @@ void Robot::setNextFieldYPos(int32_t nextFieldYPos)
     _nextFieldYPos = nextFieldYPos;
 }
 
+bool Robot::getPrevFieldReleased() const
+{
+    return _prevFieldReleased;
+}
+
+void Robot::setPrevFieldReleased(bool prevFieldReleased)
+{
+    _prevFieldReleased = prevFieldReleased;
+}
+
+
 
 
 
