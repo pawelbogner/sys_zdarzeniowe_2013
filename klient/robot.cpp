@@ -21,7 +21,7 @@ Force Robot::calculateForce(int32_t xFieldSize, int32_t yFieldSize, boost::share
 
     const double A = 0.01, B = 10000, C = 10000;
     const double destPosWidth = 0.75;   //0-1, określa położenie potencjału docelowego w proporcji długości ściany, przez którą robot ma przejechać
-    const double destPosDepth = 0.1;    //0-1, dodatnia wartość określa odsunięcie potencjału w głąb docelowej komórki (w proporcji długości ściany komórki)
+    const double destPosDepth = DIAMETER;    //dodatnia wartość określa odsunięcie potencjału w głąb docelowej komórki (w proporcji długości ściany komórki)
     Force result = {0.0, 0.0};
 
     /* odpychanie od ścian */
@@ -57,8 +57,8 @@ Force Robot::calculateForce(int32_t xFieldSize, int32_t yFieldSize, boost::share
             destY = yFieldSize - destPosWidth*yFieldSize;
         }
 
-        result.X += B/(sgn(destX - getXPos())*pow((destX - getXPos()),2) + doNotDivideByZero);
-        result.Y += B/(sgn(destY - getYPos())*pow((destY - getYPos()),2) + doNotDivideByZero);
+        result.X += B/(sgn(destX - getXPos())*pow((destX - getXPos()),2));
+        result.Y += B/(sgn(destY - getYPos())*pow((destY - getYPos()),2));
     }
 
     /* drugi robot */
