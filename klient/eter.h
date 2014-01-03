@@ -17,7 +17,7 @@ public:
     Ether(QObject *parent = 0);
     void start(int timeDelay);
 
-    std::vector<Field> getFields();
+    std::vector<Field> &getFields();
     void createFields(int32_t size_x, int32_t size_y, int32_t sector_size_x, int32_t sector_size_y);
     boost::shared_ptr<Robot> getRobotWithMatchingId(int32_t id);
 private:
@@ -28,11 +28,11 @@ private:
     int _timeDelay; //[ms]timer->start(_timeDelay);
 
 
-
 signals:
     void addRobotToSceneSignal(int32_t id, int32_t x, int32_t y);
     void redrawScene(void);
     void drawSceneWithLines(int32_t size_x, int32_t size_y, int32_t sector_size_x, int32_t sector_size_y);
+    void goToEtherSignal(int32_t id, int32_t goto_x, int32_t goto_y);
 
 public slots:
     void registerRobotInEther(int32_t local_id, int32_t id, int32_t sector_size_x, int32_t sector_size_y, int32_t size_x, int32_t size_y);

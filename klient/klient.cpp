@@ -16,6 +16,7 @@ klient::klient(QWidget *parent) :
     connect(this->client, SIGNAL(register_robot_id(int32_t,int32_t,int32_t,int32_t,int32_t,int32_t)), this->ourEther, SLOT(registerRobotInEther(int32_t,int32_t,int32_t,int32_t,int32_t,int32_t)));
     connect(this->client, SIGNAL(response_sector(int32_t,int32_t,int32_t,eSectorRequestResponse,int32_t)), this, SLOT(response_sector(int32_t,int32_t,int32_t,eSectorRequestResponse,int32_t)));
     connect(this->client, SIGNAL(go_to(int32_t,int32_t,int32_t)), this->ourEther, SLOT(setRobotNextField(int32_t, int32_t, int32_t)));
+    connect(this->ourEther, SIGNAL(goToEtherSignal(int32_t,int32_t,int32_t)), this, SLOT(go_to(int32_t, int32_t, int32_t)));
     connect(this->ourEther, SIGNAL(addRobotToSceneSignal(int32_t,int32_t,int32_t)), this, SLOT(addRobotToSceneSlot(int32_t,int32_t,int32_t)));
     connect(this->ourEther, SIGNAL(redrawScene()), this, SLOT(redrawScene()));
     connect(this->ourEther, SIGNAL(drawSceneWithLines(int32_t,int32_t,int32_t,int32_t)), this, SLOT(drawSceneWithLines(int32_t,int32_t,int32_t,int32_t)));
@@ -32,6 +33,9 @@ void klient::addRobotToSceneSlot(int32_t id, int32_t x, int32_t y)
     boost::shared_ptr<QGraphicsEllipseItem> ellipse = boost::make_shared<QGraphicsEllipseItem>(x, y, DIAMETER, DIAMETER);
     robotsOnScene.insert(std::pair<int32_t, boost::shared_ptr<QGraphicsEllipseItem> >(id, ellipse));
     Scene.addItem(robotsOnScene.find(id)->second.get());
+    ui->rr_id->setText(QString("%1").arg(id));
+    ui->rr_ssx->setText(QString("%1").arg(ourEther->getFields().at(0).xSize()));
+    ui->rr_ssy->setText(QString("%1").arg(ourEther->getFields().at(0).ySize()));
 }
 
 void klient::on_pushButton_clicked()
@@ -57,12 +61,12 @@ void klient::on_pushButton_4_clicked()
 }
 
 
-void klient::register_robot_id(int32_t local_id, int32_t id, int32_t sector_size_x, int32_t sector_size_y, int32_t size_x, int32_t size_y)
-{
-    this->ui->rr_id->setText(QString("%1").arg(id));
-    this->ui->rr_ssx->setText(QString("%1").arg(sector_size_x));
-    this->ui->rr_ssy->setText(QString("%1").arg(sector_size_y));
-}
+//void klient::register_robot_id(int32_t local_id, int32_t id, int32_t sector_size_x, int32_t sector_size_y, int32_t size_x, int32_t size_y)
+//{
+//    this->ui->rr_id->setText(QString("%1").arg(id));
+//    this->ui->rr_ssx->setText(QString("%1").arg(sector_size_x));
+//    this->ui->rr_ssy->setText(QString("%1").arg(sector_size_y));
+//}
 
 void klient::redrawScene()
 {
@@ -87,9 +91,17 @@ void klient::drawSceneWithLines(int32_t size_x, int32_t size_y, int32_t sector_s
 }
 
 
-void klient::response_sector(int32_t id, int32_t x, int32_t y, eSectorRequestResponse response, int32_t clients)
+void klient::response_sector(int32_t id, int32_t, int32_t, eSectorRequestResponse response, int32_t)
 {
-
+    if(response==eAffirmative)
+    {
+        boost::shared_ptr<Robot> robot = ourEther->getRobotWithMatchingId(id);
+        robot->setIsAllowedToLeaveField(true);
+        ui->s_resp->setText("Affirmative");
+    }
+    else {
+        ui->s_resp->setText("Negative");
+    }
 }
 
 void klient::go_to(int32_t id, int32_t goto_x, int32_t goto_y)

@@ -17,7 +17,7 @@ void Ether::start(int timeDelay)
     timer->start(_timeDelay);
 }
 
-std::vector<Field> Ether::getFields()
+std::vector<Field> &Ether::getFields()
 {
     return fields;
 }
@@ -52,9 +52,9 @@ void Ether::registerRobotInEther(int32_t local_id,
         createFields(size_x, size_y, sector_size_x, sector_size_y);
         emit drawSceneWithLines(size_x, size_y, sector_size_x, sector_size_y);
     }
-    getFields().at(0).addRobot(getRobotWithMatchingId(1));
     boost::shared_ptr<Robot> newRobot = boost::make_shared<Robot>(local_id, id);
     _allRobotsOnScene.push_back(newRobot);
+    getFields().at(0).addRobot(getRobotWithMatchingId(1));
     emit addRobotToSceneSignal(id, -10, -10);
     //    newRobot pNewRobot(newRobot(local_id, id, size_x, size_y));/* = new Robot(local_id, id, size_x, size_y);*/
     //    _allRobotsOnScene.push_back(newRobot);
@@ -64,8 +64,10 @@ void Ether::registerRobotInEther(int32_t local_id,
 void Ether::setRobotNextField(int32_t id, int32_t nextFieldX, int32_t nextFieldY)
 {
     BOOST_FOREACH(Field &field, fields){
-        if(field.setRobotNextField(id, nextFieldX, nextFieldY))
+        if(field.setRobotNextField(id, nextFieldX, nextFieldY)) {
+            emit goToEtherSignal(id,nextFieldX,nextFieldY);
             return;
+        }
     }
 }
 
