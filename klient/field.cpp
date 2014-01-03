@@ -15,9 +15,10 @@ bool Field::informServerOfRobotLeaving(boost::shared_ptr<Robot> robotLeaving, Fi
     // robot wjeżdża do nextField
     nextField.addRobot(robotLeaving);
     removeRobot(robotLeaving);
+    return false;
 }
 
-bool Field::robotDemandsFieldAccess(boost::shared_ptr<Robot> robotWishingToLeave, Field nextField)
+/*bool Field::robotDemandsFieldAccess(boost::shared_ptr<Robot> robotWishingToLeave, Field nextField)
 {
     bool isFieldAccessGranted=nextField.reserve(robotWishingToLeave); // pytanie o pozwolenie na wjazd na nextField
     if (isFieldAccessGranted) {
@@ -28,9 +29,9 @@ bool Field::robotDemandsFieldAccess(boost::shared_ptr<Robot> robotWishingToLeave
         // nie udzielono pozwolenia
     }
     return false;
-}
+}*/
 
-bool Field::reserve(boost::shared_ptr<Robot> robotWishingToEnter)
+void Field::reserve(boost::shared_ptr<Robot> robotWishingToEnter)
 {
     // tu musimy pytać serwer o pozwolenie na wjazd na ten Field
     _client->request_sector(robotWishingToEnter->getLocalId(), _xCoord, _yCoord, eReserve);

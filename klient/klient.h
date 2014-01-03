@@ -22,7 +22,7 @@ public:
     ~klient();
     
 public slots:
-    void addRobotToSceneSlot(int32_t id, int32_t x, int32_t y);
+    void addRobotToSceneSlot(int32_t id);
     //void register_robot_id(int32_t local_id, int32_t id, int32_t sector_size_x, int32_t sector_size_y, int32_t size_x, int32_t size_y);
     void redrawScene(void);
     void drawSceneWithLines(int32_t size_x, int32_t size_y, int32_t sector_size_x, int32_t sector_size_y);

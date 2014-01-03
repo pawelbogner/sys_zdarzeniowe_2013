@@ -17,7 +17,7 @@ klient::klient(QWidget *parent) :
     connect(this->client, SIGNAL(response_sector(int32_t,int32_t,int32_t,eSectorRequestResponse,int32_t)), this, SLOT(response_sector(int32_t,int32_t,int32_t,eSectorRequestResponse,int32_t)));
     connect(this->client, SIGNAL(go_to(int32_t,int32_t,int32_t)), this->ourEther, SLOT(setRobotNextField(int32_t, int32_t, int32_t)));
     connect(this->ourEther, SIGNAL(goToEtherSignal(int32_t,int32_t,int32_t)), this, SLOT(go_to(int32_t, int32_t, int32_t)));
-    connect(this->ourEther, SIGNAL(addRobotToSceneSignal(int32_t,int32_t,int32_t)), this, SLOT(addRobotToSceneSlot(int32_t,int32_t,int32_t)));
+    connect(this->ourEther, SIGNAL(addRobotToSceneSignal(int32_t)), this, SLOT(addRobotToSceneSlot(int32_t)));
     connect(this->ourEther, SIGNAL(redrawScene()), this, SLOT(redrawScene()));
     connect(this->ourEther, SIGNAL(drawSceneWithLines(int32_t,int32_t,int32_t,int32_t)), this, SLOT(drawSceneWithLines(int32_t,int32_t,int32_t,int32_t)));
     this->ui->graphicsView->setScene(&Scene);
@@ -28,14 +28,15 @@ klient::~klient()
     delete ui;
 }
 
-void klient::addRobotToSceneSlot(int32_t id, int32_t x, int32_t y)
+void klient::addRobotToSceneSlot(int32_t id)
 {
-    boost::shared_ptr<QGraphicsEllipseItem> ellipse = boost::make_shared<QGraphicsEllipseItem>(x, y, DIAMETER, DIAMETER);
+    boost::shared_ptr<QGraphicsEllipseItem> ellipse = boost::make_shared<QGraphicsEllipseItem>(-10, -10, DIAMETER, DIAMETER);
     robotsOnScene.insert(std::pair<int32_t, boost::shared_ptr<QGraphicsEllipseItem> >(id, ellipse));
     Scene.addItem(robotsOnScene.find(id)->second.get());
     ui->rr_id->setText(QString("%1").arg(id));
     ui->rr_ssx->setText(QString("%1").arg(ourEther->getFields().at(0).xSize()));
     ui->rr_ssy->setText(QString("%1").arg(ourEther->getFields().at(0).ySize()));
+
 }
 
 void klient::on_pushButton_clicked()
@@ -93,13 +94,14 @@ void klient::drawSceneWithLines(int32_t size_x, int32_t size_y, int32_t sector_s
 
 void klient::response_sector(int32_t id, int32_t, int32_t, eSectorRequestResponse response, int32_t)
 {
+    boost::shared_ptr<Robot> robot = ourEther->getRobotWithMatchingId(id);
     if(response==eAffirmative)
     {
-        boost::shared_ptr<Robot> robot = ourEther->getRobotWithMatchingId(id);
         robot->setIsAllowedToLeaveField(true);
         ui->s_resp->setText("Affirmative");
     }
     else {
+        robot->setIsAllowedToLeaveField(false);
         ui->s_resp->setText("Negative");
     }
 }

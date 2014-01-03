@@ -17,8 +17,8 @@ public:
     bool informServerOfRobotLeaving(boost::shared_ptr<Robot> robotLeaving, Field nextField);
     // robotDemandsFieldAccess to metoda wywolywana przez pole, na ktorym aktualnie znajduje sie robot, ktory
     // chce przejechac na pole nextField; metoda pyta o pozwolenie przez wywolanie reserve() w polu nextField
-    bool robotDemandsFieldAccess(boost::shared_ptr<Robot> robotWishingToLeave, Field nextField);
-    bool reserve(boost::shared_ptr<Robot> robotWishingToEnter);
+    //bool robotDemandsFieldAccess(boost::shared_ptr<Robot> robotWishingToLeave, Field nextField);
+    void reserve(boost::shared_ptr<Robot> robotWishingToEnter);
     void removeRobot(boost::shared_ptr<Robot> robot);
     void addRobot(boost::shared_ptr<Robot> robot);
     void computeOneIterationOfMotion(int timeDelay); // tu liczymy potencjaly

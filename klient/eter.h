@@ -29,7 +29,7 @@ private:
 
 
 signals:
-    void addRobotToSceneSignal(int32_t id, int32_t x, int32_t y);
+    void addRobotToSceneSignal(int32_t id);
     void redrawScene(void);
     void drawSceneWithLines(int32_t size_x, int32_t size_y, int32_t sector_size_x, int32_t sector_size_y);
     void goToEtherSignal(int32_t id, int32_t goto_x, int32_t goto_y);

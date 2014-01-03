@@ -13,7 +13,8 @@ int sgn(double val)
 }
 
 Robot::Robot(int32_t local_id, int32_t id):
-    _localId(local_id), _diameter(DIAMETER), _globalId(id), _isAllowedToLeaveField(false)
+    _localId(local_id), _diameter(DIAMETER), _globalId(id), _isAllowedToLeaveField(false),
+    _xPos(0), _yPos(0), _xVel(0), _yVel(0)
 {
 
 }
