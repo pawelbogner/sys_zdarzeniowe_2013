@@ -1,4 +1,5 @@
 #include "robot.h"
+#include "defines.h"
 
 //Robot::Robot(int32_t diameter, int32_t id):
 //    _diameter(diameter), _localId(id), _globalId(0), _isAllowedToLeaveField(false)
@@ -12,7 +13,7 @@ int sgn(double val)
 }
 
 Robot::Robot(int32_t local_id, int32_t id):
-    _localId(local_id), _diameter(10), _globalId(id), _isAllowedToLeaveField(false)
+    _localId(local_id), _diameter(DIAMETER), _globalId(id), _isAllowedToLeaveField(false)
 {
 
 }

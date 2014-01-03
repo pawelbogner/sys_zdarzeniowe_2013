@@ -22,6 +22,7 @@ HEADERS  += klient.h \
     qprotocol.h \
     field.h \
     eter.h \
-    robot.h
+    robot.h \
+    defines.h
 
 FORMS    += klient.ui

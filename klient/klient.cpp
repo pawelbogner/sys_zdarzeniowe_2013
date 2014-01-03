@@ -1,5 +1,6 @@
 #include "klient.h"
 #include "ui_klient.h"
+#include "defines.h"
 #include <iostream>
 #include <boost/make_shared.hpp>
 #include <boost/foreach.hpp>
@@ -28,7 +29,7 @@ klient::~klient()
 
 void klient::addRobotToSceneSlot(int32_t id, int32_t x, int32_t y)
 {
-    boost::shared_ptr<QGraphicsEllipseItem> ellipse = boost::make_shared<QGraphicsEllipseItem>(x, y, 10, 10);
+    boost::shared_ptr<QGraphicsEllipseItem> ellipse = boost::make_shared<QGraphicsEllipseItem>(x, y, DIAMETER, DIAMETER);
     robotsOnScene.insert(std::pair<int32_t, boost::shared_ptr<QGraphicsEllipseItem> >(id, ellipse));
     Scene.addItem(robotsOnScene.find(id)->second.get());
 }
@@ -100,12 +101,12 @@ void klient::go_to(int32_t id, int32_t goto_x, int32_t goto_y)
 
 void klient::start()
 {
-    client->register_robot(1,10);
+    client->register_robot(1,DIAMETER);
 
-    //client->register_robot(2,10);
-    //client->register_robot(3,10);
-    //client->register_robot(4,10);
-    //client->register_robot(5,10);
+    //client->register_robot(2,DIAMETER);
+    //client->register_robot(3,DIAMETER);
+    //client->register_robot(4,DIAMETER);
+    //client->register_robot(5,DIAMETER);
     ourEther->start(100);
 }
 

@@ -54,7 +54,7 @@ private:
     int32_t _diameter;
     int32_t _globalId;
     int32_t _xVel, _yVel;
-    int32_t _xPos, _yPos;
+    int32_t _xPos, _yPos; // względem kratki
 
     bool _isAllowedToLeaveField;
     int32_t _nextFieldXPos;
