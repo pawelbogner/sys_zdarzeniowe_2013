@@ -17,9 +17,8 @@ Robot::Robot(int32_t local_id, int32_t id):
 Force Robot::calculateForce(int32_t xFieldSize, int32_t yFieldSize, boost::shared_ptr<Robot> secondRobot)
 {
     // liczy siłę działającą na robota
-    const double doNotDivideByZero = 0.0001;
 
-    const double A = 0.01, B = 10000, C = 10000;
+    const double A = 0.01, B = 1000, C = 10000;
     const double destPosWidth = 0.75;   //0-1, określa położenie potencjału docelowego w proporcji długości ściany, przez którą robot ma przejechać
     const double destPosDepth = DIAMETER;    //dodatnia wartość określa odsunięcie potencjału w głąb docelowej komórki (w proporcji długości ściany komórki)
     Force result = {0.0, 0.0};
@@ -57,8 +56,10 @@ Force Robot::calculateForce(int32_t xFieldSize, int32_t yFieldSize, boost::share
             destY = yFieldSize - destPosWidth*yFieldSize;
         }
 
-        result.X += B/(sgn(destX - getXPos())*pow((destX - getXPos()),2));
-        result.Y += B/(sgn(destY - getYPos())*pow((destY - getYPos()),2));
+        result.X += B*(sgn(destX - getXPos()));
+        result.Y += B*(sgn(destY - getYPos()));
+        //result.X += B/(sgn(destX - getXPos())*pow((destX - getXPos()),2));
+        //result.Y += B/(sgn(destY - getYPos())*pow((destY - getYPos()),2));
     }
 
     /* drugi robot */
@@ -76,7 +77,7 @@ void Robot::calculatePosition(int32_t xFieldSize, int32_t yFieldSize, boost::sha
 {
     // tu odpalamy calculateForce i na podstawie wyliczonych wartości
     // siły oraz bieżących prędkości wyliczamy nowe położenie
-    /*const double timeStep = static_cast<double>(timeDelay)/1000;   //[s]
+    const double timeStep = static_cast<double>(timeDelay)/1000;   //[s]
 
     const double robotMass = 1;     //[kg]
     const double maxVelocity = 1;   //[m/s]
@@ -92,9 +93,9 @@ void Robot::calculatePosition(int32_t xFieldSize, int32_t yFieldSize, boost::sha
     if(_xVel > maxVelocity) _xVel = maxVelocity;
     else if(_xVel < -maxVelocity) _xVel = -maxVelocity;
     if(_yVel > maxVelocity) _yVel = maxVelocity;
-    else if(_yVel < -maxVelocity) _yVel = -maxVelocity;*/
-    _xPos+=_nextFieldXPos;
-    _yPos+=_nextFieldYPos;
+    else if(_yVel < -maxVelocity) _yVel = -maxVelocity;
+//    _xPos+=_nextFieldXPos;
+//    _yPos+=_nextFieldYPos;
 }
 
 
