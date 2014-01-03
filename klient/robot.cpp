@@ -76,7 +76,7 @@ void Robot::calculatePosition(int32_t xFieldSize, int32_t yFieldSize, boost::sha
 {
     // tu odpalamy calculateForce i na podstawie wyliczonych wartości
     // siły oraz bieżących prędkości wyliczamy nowe położenie
-    const double timeStep = static_cast<double>(timeDelay)/1000;   //[s]
+    /*const double timeStep = static_cast<double>(timeDelay)/1000;   //[s]
 
     const double robotMass = 1;     //[kg]
     const double maxVelocity = 1;   //[m/s]
@@ -92,7 +92,9 @@ void Robot::calculatePosition(int32_t xFieldSize, int32_t yFieldSize, boost::sha
     if(_xVel > maxVelocity) _xVel = maxVelocity;
     else if(_xVel < -maxVelocity) _xVel = -maxVelocity;
     if(_yVel > maxVelocity) _yVel = maxVelocity;
-    else if(_yVel < -maxVelocity) _yVel = -maxVelocity;
+    else if(_yVel < -maxVelocity) _yVel = -maxVelocity;*/
+    _xPos+=_nextFieldXPos;
+    _yPos+=_nextFieldYPos;
 }
 
 
@@ -215,6 +217,26 @@ void Robot::setPrevFieldReleased(bool prevFieldReleased)
 {
     _prevFieldReleased = prevFieldReleased;
 }
+int32_t Robot::getPrevFieldXPos() const
+{
+    return _prevFieldXPos;
+}
+
+void Robot::setPrevFieldXPos(const int32_t &prevFieldXPos)
+{
+    _prevFieldXPos = prevFieldXPos;
+}
+int32_t Robot::getPrevFieldYPos() const
+{
+    return _prevFieldYPos;
+}
+
+void Robot::setPrevFieldYPos(const int32_t &prevFieldYPos)
+{
+    _prevFieldYPos = prevFieldYPos;
+}
+
+
 
 
 
