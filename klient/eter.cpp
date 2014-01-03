@@ -67,7 +67,7 @@ void Ether::setRobotNextField(int32_t id, int32_t nextFieldX, int32_t nextFieldY
 {
     BOOST_FOREACH(Field &field, fields){
         if(field.setRobotNextField(id, nextFieldX, nextFieldY)) {
-            _client->request_sector(id, field.xCoord(), field.yCoord(), eReserve);
+            _client->request_sector(id, field.xCoord()+nextFieldX, field.yCoord()+nextFieldY, eReserve);
             emit goToEtherSignal(id,nextFieldX,nextFieldY);
             return;
         }

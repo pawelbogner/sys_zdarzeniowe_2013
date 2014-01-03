@@ -58,7 +58,7 @@ void Field::reallocateRobot(boost::shared_ptr<Robot> robot)
 {
     removeRobot(robot);
     Field *nextField=_ourEther->findFieldWithCoords(_xCoord+robot->getNextFieldXPos(),
-                                                   _yCoord+robot->getNextFieldYPos());
+                                                    _yCoord+robot->getNextFieldYPos());
     if (nextField!=NULL) {
         nextField->addRobot(robot);
     }

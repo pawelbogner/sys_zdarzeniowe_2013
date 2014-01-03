@@ -49,6 +49,9 @@ public:
     int32_t getNextFieldYPos() const;
     void setNextFieldYPos(int32_t nextFieldYPos);
 
+    bool getPrevFieldReleased() const;
+    void setPrevFieldReleased(bool prevFieldReleased);
+
 private:
     int32_t _localId;
     int32_t _diameter;

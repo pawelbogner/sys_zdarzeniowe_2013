@@ -19,7 +19,7 @@ Force Robot::calculateForce(int32_t xFieldSize, int32_t yFieldSize, boost::share
     // liczy siłę działającą na robota
     const double doNotDivideByZero = 0.0001;
 
-    const double A = 0.01, B = 0, C = 10000;
+    const double A = 0.01, B = 10000, C = 10000;
     const double destPosWidth = 0.75;   //0-1, określa położenie potencjału docelowego w proporcji długości ściany, przez którą robot ma przejechać
     const double destPosDepth = 0.1;    //0-1, dodatnia wartość określa odsunięcie potencjału w głąb docelowej komórki (w proporcji długości ściany komórki)
     Force result = {0.0, 0.0};
@@ -33,25 +33,25 @@ Force Robot::calculateForce(int32_t xFieldSize, int32_t yFieldSize, boost::share
     {
         double destX = 0, destY = 0;
 
-        if(_nextFieldXPos==0 && _nextFieldYPos==-1)
+        if(_nextFieldXPos==0 && _nextFieldYPos==-1) // w górę
         {
             destX = destPosWidth*xFieldSize;
             destY = -destPosDepth;
         }
 
-        if(_nextFieldXPos==1 && _nextFieldYPos==0)
+        if(_nextFieldXPos==1 && _nextFieldYPos==0) // w prawo
         {
             destX = xFieldSize + destPosDepth;
             destY = destPosWidth*yFieldSize;
         }
 
-        if(_nextFieldXPos==0 && _nextFieldYPos==1)
+        if(_nextFieldXPos==0 && _nextFieldYPos==1) // w dół
         {
             destX = xFieldSize - destPosWidth*xFieldSize;
             destY = yFieldSize + destPosDepth;
         }
 
-        if(_nextFieldXPos==-1 && _nextFieldYPos==0)
+        if(_nextFieldXPos==-1 && _nextFieldYPos==0) // w lewo
         {
             destX = -destPosDepth;
             destY = yFieldSize - destPosWidth*yFieldSize;

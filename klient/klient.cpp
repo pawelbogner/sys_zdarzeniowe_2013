@@ -44,6 +44,7 @@ void klient::addRobotToSceneSlot(int32_t id)
 void klient::on_pushButton_clicked()
 {
     std::cerr<<this->client->connect_to_host(this->ui->host->text(), this->ui->port->value(), 2000)<<std::endl;
+    ourEther->start(OURTIMEDELAYMS);
 }
 
 void klient::on_pushButton_2_clicked()
@@ -53,8 +54,7 @@ void klient::on_pushButton_2_clicked()
 
 void klient::on_pushButton_3_clicked()
 {
-//    this->client->register_robot(this->ui->rr_lid->value(), this->ui->rr_dia->value());
-    start();
+    this->client->register_robot(this->ui->rr_lid->value(), this->ui->rr_dia->value());
 }
 
 void klient::on_pushButton_4_clicked()
@@ -63,13 +63,6 @@ void klient::on_pushButton_4_clicked()
     this->client->request_sector(this->ui->s_id->value(), this->ui->s_x->value(), this->ui->s_y->value(), request);
 }
 
-
-//void klient::register_robot_id(int32_t local_id, int32_t id, int32_t sector_size_x, int32_t sector_size_y, int32_t size_x, int32_t size_y)
-//{
-//    this->ui->rr_id->setText(QString("%1").arg(id));
-//    this->ui->rr_ssx->setText(QString("%1").arg(sector_size_x));
-//    this->ui->rr_ssy->setText(QString("%1").arg(sector_size_y));
-//}
 
 void klient::redrawScene()
 {
@@ -114,16 +107,4 @@ void klient::go_to(int32_t id, int32_t goto_x, int32_t goto_y)
     this->ui->gt_x->setText(QString("%1").arg(goto_x));
     this->ui->gt_y->setText(QString("%1").arg(goto_y));
 }
-
-void klient::start()
-{
-    client->register_robot(1,DIAMETER);
-
-    //client->register_robot(2,DIAMETER);
-    //client->register_robot(3,DIAMETER);
-    //client->register_robot(4,DIAMETER);
-    //client->register_robot(5,DIAMETER);
-    ourEther->start(OURTIMEDELAYMS);
-}
-
 

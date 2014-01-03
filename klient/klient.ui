@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>klient</string>
+   <string>Mobile robots fleet simulator</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -34,6 +34,22 @@
              <string>127.0.0.1</string>
             </property>
            </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_6">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>10</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </item>
@@ -60,6 +76,9 @@
            <spacer name="horizontalSpacer_5">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Expanding</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
@@ -123,8 +142,20 @@
       </item>
       <item>
        <widget class="QGroupBox" name="groupBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>250</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="title">
-         <string>Register Robot sector</string>
+         <string>Register robot</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
@@ -132,12 +163,19 @@
            <item>
             <widget class="QLabel" name="label_3">
              <property name="text">
-              <string>LocalID</string>
+              <string>Robot local ID</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QSpinBox" name="rr_lid"/>
+            <widget class="QSpinBox" name="rr_lid">
+             <property name="minimum">
+              <number>1</number>
+             </property>
+             <property name="value">
+              <number>1</number>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
@@ -146,12 +184,19 @@
            <item>
             <widget class="QLabel" name="label_4">
              <property name="text">
-              <string>Diameter</string>
+              <string>Robot diameter</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QSpinBox" name="rr_dia"/>
+            <widget class="QSpinBox" name="rr_dia">
+             <property name="minimum">
+              <number>1</number>
+             </property>
+             <property name="value">
+              <number>10</number>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>
@@ -160,14 +205,17 @@
            <item>
             <widget class="QLabel" name="label_5">
              <property name="text">
-              <string>ID</string>
+              <string>Robot global ID</string>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QLabel" name="rr_id">
              <property name="text">
-              <string>TextLabel</string>
+              <string>-</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
              </property>
             </widget>
            </item>
@@ -178,14 +226,17 @@
            <item>
             <widget class="QLabel" name="label_7">
              <property name="text">
-              <string>SectorSizeX</string>
+              <string>Sector size (x)</string>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QLabel" name="rr_ssx">
              <property name="text">
-              <string>TextLabel</string>
+              <string>unknown</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
              </property>
             </widget>
            </item>
@@ -196,14 +247,14 @@
            <item>
             <widget class="QLabel" name="label_9">
              <property name="text">
-              <string>SectorSizeY</string>
+              <string>Sector size (y)</string>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QLabel" name="rr_ssy">
              <property name="text">
-              <string>TextLabel</string>
+              <string>unknown</string>
              </property>
             </widget>
            </item>
@@ -214,7 +265,7 @@
            <item>
             <widget class="QPushButton" name="pushButton_3">
              <property name="text">
-              <string>PushButton</string>
+              <string>Register robot</string>
              </property>
             </widget>
            </item>
@@ -243,7 +294,7 @@
           <item>
            <widget class="QLabel" name="label_6">
             <property name="text">
-             <string>ID</string>
+             <string>Robot global ID</string>
             </property>
            </widget>
           </item>
@@ -257,7 +308,7 @@
           <item>
            <widget class="QLabel" name="label_8">
             <property name="text">
-             <string>X</string>
+             <string>Req. sector (x)</string>
             </property>
            </widget>
           </item>
@@ -271,7 +322,7 @@
           <item>
            <widget class="QLabel" name="label_10">
             <property name="text">
-             <string>Y</string>
+             <string>Req. sector (y)</string>
             </property>
            </widget>
           </item>
@@ -285,7 +336,7 @@
           <item>
            <widget class="QLabel" name="label_11">
             <property name="text">
-             <string>Stan</string>
+             <string>Request</string>
             </property>
            </widget>
           </item>
@@ -299,14 +350,14 @@
           <item>
            <widget class="QLabel" name="label_13">
             <property name="text">
-             <string>Odpowiedź</string>
+             <string>Server response</string>
             </property>
            </widget>
           </item>
           <item>
            <widget class="QLabel" name="s_resp">
             <property name="text">
-             <string>TextLabel</string>
+             <string/>
             </property>
            </widget>
           </item>
@@ -319,6 +370,9 @@
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
             <property name="sizeHint" stdset="0">
              <size>
               <width>45</width>
@@ -330,7 +384,7 @@
           <item>
            <widget class="QPushButton" name="pushButton_4">
             <property name="text">
-             <string>PushButton</string>
+             <string>Send request</string>
             </property>
            </widget>
           </item>
@@ -341,7 +395,7 @@
       <item>
        <widget class="QGroupBox" name="groupBox_3">
         <property name="title">
-         <string>GOTO</string>
+         <string>Received from server</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_4">
          <item>
@@ -349,14 +403,20 @@
            <item>
             <widget class="QLabel" name="label_12">
              <property name="text">
-              <string>ID</string>
+              <string>Robot global ID</string>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QLabel" name="gt_id">
+             <property name="minimumSize">
+              <size>
+               <width>50</width>
+               <height>0</height>
+              </size>
+             </property>
              <property name="text">
-              <string>TextLabel</string>
+              <string/>
              </property>
             </widget>
            </item>
@@ -367,14 +427,14 @@
            <item>
             <widget class="QLabel" name="label_14">
              <property name="text">
-              <string>X</string>
+              <string>Next sector (x)</string>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QLabel" name="gt_x">
              <property name="text">
-              <string>TextLabel</string>
+              <string/>
              </property>
             </widget>
            </item>
@@ -385,14 +445,14 @@
            <item>
             <widget class="QLabel" name="label_15">
              <property name="text">
-              <string>Y</string>
+              <string>Next sector (y)</string>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QLabel" name="gt_y">
              <property name="text">
-              <string>TextLabel</string>
+              <string/>
              </property>
             </widget>
            </item>
@@ -414,7 +474,7 @@
      <x>0</x>
      <y>0</y>
      <width>796</width>
-     <height>25</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>
