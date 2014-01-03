@@ -52,6 +52,13 @@ public:
     bool getPrevFieldReleased() const;
     void setPrevFieldReleased(bool prevFieldReleased);
 
+
+    int32_t getPrevFieldXPos() const;
+    void setPrevFieldXPos(const int32_t &getPrevFieldXPos);
+
+    int32_t getPrevFieldYPos() const;
+    void setPrevFieldYPos(const int32_t &getPrevFieldYPos);
+
 private:
     int32_t _localId;
     int32_t _diameter;
