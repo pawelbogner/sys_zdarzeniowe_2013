@@ -25,8 +25,8 @@ Force Robot::calculateForce(int32_t xFieldSize, int32_t yFieldSize, boost::share
     Force result = {0.0, 0.0};
 
     /* odpychanie od ścian */
-    result.X += A*(-pow(getXPos(),2) + pow((xFieldSize - getXPos()),2));
-    result.Y += A*(-pow(getYPos(),2) + pow((yFieldSize - getYPos()),2));
+    result.X += A*(pow((xFieldSize - getXPos()),2) - pow(getXPos(),2));
+    result.Y += A*(pow((yFieldSize - getYPos()),2) - pow(getYPos(),2));
 
     /* wyjazd z pola */
     if(_isAllowedToLeaveField)
