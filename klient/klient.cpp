@@ -73,8 +73,8 @@ void klient::redrawScene()
 {
     BOOST_FOREACH(Field field, ourEther->getFields()){
         BOOST_FOREACH(boost::shared_ptr<Robot> robot, field.getRobotsOnField()){
-            robotsOnScene[robot->getGlobalId()]->setRect(robot->getXPos()+field.xSize()*field.xCoord(),
-                                                               robot->getYPos()+field.ySize()*field.yCoord(),
+            robotsOnScene[robot->getGlobalId()]->setRect(      robot->getXPos() - DIAMETER/2 + field.xSize()*field.xCoord(),
+                                                               robot->getYPos() - DIAMETER/2 + field.ySize()*field.yCoord(),
                                                                robot->getDiameter(),
                                                                robot->getDiameter()
                                                                );

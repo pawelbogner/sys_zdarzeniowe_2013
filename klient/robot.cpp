@@ -20,14 +20,14 @@ Force Robot::calculateForce(int32_t xFieldSize, int32_t yFieldSize, boost::share
     // liczy siłę działającą na robota
     const double doNotDivideByZero = 0.0001;
 
-    const double A = 10, B = 0, C = 0;
+    const double A = 0.01, B = 0, C = 10000;
     const double destPosWidth = 0.75;   //0-1, określa położenie potencjału docelowego w proporcji długości ściany, przez którą robot ma przejechać
     const double destPosDepth = 0.1;    //0-1, dodatnia wartość określa odsunięcie potencjału w głąb docelowej komórki (w proporcji długości ściany komórki)
     Force result = {0.0, 0.0};
 
     /* odpychanie od ścian */
-    result.X += A/(pow((xFieldSize - getXPos()),2) - pow(getXPos(),2) + doNotDivideByZero);
-    result.Y += A/(pow((yFieldSize - getYPos()),2) - pow(getYPos(),2) + doNotDivideByZero);
+    result.X += A*(-pow(getXPos(),2) + pow((xFieldSize - getXPos()),2));
+    result.Y += A*(-pow(getYPos(),2) + pow((yFieldSize - getYPos()),2));
 
     /* wyjazd z pola */
     if(_isAllowedToLeaveField)
@@ -65,8 +65,8 @@ Force Robot::calculateForce(int32_t xFieldSize, int32_t yFieldSize, boost::share
     /* drugi robot */
     if(secondRobot)
     {
-        result.X += C/(sgn(getXPos() - secondRobot->getXPos())*pow((getXPos() - secondRobot->getXPos()),2) + doNotDivideByZero);     //Żeby nigdy nie było dzielenia przez zero :)
-        result.Y += C/(sgn(getYPos() - secondRobot->getYPos())*pow((getYPos() - secondRobot->getYPos()),2) + doNotDivideByZero);
+        result.X += C/(sgn(getXPos() - secondRobot->getXPos())*pow((getXPos() - secondRobot->getXPos()),2));
+        result.Y += C/(sgn(getYPos() - secondRobot->getYPos())*pow((getYPos() - secondRobot->getYPos()),2));
     }
 
     return result;
@@ -79,7 +79,7 @@ void Robot::calculatePosition(int32_t xFieldSize, int32_t yFieldSize, boost::sha
     // siły oraz bieżących prędkości wyliczamy nowe położenie
     const double timeStep = static_cast<double>(timeDelay)/1000;   //[s]
 
-    const double robotMass = 0.01;     //[kg]
+    const double robotMass = 1;     //[kg]
     const double maxVelocity = 1;   //[m/s]
 
     Force force = calculateForce(xFieldSize, yFieldSize, secondRobot);
@@ -89,8 +89,11 @@ void Robot::calculatePosition(int32_t xFieldSize, int32_t yFieldSize, boost::sha
 
     _xVel += (force.X/robotMass)*timeStep;
     _yVel += (force.Y/robotMass)*timeStep;
+
     if(_xVel > maxVelocity) _xVel = maxVelocity;
+    else if(_xVel < -maxVelocity) _xVel = -maxVelocity;
     if(_yVel > maxVelocity) _yVel = maxVelocity;
+    else if(_yVel < -maxVelocity) _yVel = -maxVelocity;
 }
 
 
