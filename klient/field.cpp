@@ -58,6 +58,7 @@ void Field::computeOneIterationOfMotion(int timeDelay)
             robot->setPrevFieldReleased(false);
             robot->setNextFieldXPos(0);
             robot->setNextFieldYPos(0);
+            robot->setIsAllowedToLeaveField(false);
         }
         if ((robot->getXPos()>DIAMETER/2 && robot->getXPos()<_xSize-DIAMETER/2) &&
                 (robot->getYPos()>DIAMETER/2 && robot->getYPos()<_ySize-DIAMETER/2)) { // robot zajmuje tylko 1 pole
