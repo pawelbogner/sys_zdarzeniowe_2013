@@ -4,6 +4,8 @@
 #include<stdint.h>
 #include<cmath>
 #include<boost/shared_ptr.hpp>
+#include <stdlib.h>     /* srand, rand */
+#include <time.h>       /* time */
 
 
 struct Force {

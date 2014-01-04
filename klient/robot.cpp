@@ -12,20 +12,27 @@ Robot::Robot(int32_t local_id, int32_t id):
     _localId(local_id), _diameter(DIAMETER), _globalId(id), _isAllowedToLeaveField(false),
     _xPos(0), _yPos(0), _xVel(0), _yVel(0), _nextFieldXPos(0), _nextFieldYPos(0), _prevFieldReleased(true),
     _prevFieldXPos(0), _prevFieldYPos(0)
-{ }
+{
+    srand (time(NULL));
+}
 
 Force Robot::calculateForce(int32_t xFieldSize, int32_t yFieldSize, boost::shared_ptr<Robot> secondRobot)
 {
     // liczy siłę działającą na robota
 
-    const double A = 0.01, Bx = A*pow(xFieldSize,2)*10, By = A*pow(yFieldSize,2)*10, C = 1000;
-    const double destPosWidth = 0.5;   //0-1, określa położenie potencjału docelowego w proporcji długości ściany, przez którą robot ma przejechać
+    const double A = 0.01, Bx = A*pow(xFieldSize,2), By = A*pow(yFieldSize,2), C = 100;
+    const double destPosWidth = 0.75;        //0-1, określa położenie potencjału docelowego w proporcji długości ściany, przez którą robot ma przejechać
     const double destPosDepth = DIAMETER;    //dodatnia wartość określa odsunięcie potencjału w głąb docelowej komórki (w proporcji długości ściany komórki)
+    const double randomForce  = 0.01;        //losowa siła mnożona przez losowe 0-1
+
     Force result = {0.0, 0.0};
 
     /* odpychanie od ścian */
-    result.X += A*(pow((xFieldSize - getXPos()),2) - pow(getXPos(),2));
-    result.Y += A*(pow((yFieldSize - getYPos()),2) - pow(getYPos(),2));
+    result.X += A*sgn(xFieldSize/2 - getXPos())*(pow((xFieldSize/2 - getXPos()),2));
+    result.Y += A*sgn(yFieldSize/2 - getYPos())*(pow((yFieldSize/2 - getYPos()),2));
+
+    //result.X += A*(pow((xFieldSize - getXPos()),2) - pow(getXPos(),2));
+    //result.Y += A*(pow((yFieldSize - getYPos()),2) - pow(getYPos(),2));
 
     /* wyjazd z pola */
     if(_isAllowedToLeaveField)
@@ -58,6 +65,7 @@ Force Robot::calculateForce(int32_t xFieldSize, int32_t yFieldSize, boost::share
 
         result.X += Bx*(sgn(destX - getXPos()));
         result.Y += By*(sgn(destY - getYPos()));
+
         //result.X += B/(sgn(destX - getXPos())*pow((destX - getXPos()),2));
         //result.Y += B/(sgn(destY - getYPos())*pow((destY - getYPos()),2));
     }
@@ -68,9 +76,13 @@ Force Robot::calculateForce(int32_t xFieldSize, int32_t yFieldSize, boost::share
         result.X += C/(getXPos() - secondRobot->getXPos());
         result.Y += C/(getYPos() - secondRobot->getYPos());
 
-//        result.X += C/(sgn(getXPos() - secondRobot->getXPos())*pow((getXPos() - secondRobot->getXPos()),2));
-//        result.Y += C/(sgn(getYPos() - secondRobot->getYPos())*pow((getYPos() - secondRobot->getYPos()),2));
+        //result.X += C/(sgn(getXPos() - secondRobot->getXPos())*pow((getXPos() - secondRobot->getXPos()),2));
+        //result.Y += C/(sgn(getYPos() - secondRobot->getYPos())*pow((getYPos() - secondRobot->getYPos()),2));
     }
+
+    /* losowa składowa */
+    result.X += rand()*randomForce*result.X;
+    result.Y += rand()*randomForce*result.Y;
 
     return result;
 }
