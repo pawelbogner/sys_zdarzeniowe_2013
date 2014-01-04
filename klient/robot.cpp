@@ -20,7 +20,7 @@ Force Robot::calculateForce(int32_t xFieldSize, int32_t yFieldSize, boost::share
 {
     // liczy siłę działającą na robota
 
-    const double A = 0.01, Bx = A*pow(xFieldSize,2), By = A*pow(yFieldSize,2), C = 100;
+    const double A = 0.5, Bx = A*pow(xFieldSize,2), By = A*pow(yFieldSize,2), C = 100;
     const double destPosWidth = 0.75;        //0-1, określa położenie potencjału docelowego w proporcji długości ściany, przez którą robot ma przejechać
     const double destPosDepth = DIAMETER;    //dodatnia wartość określa odsunięcie potencjału w głąb docelowej komórki (w proporcji długości ściany komórki)
     const double randomForce  = 0.01;        //losowa siła mnożona przez losowe 0-1
@@ -28,9 +28,15 @@ Force Robot::calculateForce(int32_t xFieldSize, int32_t yFieldSize, boost::share
     Force result = {0.0, 0.0};
 
     /* odpychanie od ścian */
-    result.X += A*sgn(xFieldSize/2 - getXPos())*(pow((xFieldSize/2 - getXPos()),2));
-    result.Y += A*sgn(yFieldSize/2 - getYPos())*(pow((yFieldSize/2 - getYPos()),2));
+    //R, okrągłe poziomice
+    result.X += A*(xFieldSize/2 - getXPos());
+    result.Y += A*(yFieldSize/2 - getYPos());
 
+    //R^2, okrągłe poziomice
+    //result.X += A*sgn(xFieldSize/2 - getXPos())*(pow((xFieldSize/2 - getXPos()),2));
+    //result.Y += A*sgn(yFieldSize/2 - getYPos())*(pow((yFieldSize/2 - getYPos()),2));
+
+    //R^2, prostokątne poziomice
     //result.X += A*(pow((xFieldSize - getXPos()),2) - pow(getXPos(),2));
     //result.Y += A*(pow((yFieldSize - getYPos()),2) - pow(getYPos(),2));
 
@@ -81,8 +87,8 @@ Force Robot::calculateForce(int32_t xFieldSize, int32_t yFieldSize, boost::share
     }
 
     /* losowa składowa */
-    result.X += rand()*randomForce*result.X;
-    result.Y += rand()*randomForce*result.Y;
+    result.X += ((rand()%1000)/1000 - 0.5)*randomForce*result.X;
+    result.Y += ((rand()%1000)/1000 - 0.5)*randomForce*result.Y;
 
     return result;
 }
