@@ -10,7 +10,9 @@ int sgn(double val)
 
 double distance(double x1, double y1, double x2, double y2)
 {
-    return(sqrt( pow((x2-x1),2) + pow((y2-y1),2) ));
+    double ans = sqrt( pow((x2-x1),2) + pow((y2-y1),2) );
+    if(ans) return(ans);
+    else return(0.00000000001);
 }
 
 Robot::Robot(int32_t local_id, int32_t id):
@@ -25,25 +27,26 @@ Force Robot::calculateForce(int32_t xFieldSize, int32_t yFieldSize, boost::share
 {
     // liczy siłę działającą na robota
 
-    const double Ax = 0.1, Ay = 0.1, Bx = 500000, By = 500000, Cx = 10000, Cy = 10000;
+    const double A = 5000,
+                 B = 50,
+                 C = 100;
     const double destPosWidth = 0.75;        //0-1, określa położenie potencjału docelowego w proporcji długości ściany, przez którą robot ma przejechać
-    const double destPosDepth = DIAMETER;    //dodatnia wartość określa odsunięcie potencjału w głąb docelowej komórki (w proporcji długości ściany komórki)
-    const double randomForce  = 0.01;        //losowa siła mnożona przez losowe 0-1
+    const double destPosDepth = 0.1;         //dodatnia wartość [0;1], określa odsunięcie potencjału w głąb docelowej komórki
+    const double randomForce  = 0.01;        //losowa siła mnożona przez losowe [-0.5;0.5]
+
+    //współrzędne robotów znormalizowane w fukcji wielkości pola, aby zawsze stosunek sił był ten sam
+    const double myNormX = getXPos()/xFieldSize, myNormY = getYPos()/yFieldSize;
+    const double normXFieldSize = 1, normYFieldSize = 1; //double, żeby nie robić wszędzie rzutowania :)
 
     Force result = {0.0, 0.0};
 
     /* odpychanie od ścian */
-    //R^2, okrągłe poziomice
-    result.X += Ax*sgn(xFieldSize/2 - getXPos())*(pow((xFieldSize/2 - getXPos()),2));
-    result.Y += Ay*sgn(yFieldSize/2 - getYPos())*(pow((yFieldSize/2 - getYPos()),2));
-
-    //R, okrągłe poziomice
-    //result.X += A*(xFieldSize/2 - getXPos());
-    //result.Y += A*(yFieldSize/2 - getYPos());
-
-    //R^2, prostokątne poziomice
-    //result.X += A*(pow((xFieldSize - getXPos()),2) - pow(getXPos(),2));
-    //result.Y += A*(pow((yFieldSize - getYPos()),2) - pow(getYPos(),2));
+    //cos(alpha)*A*R^2
+    result.X += ((normXFieldSize/2)-myNormX)/(distance(myNormX, myNormY, normXFieldSize/2, normYFieldSize/2))
+               * A*pow(distance(myNormX, myNormY, normXFieldSize/2, normYFieldSize/2),2);
+    //sin(alpha)*A*R^2
+    result.Y += ((normYFieldSize/2)-myNormY)/(distance(myNormX, myNormY, normXFieldSize/2, normYFieldSize/2))
+               * A*pow(distance(myNormX, myNormY, normXFieldSize/2, normYFieldSize/2),2);
 
     /* wyjazd z pola */
     if(_isAllowedToLeaveField)
@@ -52,50 +55,52 @@ Force Robot::calculateForce(int32_t xFieldSize, int32_t yFieldSize, boost::share
 
         if(_nextFieldXPos==0 && _nextFieldYPos==-1) // w górę
         {
-            destX = destPosWidth*xFieldSize;
+            destX = destPosWidth*normXFieldSize;
             destY = -destPosDepth;
         }
 
         if(_nextFieldXPos==1 && _nextFieldYPos==0) // w prawo
         {
-            destX = xFieldSize + destPosDepth;
-            destY = destPosWidth*yFieldSize;
+            destX = normXFieldSize + destPosDepth;
+            destY = destPosWidth*normYFieldSize;
         }
 
         if(_nextFieldXPos==0 && _nextFieldYPos==1) // w dół
         {
-            destX = xFieldSize - destPosWidth*xFieldSize;
-            destY = yFieldSize + destPosDepth;
+            destX = normXFieldSize - destPosWidth*normXFieldSize;
+            destY = normYFieldSize + destPosDepth;
         }
 
         if(_nextFieldXPos==-1 && _nextFieldYPos==0) // w lewo
         {
             destX = -destPosDepth;
-            destY = yFieldSize - destPosWidth*yFieldSize;
+            destY = normYFieldSize - destPosWidth*normYFieldSize;
         }
 
         //cos(alpha)*B/R^2
-        result.X += ((destX-getXPos())/distance(getXPos(), getYPos(), destX, destY))
-                   * Bx/pow(distance(getXPos(), getYPos(), destX, destY),2);
+        result.X += ((destX-myNormX)/distance(myNormX, myNormY, destX, destY))
+                   * B/pow(distance(myNormX, myNormY, destX, destY),2);
         //sin(alpha)*B/R^2
-        result.Y += (destY-getYPos())/distance(getXPos(), getYPos(), destX, destY)
-                   * By/pow(distance(getXPos(), getYPos(), destX, destY),2);
+        result.Y += (destY-myNormY)/distance(myNormX, myNormY, destX, destY)
+                   * B/pow(distance(myNormX, myNormY, destX, destY),2);
     }
 
     /* drugi robot */
     if(secondRobot)
     {
+        const double secRobNormX = secondRobot->getXPos()/xFieldSize, secRobNormY = secondRobot->getYPos()/yFieldSize;
+
         //cos(alpha)*C/R^2
-        result.X += (getXPos()-secondRobot->getXPos())/(distance(getXPos(), getYPos(), secondRobot->getXPos(), secondRobot->getYPos()))
-                   * Cx/pow(distance(getXPos(), getYPos(), secondRobot->getXPos(), secondRobot->getYPos()),2);
+        result.X += (myNormX-secRobNormX)/(distance(myNormX, myNormY, secRobNormX, secRobNormY))
+                   * C/pow(distance(myNormX, myNormY, secRobNormX, secRobNormY),2);
         //sin(alpha)*C/R^2
-        result.Y += (getYPos()-secondRobot->getYPos())/(distance(getXPos(), getYPos(), secondRobot->getXPos(), secondRobot->getYPos()))
-                   * Cy/pow(distance(getXPos(), getYPos(), secondRobot->getXPos(), secondRobot->getYPos()),2);
+        result.Y += (myNormY-secRobNormY)/(distance(myNormX, myNormY, secRobNormX, secRobNormY))
+                   * C/pow(distance(myNormX, myNormY, secRobNormX, secRobNormY),2);
     }
 
     /* losowa składowa */
-    //result.X += ((rand()%1000)/1000 - 0.5)*randomForce*result.X;
-    //result.Y += ((rand()%1000)/1000 - 0.5)*randomForce*result.Y;
+    result.X += ((rand()%1000)/1000 - 0.5)*randomForce*result.X;
+    result.Y += ((rand()%1000)/1000 - 0.5)*randomForce*result.Y;
 
     return result;
 }
@@ -107,13 +112,37 @@ void Robot::calculatePosition(int32_t xFieldSize, int32_t yFieldSize, boost::sha
     // siły oraz bieżących prędkości wyliczamy nowe położenie
     const double timeStep = static_cast<double>(timeDelay)/1000;   //[s]
 
-    const double robotMass = 1;     //[kg]
-    const double maxVelocity = 2;   //[m/s]
+    const double robotMass = 10;     //[kg]
+    const double maxVelocity = 5;   //[m/s]
 
     Force force = calculateForce(xFieldSize, yFieldSize, secondRobot);
 
-    _xPos = getXPos() + timeStep*_xVel + (force.X/robotMass)*pow(timeStep,2)/2;
-    _yPos = getYPos() + timeStep*_yVel + (force.Y/robotMass)*pow(timeStep,2)/2;
+    /* Ograniczenie przemieszczenia zgodnie z maxVelocity */
+    if((timeStep*_xVel + (force.X/robotMass)*pow(timeStep,2)/2) > maxVelocity*timeStep)
+    {
+        _xPos = getXPos() + timeStep*maxVelocity;
+    }
+    else if((timeStep*_xVel + (force.X/robotMass)*pow(timeStep,2)/2) < -maxVelocity*timeStep)
+    {
+        _xPos = getXPos() - timeStep*maxVelocity;
+    }
+    else
+    {
+        _xPos = getXPos() + timeStep*_xVel + (force.X/robotMass)*pow(timeStep,2)/2;
+    }
+
+    if(timeStep*_yVel + (force.Y/robotMass)*pow(timeStep,2)/2 > maxVelocity*timeStep)
+    {
+        _yPos = getYPos() + timeStep*maxVelocity;
+    }
+    else if(timeStep*_yVel + (force.Y/robotMass)*pow(timeStep,2)/2 < -maxVelocity*timeStep)
+    {
+        _yPos = getYPos() - timeStep*maxVelocity;
+    }
+    else
+    {
+        _yPos = getYPos() + timeStep*_yVel + (force.Y/robotMass)*pow(timeStep,2)/2;
+    }
 
     _xVel += (force.X/robotMass)*timeStep;
     _yVel += (force.Y/robotMass)*timeStep;
@@ -123,7 +152,6 @@ void Robot::calculatePosition(int32_t xFieldSize, int32_t yFieldSize, boost::sha
     if(_yVel > maxVelocity) _yVel = maxVelocity;
     else if(_yVel < -maxVelocity) _yVel = -maxVelocity;
 }
-
 
 
 int32_t Robot::getLocalId() const
