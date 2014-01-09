@@ -75,10 +75,10 @@ Force Robot::calculateForce(int32_t xFieldSize, int32_t yFieldSize, boost::share
         }
 
         //cos(alpha)*B/R^2
-        result.X += (distance(getXPos(), getYPos(), destX, destY)/(destY-getYPos()))
+        result.X += ((destX-getXPos())/distance(getXPos(), getYPos(), destX, destY))
                    * Bx/pow(distance(getXPos(), getYPos(), destX, destY),2);
         //sin(alpha)*B/R^2
-        result.Y += (distance(getXPos(), getYPos(), destX, destY)/(destX-getXPos()))
+        result.Y += (destY-getYPos())/distance(getXPos(), getYPos(), destX, destY)
                    * By/pow(distance(getXPos(), getYPos(), destX, destY),2);
     }
 
