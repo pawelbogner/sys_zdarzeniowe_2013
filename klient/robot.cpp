@@ -74,29 +74,28 @@ Force Robot::calculateForce(int32_t xFieldSize, int32_t yFieldSize, boost::share
             destY = yFieldSize - destPosWidth*yFieldSize;
         }
 
+        //cos(alpha)*B/R^2
+        result.X += (distance(getXPos(), getYPos(), destX, destY)/(destY-getYPos()))
+                   * Bx/pow(distance(getXPos(), getYPos(), destX, destY),2);
         //sin(alpha)*B/R^2
-        result.X += (distance(getXPos(), getYPos(), destX, destY)/(destY-getYPos())) * Bx/pow(distance(getXPos(), getYPos(), destX, destY),2);
-        result.Y += (distance(getXPos(), getYPos(), destX, destY)/(destX-getXPos())) * By/pow(distance(getXPos(), getYPos(), destX, destY),2);
-
-        //result.X += B/(sgn(destX - getXPos())*pow((destX - getXPos()),2));
-        //result.Y += B/(sgn(destY - getYPos())*pow((destY - getYPos()),2));
+        result.Y += (distance(getXPos(), getYPos(), destX, destY)/(destX-getXPos()))
+                   * By/pow(distance(getXPos(), getYPos(), destX, destY),2);
     }
 
     /* drugi robot */
     if(secondRobot)
     {
+        //cos(alpha)*C/R^2
+        result.X += (getXPos()-secondRobot->getXPos())/(distance(getXPos(), getYPos(), secondRobot->getXPos(), secondRobot->getYPos()))
+                   * Cx/pow(distance(getXPos(), getYPos(), secondRobot->getXPos(), secondRobot->getYPos()),2);
         //sin(alpha)*C/R^2
-        result.X += (distance(getXPos(), getYPos(), secondRobot->getXPos(), secondRobot->getYPos())/(getYPos()-secondRobot->getYPos())) * Cx/pow(distance(getXPos(), getYPos(), secondRobot->getXPos(), secondRobot->getYPos()),2);
-        result.Y += (distance(getXPos(), getYPos(), secondRobot->getXPos(), secondRobot->getYPos())/(getXPos()-secondRobot->getXPos())) * Cy/pow(distance(getXPos(), getYPos(), secondRobot->getXPos(), secondRobot->getYPos()),2);
-
-
-        //result.X += C/(sgn(getXPos() - secondRobot->getXPos())*pow((getXPos() - secondRobot->getXPos()),2));
-        //result.Y += C/(sgn(getYPos() - secondRobot->getYPos())*pow((getYPos() - secondRobot->getYPos()),2));
+        result.Y += (getYPos()-secondRobot->getYPos())/(distance(getXPos(), getYPos(), secondRobot->getXPos(), secondRobot->getYPos()))
+                   * Cy/pow(distance(getXPos(), getYPos(), secondRobot->getXPos(), secondRobot->getYPos()),2);
     }
 
     /* losowa składowa */
-    result.X += ((rand()%1000)/1000 - 0.5)*randomForce*result.X;
-    result.Y += ((rand()%1000)/1000 - 0.5)*randomForce*result.Y;
+    //result.X += ((rand()%1000)/1000 - 0.5)*randomForce*result.X;
+    //result.Y += ((rand()%1000)/1000 - 0.5)*randomForce*result.Y;
 
     return result;
 }
@@ -123,8 +122,6 @@ void Robot::calculatePosition(int32_t xFieldSize, int32_t yFieldSize, boost::sha
     else if(_xVel < -maxVelocity) _xVel = -maxVelocity;
     if(_yVel > maxVelocity) _yVel = maxVelocity;
     else if(_yVel < -maxVelocity) _yVel = -maxVelocity;
-//    _xPos+=_nextFieldXPos;
-//    _yPos+=_nextFieldYPos;
 }
 
 
