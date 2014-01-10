@@ -7,7 +7,7 @@ SerwerMain::SerwerMain(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    this->serwer = new QSerwer(50, 50, 10, 10, this);
+    this->serwer = new QSerwer(25, 25, 10, 10, this);
     connect(this->serwer, SIGNAL(data(QBytes)), this, SLOT(data(QBytes)));
 }
 

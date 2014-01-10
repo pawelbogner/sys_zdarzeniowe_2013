@@ -27,9 +27,9 @@ Force Robot::calculateForce(int32_t xFieldSize, int32_t yFieldSize, boost::share
 {
     // liczy siłę działającą na robota
 
-    const double A = 5000,
-                 B = 50,
-                 C = 100;
+    const double A = 1500,      //odpychanie ścian
+                 B = 50,        //wyjazd
+                 C = 20;       //drugi robot
     const double destPosWidth = 0.75;        //0-1, określa położenie potencjału docelowego w proporcji długości ściany, przez którą robot ma przejechać
     const double destPosDepth = 0.1;         //dodatnia wartość [0;1], określa odsunięcie potencjału w głąb docelowej komórki
     const double randomForce  = 0.01;        //losowa siła mnożona przez losowe [-0.5;0.5]
@@ -113,8 +113,9 @@ void Robot::calculatePosition(int32_t xFieldSize, int32_t yFieldSize, boost::sha
     const double timeStep = static_cast<double>(timeDelay)/1000;   //[s]
 
     const double robotMass = 1;     //[kg]
-    const double maxVelocity = 5;   //[m/s]
-    const double frictionFactor = 10;
+    const double maxVelocityX = 0.2*xFieldSize;
+    const double maxVelocityY = 0.2*yFieldSize;
+    const double frictionFactor = 0;
     const double brakingFactor = 0.3;
 
     bool         brake = false;
@@ -132,26 +133,26 @@ void Robot::calculatePosition(int32_t xFieldSize, int32_t yFieldSize, boost::sha
         brake = true;
 
     /* Ograniczenie przemieszczenia zgodnie z maxVelocity */
-    if((timeStep*_xVel + (force.X/robotMass)*pow(timeStep,2)/2) > maxVelocity*timeStep)
+    if((timeStep*_xVel + (force.X/robotMass)*pow(timeStep,2)/2) > maxVelocityX*timeStep)
     {
-        _xPos = getXPos() + timeStep*maxVelocity;
+        _xPos = getXPos() + timeStep*maxVelocityX;
     }
-    else if((timeStep*_xVel + (force.X/robotMass)*pow(timeStep,2)/2) < -maxVelocity*timeStep)
+    else if((timeStep*_xVel + (force.X/robotMass)*pow(timeStep,2)/2) < -maxVelocityX*timeStep)
     {
-        _xPos = getXPos() - timeStep*maxVelocity;
+        _xPos = getXPos() - timeStep*maxVelocityX;
     }
     else
     {
         _xPos = getXPos() + timeStep*_xVel + (force.X/robotMass)*pow(timeStep,2)/2;
     }
 
-    if(timeStep*_yVel + (force.Y/robotMass)*pow(timeStep,2)/2 > maxVelocity*timeStep)
+    if(timeStep*_yVel + (force.Y/robotMass)*pow(timeStep,2)/2 > maxVelocityY*timeStep)
     {
-        _yPos = getYPos() + timeStep*maxVelocity;
+        _yPos = getYPos() + timeStep*maxVelocityY;
     }
-    else if(timeStep*_yVel + (force.Y/robotMass)*pow(timeStep,2)/2 < -maxVelocity*timeStep)
+    else if(timeStep*_yVel + (force.Y/robotMass)*pow(timeStep,2)/2 < -maxVelocityY*timeStep)
     {
-        _yPos = getYPos() - timeStep*maxVelocity;
+        _yPos = getYPos() - timeStep*maxVelocityY;
     }
     else
     {
@@ -163,10 +164,10 @@ void Robot::calculatePosition(int32_t xFieldSize, int32_t yFieldSize, boost::sha
     _yVel += (force.Y/robotMass)*timeStep;
     if(brake) _yVel *= brakingFactor;
 
-    if(_xVel > maxVelocity) _xVel = maxVelocity;
-    else if(_xVel < -maxVelocity) _xVel = -maxVelocity;
-    if(_yVel > maxVelocity) _yVel = maxVelocity;
-    else if(_yVel < -maxVelocity) _yVel = -maxVelocity;
+    if(_xVel > maxVelocityX) _xVel = maxVelocityX;
+    else if(_xVel < -maxVelocityX) _xVel = -maxVelocityX;
+    if(_yVel > maxVelocityY) _yVel = maxVelocityY;
+    else if(_yVel < -maxVelocityY) _yVel = -maxVelocityY;
 }
 
 
