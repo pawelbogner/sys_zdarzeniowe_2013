@@ -112,10 +112,24 @@ void Robot::calculatePosition(int32_t xFieldSize, int32_t yFieldSize, boost::sha
     // siły oraz bieżących prędkości wyliczamy nowe położenie
     const double timeStep = static_cast<double>(timeDelay)/1000;   //[s]
 
-    const double robotMass = 10;     //[kg]
+    const double robotMass = 1;     //[kg]
     const double maxVelocity = 5;   //[m/s]
+    const double frictionFactor = 10;
+    const double brakingFactor = 0.3;
+
+    bool         brake = false;
 
     Force force = calculateForce(xFieldSize, yFieldSize, secondRobot);
+
+    /* Siła tłumiąca */
+    if(force.X > abs(frictionFactor*robotMass*9.81))
+        force.X += frictionFactor*(-sgn(_xVel))*robotMass*9.81;
+    else
+        brake = true;
+    if(force.Y > abs(frictionFactor*robotMass*9.81))
+        force.Y += frictionFactor*(-sgn(_yVel))*robotMass*9.81;
+    else
+        brake = true;
 
     /* Ograniczenie przemieszczenia zgodnie z maxVelocity */
     if((timeStep*_xVel + (force.X/robotMass)*pow(timeStep,2)/2) > maxVelocity*timeStep)
@@ -145,7 +159,9 @@ void Robot::calculatePosition(int32_t xFieldSize, int32_t yFieldSize, boost::sha
     }
 
     _xVel += (force.X/robotMass)*timeStep;
+    if(brake) _xVel *= brakingFactor;
     _yVel += (force.Y/robotMass)*timeStep;
+    if(brake) _yVel *= brakingFactor;
 
     if(_xVel > maxVelocity) _xVel = maxVelocity;
     else if(_xVel < -maxVelocity) _xVel = -maxVelocity;
