@@ -1,3 +1,12 @@
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+////                                                  ////
+////                 WERSJA 0.2                       ////
+////                                                  ////
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+
+
 #ifndef QPROTOCOL_H
 #define QPROTOCOL_H
 
@@ -76,6 +85,8 @@ typedef struct
     int32_t y;
     eSectorRequestResponse response;
     int32_t clients;
+    int32_t goto_x;
+    int32_t goto_y;
 } tResponseSector;
 
 typedef struct
@@ -86,23 +97,6 @@ typedef struct
 #define RESPONSE_SECTOR 4
 
 
-
-
-
-
-typedef struct
-{
-    int32_t id;
-    int32_t goto_x;
-    int32_t goto_y;
-} tGoToTask;
-
-typedef struct
-{
-    tHeader header;
-    tGoToTask data;
-} tGoToTaskSend;
-#define GOTO_TASK 5
 
 
 typedef struct

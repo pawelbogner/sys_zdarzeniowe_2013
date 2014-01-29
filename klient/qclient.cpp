@@ -63,12 +63,13 @@ void QClient::ready_read()
         socket->read((char*)&packet, sizeof(packet));
         socket->flush();
         std::cerr << "; data: ";
-        std::cerr << packet.id << ", " << packet.x << ", " << packet.y << ", " << packet.response << ", " << packet.clients << "." << std::endl;
+        std::cerr << packet.id << ", " << packet.x << ", " << packet.y << ", " << packet.response << ", " << packet.clients << ", " << packet.goto_x << ", " << packet.goto_y << "." << std::endl;
 
+        emit go_to(packet.id, packet.goto_x, packet.goto_y);
         emit response_sector(packet.id, packet.x, packet.y, packet.response, packet.clients);
     }
         break;
-    case GOTO_TASK:
+    /*case GOTO_TASK:
     {
         tGoToTask packet;
         socket->read((char*)&packet, sizeof(packet));
@@ -79,7 +80,7 @@ void QClient::ready_read()
         emit go_to(packet.id, packet.goto_x, packet.goto_y);
 
     }
-        break;
+        break;*/
 
     }
     socket->flush();

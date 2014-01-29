@@ -34,10 +34,9 @@ public slots:
     // x, y to numery sektora,
     // response określa czy można wjechać na sektor wartości eAffirmative = 1, eNegative = 0
     // clients określa ile klientów jest w sektorze
-    void response_sector(int32_t id, int32_t x, int32_t y, int32_t response, int32_t clients);
+    void response_sector(int32_t id, int32_t x, int32_t y, int32_t response, int32_t clients, int32_t goto_x, int32_t goto_y);
 
     // zlecenie zadania przejazdu do punktu x, y w jednostkach mapy
-    void goto_task(int32_t id, int32_t goto_x, int32_t goto_y);
 
 
 private slots:
@@ -61,6 +60,7 @@ private:
     uint32_t sector_size_y;
     uint32_t size_x;
     uint32_t size_y;
+
 signals:
     // rejestruje robota. diameter jest średnicą robota w jednostkach mapy
     void register_robot  (int32_t robot_id, int32_t diameter);

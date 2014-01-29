@@ -127,7 +127,7 @@ void QSerwer::ReadData(QObject *s)
     std::cerr << __PRETTY_FUNCTION__ << std::endl;
 }
 
-void QSerwer::response_sector(int32_t id, int32_t x, int32_t y, int32_t resp, int32_t clients)
+void QSerwer::response_sector(int32_t id, int32_t x, int32_t y, int32_t resp, int32_t clients, int32_t goto_x, int32_t goto_y)
 {
     tResponseSectorSend response;
     QTcpSocket *socket;
@@ -139,31 +139,8 @@ void QSerwer::response_sector(int32_t id, int32_t x, int32_t y, int32_t resp, in
     response.data.y = y;
     response.data.response = static_cast<eSectorRequestResponse>(resp);
     response.data.clients = clients;
-
-    socket = 0;
-    for (int i = 0; i < this->list_of_robots.size(); i++)
-    {
-        if (this->list_of_robots.at(i).id == id)
-        {
-            socket = this->list_of_robots.at(i).connection;
-            socket->write((char*)&response, sizeof(response));
-            socket->flush();
-            break;
-        }
-    }
-    std::cerr << __PRETTY_FUNCTION__ << std::endl;
-}
-
-void QSerwer::goto_task(int32_t id, int32_t goto_x, int32_t goto_y)
-{
-    tGoToTaskSend response;
-    QTcpSocket *socket;
-    response.header.type = GOTO_TASK;
-    response.header.length = sizeof(response.data);
-
-    response.data.id = id;
-    response.data.goto_x = goto_x;
-    response.data.goto_y = goto_y;
+    response.data.goto_x=goto_x;
+    response.data.goto_y=goto_y;
 
     socket = 0;
     for (int i = 0; i < this->list_of_robots.size(); i++)
