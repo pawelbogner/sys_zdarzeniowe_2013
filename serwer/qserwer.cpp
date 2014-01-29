@@ -127,7 +127,7 @@ void QSerwer::ReadData(QObject *s)
     std::cerr << __PRETTY_FUNCTION__ << std::endl;
 }
 
-void QSerwer::response_sector(int32_t id, int32_t x, int32_t y, eSectorRequestResponse resp, int32_t clients)
+void QSerwer::response_sector(int32_t id, int32_t x, int32_t y, int32_t resp, int32_t clients)
 {
     tResponseSectorSend response;
     QTcpSocket *socket;
@@ -137,7 +137,7 @@ void QSerwer::response_sector(int32_t id, int32_t x, int32_t y, eSectorRequestRe
     response.data.id = id;
     response.data.x = x;
     response.data.y = y;
-    response.data.response = eAffirmative;//static_cast<eSectorRequestResponse>(responseBF);
+    response.data.response = static_cast<eSectorRequestResponse>(resp);
     response.data.clients = clients;
 
     socket = 0;

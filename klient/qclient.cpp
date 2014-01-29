@@ -10,6 +10,8 @@ QClient::QClient(QObject *parent) :
     connect(this->socket, SIGNAL(connected()), this, SLOT(connected()));
     connect(this->socket, SIGNAL(disconnected()), this, SLOT(disconnected()));
     connect(this->socket, SIGNAL(readyRead()), this, SLOT(ready_read()));
+
+    _localId=0;
 }
 
 bool QClient::connect_to_host(QString host, qint16 port, int timeout)
@@ -52,7 +54,7 @@ void QClient::ready_read()
         std::cerr << "; data: ";
         std::cerr << packet.local_id << ", " << packet.id << ", " << packet.sector_size_x << ", " << packet.sector_size_y << ", " << packet.size_x << ", " << packet.size_y << "." << std::endl;
 
-        emit register_robot_id(packet.local_id, packet.id, packet.sector_size_x, packet.sector_size_y, packet.size_x, packet.size_y);
+        emit register_robot_id(packet.local_id, packet.id, _currentRobotStartingX, _currentRobotStartingY, packet.sector_size_x, packet.sector_size_y, packet.size_x, packet.size_y);
     }
         break;
     case RESPONSE_SECTOR:
@@ -83,14 +85,17 @@ void QClient::ready_read()
     socket->flush();
 }
 
-void QClient::register_robot(int32_t local_id, int32_t diameter)
+void QClient::register_robot(int32_t startingX, int32_t startingY, int32_t diameter)
 {
     tRegisterRobotSend response;
     response.header.type = REGISTER_ROBOT;
     response.header.length = sizeof(response.data);
 
-    response.data.local_id = local_id;
+    response.data.local_id = ++_localId;
     response.data.diameter = diameter;
+
+    _currentRobotStartingX=startingX;
+    _currentRobotStartingY=startingY;
 
     socket->write((char*)&response, sizeof(response));
     socket->flush();

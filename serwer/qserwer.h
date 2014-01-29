@@ -34,7 +34,7 @@ public slots:
     // x, y to numery sektora,
     // response określa czy można wjechać na sektor wartości eAffirmative = 1, eNegative = 0
     // clients określa ile klientów jest w sektorze
-    void response_sector(int32_t id, int32_t x, int32_t y, eSectorRequestResponse response, int32_t clients);
+    void response_sector(int32_t id, int32_t x, int32_t y, int32_t response, int32_t clients);
 
     // zlecenie zadania przejazdu do punktu x, y w jednostkach mapy
     void goto_task(int32_t id, int32_t goto_x, int32_t goto_y);

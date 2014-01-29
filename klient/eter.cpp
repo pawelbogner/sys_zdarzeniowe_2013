@@ -43,6 +43,8 @@ void Ether::createFields(int32_t size_x, int32_t size_y, int32_t sector_size_x, 
 
 void Ether::registerRobotInEther(int32_t local_id,
                                  int32_t id,
+                                 int32_t startingX,
+                                 int32_t startingY,
                                  int32_t sector_size_x,
                                  int32_t sector_size_y,
                                  int32_t size_x,
@@ -56,11 +58,15 @@ void Ether::registerRobotInEther(int32_t local_id,
     newRobot->setXPos(DIAMETER);
     newRobot->setYPos(DIAMETER);
     _allRobotsOnScene.push_back(newRobot);
-    getFields().at(0).addRobot(getRobotWithMatchingId(id));
+    if (startingX>size_x-1) {
+        startingX=0;
+    }
+    if (startingY>size_y-1) {
+        startingY=0;
+    }
+    getFields().at(startingY+startingX*size_y).addRobot(getRobotWithMatchingId(id));
+    _client->current_position(id,startingX,startingY);
     emit addRobotToSceneSignal(id);
-    //    newRobot pNewRobot(newRobot(local_id, id, size_x, size_y));/* = new Robot(local_id, id, size_x, size_y);*/
-    //    _allRobotsOnScene.push_back(newRobot);
-    // uh jeszcze trzeba ogarnąć tę ewentualną zmicd anę wielkosci pola
 }
 
 void Ether::setRobotNextField(int32_t id, int32_t nextFieldX, int32_t nextFieldY)
@@ -92,6 +98,7 @@ Field *Ether::findFieldWithCoords(int32_t x, int32_t y) {
     }
     return NULL;
 }
+
 QClient *Ether::client() const
 {
     return _client;

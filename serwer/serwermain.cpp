@@ -8,7 +8,7 @@ SerwerMain::SerwerMain(QWidget *parent) :
     ui->setupUi(this);
 
     this->serwer = new QSerwer(25, 25, 10, 10, this);
-    connect(this->serwer, SIGNAL(data(QBytes)), this, SLOT(data(QBytes)));
+    //connect(this->serwer, SIGNAL(data(QBytes)), this, SLOT(data(QBytes)));
 }
 
 SerwerMain::~SerwerMain()
@@ -29,7 +29,7 @@ void SerwerMain::on_pushButton_3_clicked()
 
 void SerwerMain::on_pushButton_4_clicked()
 {
-    this->serwer->response_sector(this->ui->se_id->value(), this->ui->se_x->value(), this->ui->se_y->value(), eAffirmative, this->ui->se_cli->value());
+    this->serwer->response_sector(this->ui->se_id->value(), this->ui->se_x->value(), this->ui->se_y->value(), this->ui->se_resp->value(), this->ui->se_cli->value());
 }
 
 void SerwerMain::on_se_resp_valueChanged(int arg1)

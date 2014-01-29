@@ -13,7 +13,7 @@ klient::klient(QWidget *parent) :
 
     this->client = new QClient(this);
     this->ourEther = new Ether(this->client,this);
-    connect(this->client, SIGNAL(register_robot_id(int32_t,int32_t,int32_t,int32_t,int32_t,int32_t)), this->ourEther, SLOT(registerRobotInEther(int32_t,int32_t,int32_t,int32_t,int32_t,int32_t)));
+    connect(this->client, SIGNAL(register_robot_id(int32_t,int32_t,int32_t,int32_t,int32_t,int32_t,int32_t,int32_t)), this->ourEther, SLOT(registerRobotInEther(int32_t,int32_t,int32_t,int32_t,int32_t,int32_t,int32_t,int32_t)));
     connect(this->client, SIGNAL(response_sector(int32_t,int32_t,int32_t,eSectorRequestResponse,int32_t)), this, SLOT(response_sector(int32_t,int32_t,int32_t,eSectorRequestResponse,int32_t)));
     connect(this->client, SIGNAL(go_to(int32_t,int32_t,int32_t)), this->ourEther, SLOT(setRobotNextField(int32_t, int32_t, int32_t)));
     connect(this->ourEther, SIGNAL(goToEtherSignal(int32_t,int32_t,int32_t)), this, SLOT(go_to(int32_t, int32_t, int32_t)));
@@ -54,7 +54,7 @@ void klient::on_pushButton_2_clicked()
 
 void klient::on_pushButton_3_clicked()
 {
-    this->client->register_robot(this->ui->rr_lid->value(), this->ui->rr_dia->value());
+    this->client->register_robot(this->ui->rr_starting_x->value(), this->ui->rr_starting_y->value(), this->ui->rr_dia->value());
 }
 
 

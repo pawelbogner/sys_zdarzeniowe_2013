@@ -40,7 +40,7 @@ signals:
     void goToEtherSignal(int32_t id, int32_t goto_x, int32_t goto_y); // wywoluje go_to w klient
 
 public slots:
-    void registerRobotInEther(int32_t local_id, int32_t id, int32_t sector_size_x, int32_t sector_size_y, int32_t size_x, int32_t size_y); // wywolywane przez register_robot_id w qclient
+    void registerRobotInEther(int32_t local_id, int32_t id, int32_t startingX, int32_t startingY, int32_t sector_size_x, int32_t sector_size_y, int32_t size_x, int32_t size_y); // wywolywane przez register_robot_id w qclient
     void setRobotNextField(int32_t id, int32_t nextFieldX, int32_t nextFieldY); // wywolywane przez go_to w qclient
     void advanceTime(); // z timera
 };
