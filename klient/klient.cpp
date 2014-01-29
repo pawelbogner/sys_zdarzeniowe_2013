@@ -114,7 +114,10 @@ void klient::go_to(int32_t id, int32_t goto_x, int32_t goto_y)
     this->ui->gt_y->setText(QString("%1").arg(goto_y));
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
 void klient::on_pushButton_4_clicked()
 {
     const char *fileName=this->ui->fileName->text().toLocal8Bit().data();
@@ -122,6 +125,7 @@ void klient::on_pushButton_4_clicked()
     inputFile.open(fileName,std::ifstream::in);
 
     if (!inputFile.good()) {
+<<<<<<< HEAD
         std::cerr << "Error: failed to open file " << fileName << "." << std::endl;
         return;
     }
@@ -138,4 +142,18 @@ void klient::on_pushButton_4_clicked()
     newRobot=robotsToRegister[0];
     this->client->register_robot(newRobot.x,newRobot.y,newRobot.diameter);
     robotsToRegister.erase(robotsToRegister.begin());
+=======
+        std::cerr << "Error: failed to read the file " << fileName << "." << std::endl;
+        return;
+    }
+
+    int32_t startingX, startingY, diameter;
+    while (!inputFile.eof()) {
+        inputFile >> startingX >> startingY >> diameter;
+        if (!inputFile.eof()) {
+            this->client->register_robot(startingX, startingY, diameter);
+        }
+    }
+    inputFile.close();
+>>>>>>> master
 }
