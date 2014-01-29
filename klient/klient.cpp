@@ -4,6 +4,7 @@
 #include <iostream>
 #include <boost/make_shared.hpp>
 #include <boost/foreach.hpp>
+#include <fstream>
 
 klient::klient(QWidget *parent) :
     QMainWindow(parent),
@@ -20,6 +21,7 @@ klient::klient(QWidget *parent) :
     connect(this->ourEther, SIGNAL(addRobotToSceneSignal(int32_t)), this, SLOT(addRobotToSceneSlot(int32_t)));
     connect(this->ourEther, SIGNAL(redrawScene()), this, SLOT(redrawScene()));
     connect(this->ourEther, SIGNAL(drawSceneWithLines(int32_t,int32_t,int32_t,int32_t)), this, SLOT(drawSceneWithLines(int32_t,int32_t,int32_t,int32_t)));
+    connect(this->ourEther, SIGNAL(robotProcessedSignal()), this, SLOT(registerNextRobot()));
     this->ui->graphicsView->setScene(&Scene);
 }
 
@@ -80,6 +82,16 @@ void klient::drawSceneWithLines(int32_t size_x, int32_t size_y, int32_t sector_s
         Scene.addLine(0, i*sector_size_y, size_x*sector_size_x, i*sector_size_y);
 }
 
+void klient::registerNextRobot()
+{
+    if (robotsToRegister.size()==0) {
+        return;
+    }
+    RobotToRegister newRobot=robotsToRegister[0];
+    this->client->register_robot(newRobot.x,newRobot.y,newRobot.diameter);
+    robotsToRegister.erase(robotsToRegister.begin());
+}
+
 
 void klient::response_sector(int32_t id, int32_t, int32_t, eSectorRequestResponse response, int32_t)
 {
@@ -102,3 +114,28 @@ void klient::go_to(int32_t id, int32_t goto_x, int32_t goto_y)
     this->ui->gt_y->setText(QString("%1").arg(goto_y));
 }
 
+
+void klient::on_pushButton_4_clicked()
+{
+    const char *fileName=this->ui->fileName->text().toLocal8Bit().data();
+    std::ifstream inputFile;
+    inputFile.open(fileName,std::ifstream::in);
+
+    if (!inputFile.good()) {
+        std::cerr << "Error: failed to open file " << fileName << "." << std::endl;
+        return;
+    }
+
+    RobotToRegister newRobot;
+    while (!inputFile.eof()) {
+        inputFile >> newRobot.x >> newRobot.y >> newRobot.diameter;
+        if (!inputFile.eof()) {
+            robotsToRegister.push_back(newRobot);
+        }
+    }
+    inputFile.close();
+
+    newRobot=robotsToRegister[0];
+    this->client->register_robot(newRobot.x,newRobot.y,newRobot.diameter);
+    robotsToRegister.erase(robotsToRegister.begin());
+}

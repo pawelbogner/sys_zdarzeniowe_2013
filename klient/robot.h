@@ -12,6 +12,9 @@ struct Force {
     double X, Y;
 };
 
+struct RobotToRegister {
+    int32_t x, y, diameter;
+};
 
 class Robot
 {

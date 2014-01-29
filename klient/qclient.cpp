@@ -69,19 +69,6 @@ void QClient::ready_read()
         emit response_sector(packet.id, packet.x, packet.y, packet.response, packet.clients);
     }
         break;
-    /*case GOTO_TASK:
-    {
-        tGoToTask packet;
-        socket->read((char*)&packet, sizeof(packet));
-        socket->flush();
-        std::cerr << "; data: ";
-        std::cerr << packet.id << ", " << packet.goto_x << ", " << packet.goto_y << "." << std::endl;
-
-        emit go_to(packet.id, packet.goto_x, packet.goto_y);
-
-    }
-        break;*/
-
     }
     socket->flush();
 }

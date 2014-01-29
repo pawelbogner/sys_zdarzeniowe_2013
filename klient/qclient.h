@@ -13,6 +13,7 @@ public:
     explicit QClient(QObject *parent = 0);
     bool connect_to_host(QString host, qint16 port, int timeout);
     void disconnect_from_host();
+
 private:
     QTcpSocket *socket;
     bool _connected;

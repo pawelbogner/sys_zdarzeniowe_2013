@@ -38,6 +38,7 @@ signals:
     void redrawScene(void); // wywoluje redrawScene w klient
     void drawSceneWithLines(int32_t size_x, int32_t size_y, int32_t sector_size_x, int32_t sector_size_y); // wywoluje drawSceneWithLines w klient
     void goToEtherSignal(int32_t id, int32_t goto_x, int32_t goto_y); // wywoluje go_to w klient
+    void robotProcessedSignal(void); // wywoluje rejestracje kolejnego robota z pliku
 
 public slots:
     void registerRobotInEther(int32_t local_id, int32_t id, int32_t startingX, int32_t startingY, int32_t sector_size_x, int32_t sector_size_y, int32_t size_x, int32_t size_y); // wywolywane przez register_robot_id w qclient

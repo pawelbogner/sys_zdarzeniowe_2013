@@ -67,6 +67,7 @@ void Ether::registerRobotInEther(int32_t local_id,
     getFields().at(startingY+startingX*size_y).addRobot(getRobotWithMatchingId(id));
     _client->current_position(id,startingX,startingY);
     emit addRobotToSceneSignal(id);
+    emit robotProcessedSignal();
 }
 
 void Ether::setRobotNextField(int32_t id, int32_t nextFieldX, int32_t nextFieldY)
