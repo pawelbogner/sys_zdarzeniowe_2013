@@ -285,7 +285,7 @@
              </property>
              <property name="minimumSize">
               <size>
-               <width>100</width>
+               <width>120</width>
                <height>0</height>
               </size>
              </property>
@@ -308,34 +308,10 @@
             </spacer>
            </item>
            <item>
-            <widget class="QLabel" name="label_8">
-             <property name="text">
-              <string>or</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="horizontalSpacer_4">
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
             <widget class="QPushButton" name="pushButton_4">
              <property name="minimumSize">
               <size>
-<<<<<<< HEAD
                <width>120</width>
-=======
-               <width>100</width>
->>>>>>> master
                <height>0</height>
               </size>
              </property>
@@ -351,11 +327,7 @@
            <item>
             <widget class="QLabel" name="label_6">
              <property name="text">
-<<<<<<< HEAD
               <string>File name:</string>
-=======
-              <string>Filename:</string>
->>>>>>> master
              </property>
             </widget>
            </item>
@@ -370,12 +342,6 @@
              <property name="text">
               <string>robots.txt</string>
              </property>
-<<<<<<< HEAD
-=======
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
->>>>>>> master
             </widget>
            </item>
           </layout>
