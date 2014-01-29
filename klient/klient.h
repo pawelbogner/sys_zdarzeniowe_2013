@@ -38,6 +38,8 @@ private slots:
     void response_sector  (int32_t id, int32_t, int32_t, eSectorRequestResponse response, int32_t); // wywolywane przez response_sector w qclient
     void go_to            (int32_t id, int32_t goto_x, int32_t goto_y); // wywolywane przez goToEtherSignal w Ether
 
+    void on_pushButton_4_clicked();
+
 private:
     Ui::klient *ui;
     QClient *client;

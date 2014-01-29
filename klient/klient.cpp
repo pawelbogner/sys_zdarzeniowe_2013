@@ -4,6 +4,7 @@
 #include <iostream>
 #include <boost/make_shared.hpp>
 #include <boost/foreach.hpp>
+#include <fstream>
 
 klient::klient(QWidget *parent) :
     QMainWindow(parent),
@@ -102,3 +103,23 @@ void klient::go_to(int32_t id, int32_t goto_x, int32_t goto_y)
     this->ui->gt_y->setText(QString("%1").arg(goto_y));
 }
 
+void klient::on_pushButton_4_clicked()
+{
+    const char *fileName=this->ui->fileName->text().toLocal8Bit().data();
+    std::ifstream inputFile;
+    inputFile.open(fileName,std::ifstream::in);
+
+    if (!inputFile.good()) {
+        std::cerr << "Error: failed to read the file " << fileName << "." << std::endl;
+        return;
+    }
+
+    int32_t startingX, startingY, diameter;
+    while (!inputFile.eof()) {
+        inputFile >> startingX >> startingY >> diameter;
+        if (!inputFile.eof()) {
+            this->client->register_robot(startingX, startingY, diameter);
+        }
+    }
+    inputFile.close();
+}

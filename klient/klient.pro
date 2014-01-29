@@ -26,3 +26,5 @@ HEADERS  += klient.h \
     defines.h
 
 FORMS    += klient.ui
+
+OTHER_FILES +=
