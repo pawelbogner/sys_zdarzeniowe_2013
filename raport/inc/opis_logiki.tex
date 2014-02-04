@@ -1,0 +1,28 @@
+\section{Opis logiki}
+
+Działania w systemie są odpowiedzią na zdarzenia wynikające z komunikacji serwer-symulator.
+
+\begin{enumerate}
+  \item pobranie informacji początkowych od serwera: współrzędne
+    sektora początkowego,
+
+  \item wysłanie zapytania o pozwolenie wjazdu do kolejnego
+    sektora, \label{zapytanie}
+
+  \item oczekiwanie na pozwolenie, przy jednoczesnym poruszaniu się
+    zgodnie z wektorem wyznaczonym przez pola potencjałów,
+    
+  \item otrzymanie pozwolenia na wjazd do kolejnego sektora,
+    ustawienie przeciwnego potencjału na ścianie sąsiadującej z
+    kolejnym sektorem, otrzymanie współrzędnych następnego sektora
+    docelowego,
+
+  \item przejazd do kolejnego sektora,
+
+  \item zwolnienie poprzedniego sektora, przejście do punktu \ref{zapytanie}.
+
+\end{enumerate}
+
+
+
+

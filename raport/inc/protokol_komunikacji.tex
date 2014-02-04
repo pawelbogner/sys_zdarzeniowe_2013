@@ -1,0 +1,32 @@
+\section{Protokół komunikacji z serwerem}
+Protokół komunikacji jest identyczny z zaimplementowanym w zalążku przez Adama Klamę. Opiera się on na transmisji pakietów danych o odpowiednich nagłówkach poprzez protokół TCP/IP. Wszystkie przekazywane wartości liczbowe mają typ danych int32\_t (czterobajtowy \textit{signed integer}).\\
+
+Przebieg komunikacji z serwerem po uruchomieniu aplikacji:
+\begin{enumerate}
+\item Klient podłącza się do serwera.
+\item\label{pkt:rejestracjarobota} Klient wysyła do serwera żądanie rejestracji robota:
+\begin{itemize}
+\item ramka zapytania ma rozmiar 8 bajtów oraz nagłówek oznaczony 1 (\texttt{REGISTER\_ROBOT}), zawiera ona kolejno lokalne id robota (id w kliencie) oraz promień robota;
+\item ramka odpowiedzi ma rozmiar 24 bajty oraz nagłówek oznaczony 2 (\texttt{REGISTER\_ROBOT\_RESP}), zawiera ona kolejno globalne id robota (w serwerze), lokalne id robota (w kliencie), rozmiar pojedynczej komórki planszy w osi X, rozmiar pojedynczej komórki planszy w osi Y, liczba komórek planszy w osi X, liczba komórek planszy w osi Y.
+\end{itemize}
+\item\label{pkt:currentpos} Klient wysyła do serwera informację o początkowym położeniu właśnie zarejestrowanego robota:
+\begin{itemize}
+\item ramka zapytania ma rozmiar 12 bajtów oraz nagłówek oznaczony 6 (\texttt{CURRENT\_POSITION}), zawiera ona kolejno globalne id robota, położenie robota w osi X (tj. numer komórki, w której robot się znajduje, patrząc względem osi X), położenie robota w osi Y;
+\item serwer nie odpowiada na to zapytanie.
+\end{itemize}
+\vspace{10pt}
+Zdarzenia \ref{pkt:rejestracjarobota}, \ref{pkt:currentpos} powtarzają się tyle razy, ile dostępnych jest robotów, natomiast po zarejestrowaniu pierwszego robota serwer może przejść do wykonywania zdarzenia \ref{pkt:goto}.
+\vspace{10pt}
+\item\label{pkt:goto} Serwer wysyła robotowi, wybranemu spośród już zarejestrowanych, polecenie przejechania do jednej z sąsiednich komórek oraz sygnał, czy ma pozwolenie na przejazd do docelowej komórki:
+\begin{itemize}
+\item ramka zapytania ma rozmiar 28 bajtów oraz nagłówek oznaczony 4 (\texttt{RESPONSE\_SECTOR}), zawiera ona kolejno globalne id robota, docelowe położenie robota w osi X, docelowe położenie robota w osi Y, flaga oznaczająca pozwolenie na przejazd (1) lub też jego brak (0), numer klienta (w tej chwili ignorowany), docelowe położenie w osi X, docelowe położenie w osi Y;
+\item klient nie odpowiada na to zapytanie.
+\end{itemize}
+\item\begin{enumerate}[a)]\item W przypadku braku pozwolenia na przejazd robot czeka na otrzymanie pozwolenia od serwera, przy czym zadaniem serwera jest monitorowanie faktu, że istnieje robot, który pytał o pozwolenie, dostał odmowę i znajduje się w stanie oczekiwania.
+\item W przypadku otrzymania pozwolenia na przejazd robot przejeżdża do komórki docelowej i w momencie opuszczenia poprzedniej komórki całą swoją powierzchnią informuje serwer o zwolnieniu tejże:
+\begin{itemize}
+\item ramka zapytania ma rozmiar 16 bajtów oraz nagłówek oznaczony 3 (\texttt{REQUEST\_SECTOR}), zawiera ona kolejno globalne id robota, poprzednie położenie robota w osi X, poprzednie położenie robota w osi Y, flaga oznaczająca opuszczenie poprzedniej komórki - wartość liczbowa 0;
+\item serwer nie odpowiada na to zapytanie.
+\end{itemize}
+\end{enumerate}
+\end{enumerate}

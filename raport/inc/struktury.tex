@@ -1,0 +1,6 @@
+
+\section{Zarys struktur danych}
+\subsection{Scena}
+W zaproponowanym modelu scena (plansza) jest strukturą, zawierającą tablicę komórek, a także ewentualne informacje związane z modelem robota wspólne dla wszystkich. Pojedyncza komórka zawierałaby informacje o swoich wymiarach oraz listę robotów, które aktualnie się w niej znajdują, a także wskaźnik do struktury zawierającej modele dla metody pól potencjałów.
+\subsection{Dane wymieniane z serwerem}
+Serwer ma zadanie planowania tras dla robotów, wobec czego pożądana informacja dla każdego z robotów to następna komórka, do której ten ma się kierować oraz zezwolenie bądź brak zezwolenia na wjazd do niej. W przypadku braku zezwolenia robot zatrzymałby się w bieżącej komórce; w przeciwnym wypadku przejechałby od razu do następnej komórki.\\\\Klient miałby za zadanie wysyłania zapytań o dalsze drogi robotów oraz o pozwolenie na ich realizację, a także informowałby o wykonanych zadaniach i zjeździe robotów ze sceny.

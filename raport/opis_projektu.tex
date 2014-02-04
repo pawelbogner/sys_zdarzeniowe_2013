@@ -1,0 +1,72 @@
+\documentclass[11pt, a4paper]{article} 
+\usepackage[polish]{babel}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{dcolumn}
+\usepackage{geometry} % to change the page dimensions
+\usepackage{graphicx} % support the \includegraphics command and options
+\usepackage{float}
+\usepackage{array} % for better arrays (eg matrices) in maths
+\usepackage{verbatim} % adds environment for commenting out blocks of text & for better verbatim
+\usepackage{lscape}
+\usepackage{latexsym}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage{makecell}
+\let\lll=\amslll
+%\savesymbol{lll}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{pdflscape} 
+\usepackage{epstopdf}
+\usepackage{pdfpages}
+
+
+\usepackage{fontspec}
+%\usepackage[utf8](fontenc)
+
+
+\setlength\parindent{0pt}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\newcommand{\linia}{\rule{\linewidth}{0.1mm}}
+\usepackage[  
+  bookmarks=true,  
+  bookmarksnumbered=false,  
+  unicode=true,  
+  pdftitle={Projekt zespołowy},
+  pdfauthor={Paweł Bogner, Krzysztof Nomejko, Grzegorz Maj,
+  Bartosz Folta, Marcin Dmochowski},
+  pdfnewwindow=true,
+  colorlinks=false
+]{hyperref} 
+
+\begin{document}
+	\input{inc/titlepage.tex}
+
+	\section{Zarządzanie projektem}
+		\input{inc/zarzadzanie_projektem.tex}
+
+
+%\includepdf[landscape]{img/gantt.pdf}
+
+\input{inc/opis_logiki.tex}
+\input{inc/zachowanie_w_polu.tex}
+\input{inc/struktury.tex}
+\input{inc/protokol_komunikacji.tex}
+\input{inc/gui.tex}
+
+
+
+	\section{Zespół}
+		\subsection{Paweł Bogner}
+			\input{inc/zespol_pawel_bogner.tex}
+		\subsection{Marcin Dmochowski}
+			\input{inc/zespol_marcin_dmochowski.tex}
+		\subsection{Bartosz Folta}
+			\input{inc/zespol_bartosz_folta.tex}
+		\subsection{Grzegorz Maj}
+			\input{inc/zespol_grzegorz_maj.tex}
+		\subsection{Krzysztof Nomejko}
+			\input{inc/zespol_krzysztof_nomejko.tex}
+\end{document}
