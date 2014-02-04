@@ -1,8 +1,8 @@
 \section{Opis logiki}
 
-Logika działania i komunikacji z serwerem zostały zrealizowane zgodnie z zalążkiem komunikacji po TCP \textit{qprotocol.h} wersja 0.2.
+Logika działania i komunikacji z serwerem zostały zrealizowane zgodnie z zalążkiem komunikacji z wykorzystaniem protokołu TCP/IP -- \textit{qprotocol.h} wersja 0.2.\\
 
-Działania w systemie są odpowiedzią na zdarzenia wynikające z komunikacji serwer-symulator.
+Działania w systemie są odpowiedzią na zdarzenia wynikające z komunikacji serwer-symulator:
 
 \begin{enumerate}
   \item pobranie informacji początkowych od serwera: współrzędne
@@ -11,15 +11,13 @@ Działania w systemie są odpowiedzią na zdarzenia wynikające z komunikacji se
   \item wysłanie zapytania o pozwolenie wjazdu do kolejnego
     sektora, \label{zapytanie}
 
-  \item oczekiwanie na pozwolenie, przy jednoczesnym poruszaniu się
-    zgodnie z wektorem wyznaczonym przez pola potencjałów,
+  \item oczekiwanie na pozwolenie, przy jednoczesnym poruszaniu się robotów wewnątrz swoich sektorów
+    zgodnie z wektorami wyznaczonymi z wykorzystaniem metody pól potencjałów,
     
-  \item otrzymanie pozwolenia na wjazd do kolejnego sektora,
+  \item otrzymanie pozwolenia na wjazd do kolejnego sektora powoduje
     ustawienie przeciwnego potencjału na ścianie sąsiadującej z
-    kolejnym sektorem, otrzymanie współrzędnych następnego sektora
+    kolejnym sektorem i w konsekwencji przejazd robota do kolejnego sektora, otrzymanie współrzędnych następnego sektora
     docelowego,
-
-  \item przejazd do kolejnego sektora,
 
   \item zwolnienie poprzedniego sektora, przejście do punktu \ref{zapytanie}.
 

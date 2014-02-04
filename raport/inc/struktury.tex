@@ -3,15 +3,15 @@
 
 \subsection{Scena}
 
-W zrealizowanym modelu scena (plansza) jest strukturą, zawierającą tablicę komórek, zawierająca wszystkie 
-niezbędne dane do sterowania robotami.
+W zrealizowanym modelu scena (plansza) jest strukturą, zawierającą tablicę komórek. Składa się ona na wszystkie 
+niezbędne dane do sterowania robotami.\\
 
-Pojedyncza komórka zawiera informacje o swoich wymiarach oraz listę wskaźników na roboty, które aktualnie się w niej znajdują, a także interfejs do dodawania i usuwania robotów w zależności od pojawiających się zdarzeń(roboty wjeżdżają i wyjeżdżają z komórki).
+Pojedyncza komórka zawiera informacje o swoich wymiarach oraz listę wskaźników na roboty, które aktualnie się w niej znajdują, a także interfejs do dodawania i usuwania robotów w zależności od pojawiających się zdarzeń (roboty wjeżdżają i wyjeżdżają z komórki).\\
 
 Klasa opisująca pojedynczego robota zawiera informacje o położeniu robota, jego prędkościach, a także niezbędne metody do wyliczania sił sterujących robotem (zależnych od położenia robota względem środka sektora i położenia ewentualnego drugiego robota w sektorze).
 
 \subsection{Dane wymieniane z serwerem}
 
-Serwer ma zadanie planowania tras dla robotów, wobec czego pożądana informacja dla każdego z robotów to następna komórka, do której ten ma się kierować oraz zezwolenie bądź brak zezwolenia na wjazd do niej. W przypadku braku zezwolenia robot zatrzymuje się w bieżącej komórce; w przeciwnym wypadku przejeżdża od razu do następnej komórki. Serwer musi również informować klienta o wjeździe nowego robota na scenę.
+Serwer ma zadanie planowania tras dla robotów, wobec czego pożądana informacja dla każdego z robotów to następna komórka, do której ten ma się kierować oraz zezwolenie bądź brak zezwolenia na wjazd do niej. W przypadku braku zezwolenia robot zatrzymuje się w bieżącej komórce; w przeciwnym wypadku przejeżdża od razu do następnej komórki.\\
 
-Klient wysyła zapytania o dalsze drogi robotów oraz o pozwolenie na ich realizację, a także informuje o wykonanych zadaniach i zjeździe robotów ze sceny.
+Klient wysyła zapytania o dalsze drogi robotów oraz o pozwolenie na ich realizację, a także informuje o wykonanych zadaniach oraz o zwalnianych komórkach.

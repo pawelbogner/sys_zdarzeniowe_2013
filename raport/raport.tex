@@ -16,15 +16,16 @@
 \let\lll=\amslll
 %\savesymbol{lll}
 \usepackage{amssymb}
-
-%\usepackage{fontspec}
-%\usepackage[utf8]{fontenc}
-\usepackage[OT4]{fontenc}
-\usepackage[utf8]{inputenc}
-
+\usepackage{enumerate}
 \usepackage{pdflscape} 
 \usepackage{epstopdf}
 \usepackage{pdfpages}
+
+
+\usepackage{fontspec}
+%\usepackage[OT4]{fontenc}
+%\usepackage[utf8]{inputenc}
+
 
 \setlength\parindent{0pt}
 
@@ -38,7 +39,11 @@
   pdfauthor={Paweł Bogner, Krzysztof Nomejko, Grzegorz Maj,
   Bartosz Folta, Marcin Dmochowski},
   pdfnewwindow=true,
-  colorlinks=false
+  colorlinks=true,
+  citecolor=black,
+  urlcolor=black,
+  filecolor=black,
+  linkcolor=black
 ]{hyperref} 
 
 \begin{document}
@@ -57,14 +62,14 @@
 
 
 	\section{Zespół}
-		\subsection{Paweł Bogner}
+		\subsection*{Paweł Bogner}
 			\input{inc/zespol_pawel_bogner.tex}
-		\subsection{Marcin Dmochowski}
+		\subsection*{Marcin Dmochowski}
 			\input{inc/zespol_marcin_dmochowski.tex}
-		\subsection{Bartosz Folta}
+		\subsection*{Bartosz Folta}
 			\input{inc/zespol_bartosz_folta.tex}
-		\subsection{Grzegorz Maj}
+		\subsection*{Grzegorz Maj}
 			\input{inc/zespol_grzegorz_maj.tex}
-		\subsection{Krzysztof Nomejko}
+		\subsection*{Krzysztof Nomejko}
 			\input{inc/zespol_krzysztof_nomejko.tex}
 \end{document}
