@@ -16,15 +16,15 @@
 \let\lll=\amslll
 %\savesymbol{lll}
 \usepackage{amssymb}
-\usepackage{enumerate}
+
+%\usepackage{fontspec}
+%\usepackage[utf8]{fontenc}
+\usepackage[OT4]{fontenc}
+\usepackage[utf8]{inputenc}
+
 \usepackage{pdflscape} 
 \usepackage{epstopdf}
 \usepackage{pdfpages}
-
-
-\usepackage{fontspec}
-%\usepackage[utf8](fontenc)
-
 
 \setlength\parindent{0pt}
 
@@ -43,18 +43,16 @@
 
 \begin{document}
 	\input{inc/titlepage.tex}
-
-	\section{Zarządzanie projektem}
-		\input{inc/zarzadzanie_projektem.tex}
-
+	
+	\input{inc/zarzadzanie_projektem.tex}
 
 %\includepdf[landscape]{img/gantt.pdf}
 
-\input{inc/opis_logiki.tex}
-\input{inc/zachowanie_w_polu.tex}
-\input{inc/struktury.tex}
-\input{inc/protokol_komunikacji.tex}
-\input{inc/gui.tex}
+	\input{inc/opis_logiki.tex}
+	\input{inc/zachowanie_w_polu.tex}
+	\input{inc/struktury.tex}
+	\input{inc/protokol_komunikacji.tex}
+	\input{inc/gui.tex}
 
 
 
