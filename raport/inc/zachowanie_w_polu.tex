@@ -4,18 +4,22 @@
 	 Potencjały ustalane są w następujący sposób:
 	\begin{itemize}
 		\item robot oczekujący na zezwolenie wyjazdu z pola widzi wszystkie ściany jako spolaryzowane ładunkiem o znaku zgodnym ze znakiem jego ładunku (rys. \ref{pic:waiting}), a jego wektor sił ma składowe opisane następującymi równaniami:
-                  $$F_x= A*((X-x)^2 - x^2)$$
-		  $$F_y= A*((Y-y)^2 - y^2),$$
+                $$F_x= \cos(\alpha)*A*R^2$$
+		  		$$F_y= \sin(\alpha)*A*R^2$$
+		  		gdzie $R$ jest odległością do środka pola, a $\alpha$ to kąt odchylenia zamodelowany z proporcji trójkąta prostokątnego,
 		\item robot wykonujący manewr przejazdu do innego pola widzi dodatkowy ładunek na ścianie, w kierunku której ma zmierzać (umieszczony z jej prawej strony, aby zapobiegać kolizjom) (rys. \ref{pic:moving}), a do składowych jego wektora sił dodaje się człon odpowiedzialny za modelowanie dodatkowego potencjału:
-                  $$F_{xM}= +\frac{B}{(X_p-x)^2}$$
-                  $$F_{yM}= +\frac{B}{(Y_p-y)^2},$$
+                  $$F_{xM}= \cos(\beta)*B*R^2$$
+		  		$$F_{yM}= \sin(\beta)*B*R^2$$
+		  		gdzie $R$ jest odległością do środka pola, a $\alpha$ to kąt odchylenia zamodelowany z proporcji trójkąta prostokątnego,
 		\item dwa roboty znajdujące się w tym samym polu zawsze są spolaryzowane ładunkami punktowymi o jednakowych znakach (rys. \ref{pic:tworobots}), a do wektora sił dodawany jest w tym wypadku następujący człon modelujący siłę wzajemnie je odpychającą:
-                  $$F_{xD}= +\frac{C}{\mathrm{sgn}(x-x_D)(x-x_D)^2}$$
-                  $$F_{yD}= +\frac{C}{\mathrm{sgn}(y-y_D)(y-y_D)^2},$$ 
+                  $$F_{xD}= \cos(\theta)*C*R^2$$
+		  		$$F_{yD}= \sin(\theta)*C*R^2$$
+		  		gdzie $R$ jest odległością do środka pola, a $\alpha$ to kąt odchylenia zamodelowany z proporcji trójkąta prostokątnego,
 		\item w wypadku, jeśli w polu znajdują się dwa roboty, każdy widzi inną polaryzację ścian -- taką, aby zgadzała się ona z jego stanem ruchu (oczekiwanie, zezwolenie na przejazd),
                 \item przykład --- kiedy w polu znajdują się dwa roboty i robot, dla którego obliczamy wypadkowy wektor sił, wyjeżdża z pola, składowe jego sił opisane są następującymi równaniami:
-                  $$F_x= A((X-x)^2 - x^2)+B(X_p-x)^2+C(x-x_D)^2$$
-                  $$F_y= A((Y-y)^2 - y^2)+B(Y_p-y)^2+C(y-y_D)^2.$$ 
+                $$F_x= \cos(\alpha)*A*R^2+\cos(\beta)*B*R^2+\cos(\theta)*C*R^2$$
+		  		$$F_y= \sin(\alpha)*A*R^2+\sin(\beta)*B*R^2+\sin(\theta)*C*R^2$$
+
 	\end{itemize}
 	
 	Wszystkie siły sterujące są wyliczane dla każdego robota osobno. Nie ma żadnej komunikacji pomiędzy poszczególnymi robotami.
